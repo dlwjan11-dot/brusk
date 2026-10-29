@@ -1,0 +1,64 @@
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated rimraf@2.6.3: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated boolean@3.2.0: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+
+added 284 packages, and audited 285 packages in 3s
+
+47 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+Checksumming Protective Master Boot Record (MBR : 0)…
+Protective Master Boot Record (MBR :: verified   CRC32 $E81C6068
+Checksumming GPT Header (Primary GPT Header : 1)…
+ GPT Header (Primary GPT Header : 1): verified   CRC32 $AE37B904
+Checksumming GPT Partition Data (Primary GPT Table : 2)…
+GPT Partition Data (Primary GPT Tabl: verified   CRC32 $6D887BAB
+Checksumming  (Apple_Free : 3)…
+                    (Apple_Free : 3): verified   CRC32 $00000000
+Checksumming disk image (Apple_APFS : 4)…
+         disk image (Apple_APFS : 4): verified   CRC32 $18B58383
+Checksumming  (Apple_Free : 5)…
+                    (Apple_Free : 5): verified   CRC32 $00000000
+Checksumming GPT Partition Data (Backup GPT Table : 6)…
+GPT Partition Data (Backup GPT Table: verified   CRC32 $6D887BAB
+Checksumming GPT Header (Backup GPT Header : 7)…
+  GPT Header (Backup GPT Header : 7): verified   CRC32 $6641CC6C
+verified   CRC32 $8560679E
+/dev/disk7          	GUID_partition_scheme          	
+/dev/disk7s1        	Apple_APFS                     	
+/dev/disk8          	EF57347C-0000-11AA-AA11-0030654	
+/dev/disk8s1        	41504653-0000-11AA-AA11-0030654	/private/var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/aria2-EtJxAo/mnt
+"disk7" ejected.
+aria2c (mac) ok
+yt-dlp_macos ok
+  • electron-builder  version=26.18.0 os=25.6.0
+  • loaded configuration  file=package.json ("build" field)
+  • executing @electron/rebuild  electronVersion=45.1.0 arch=x64 buildFromSource=false workspaceRoot=/Users/runner/work/brusk/brusk projectDir=./ appDir=./
+  • installing native dependencies  arch=x64
+  • completed installing native dependencies
+  • packaging       platform=darwin arch=x64 electron=45.1.0 appOutDir=dist/mac
+  • downloaded      label=electron progress=100%
+  • downloaded electron zip extracted successfully  output=/Users/runner/work/brusk/brusk/dist/mac
+  • searching for node modules  pm=npm searchDir=/Users/runner/work/brusk/brusk
+  • downloaded      label=icons-bundle.tar.gz progress=100%
+  • skipped macOS code signing  reason=identity explicitly is set to null
+  • executing @electron/rebuild  electronVersion=45.1.0 arch=arm64 buildFromSource=false workspaceRoot=/Users/runner/work/brusk/brusk projectDir=./ appDir=./
+  • installing native dependencies  arch=arm64
+  • completed installing native dependencies
+  • packaging       platform=darwin arch=arm64 electron=45.1.0 appOutDir=dist/mac-arm64
+  • downloaded      label=electron progress=100%
+  • downloaded electron zip extracted successfully  output=/Users/runner/work/brusk/brusk/dist/mac-arm64
+  • searching for node modules  pm=npm searchDir=/Users/runner/work/brusk/brusk
+  • skipped macOS code signing  reason=identity explicitly is set to null
+dist/mac-arm64/Brusk.app: replacing existing signature
+created: /Users/runner/work/brusk/brusk/out/Brusk-Mac-AppleSilicon.dmg
+created: /Users/runner/work/brusk/brusk/out/Brusk-Mac-Intel.dmg
+total 1519648
+drwxr-xr-x   6 runner  staff        192 Oct 29 14:11 .
+drwxr-xr-x  23 runner  staff        736 Oct 29 14:10 ..
+-rw-r--r--@  1 runner  staff  191237570 Oct 29 14:10 Brusk-Mac-AppleSilicon.dmg
+-rw-r--r--   1 runner  staff  178793483 Oct 29 14:10 Brusk-Mac-AppleSilicon.zip
+-rw-r--r--@  1 runner  staff  199688385 Oct 29 14:11 Brusk-Mac-Intel.dmg
+-rw-r--r--   1 runner  staff  185994704 Oct 29 14:11 Brusk-Mac-Intel.zip
