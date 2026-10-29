@@ -1,0 +1,8 @@
+status=success
+signed=0
+commit=7ecc7ab45491026c50b5b51cc04a4c295bbbcbe9
+total 142856
+drwxr-xr-x  2 runner runner     4096 Oct 29 14:05 .
+drwxr-xr-x 13 runner runner     4096 Oct 29 14:05 ..
+-rw-r--r--  1 runner runner 69810666 Oct 29 14:05 Brusk-Android-32bit.apk
+-rw-r--r--  1 runner runner 76463800 Oct 29 14:05 Brusk-Android.apk
