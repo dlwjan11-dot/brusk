@@ -99,7 +99,8 @@ function clean(i) {
   return {
     url: s(i.url, 8192), referrer: s(i.referrer, 4096), pageUrl: s(i.pageUrl, 4096), pageTitle: s(i.pageTitle, 300),
     filename: s(i.filename, 300), userAgent: s(i.userAgent, 512), mime: s(i.mime, 120), size: Number.isFinite(i.size) ? i.size : undefined,
-    kind: ['video', 'http', 'torrent'].includes(i.kind) ? i.kind : undefined,
+    kind: ['video', 'http', 'torrent', 'gallery'].includes(i.kind) ? i.kind : undefined,
+    gallery: i.gallery && typeof i.gallery === 'object' ? { posts: Math.max(0, Math.min(100000, Number(i.gallery.posts) || 0)), types: ['all', 'images', 'videos'].includes(i.gallery.types) ? i.gallery.types : 'all' } : undefined,
     cookies: Array.isArray(i.cookies) ? i.cookies.slice(0, 200).map(c => ({ name: s(c.name, 256), value: s(c.value, 8192), domain: s(c.domain, 256), path: s(c.path, 512), secure: Boolean(c.secure), httpOnly: Boolean(c.httpOnly), expirationDate: Number(c.expirationDate) || 0 })).filter(c => c.name) : [],
   };
 }

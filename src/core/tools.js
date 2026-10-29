@@ -51,6 +51,8 @@ const SOURCES = {
     const url = DENO(WIN ? 'x86_64-pc-windows-msvc' : MAC ? (ARM ? 'aarch64-apple-darwin' : 'x86_64-apple-darwin') : 'x86_64-unknown-linux-gnu');
     return { url, sums: url + '.sha256sum', asset: null, archive: true, binary: exe('deno') };   // .sha256sum holds one hash
   })(),
+  // Built from PyPI on GitHub for every Brusk release (gallery-dl publishes no macOS build); shipped inside the app.
+  'gallery-dl': { url: null, binary: exe('gallery-dl') },
   aria2c: {
     // Windows: fetched if missing. macOS/Linux: shipped inside the app (no official standalone download).
     url: WIN ? `${GH}/aria2/aria2/releases/download/release-1.37.0/aria2-1.37.0-win-64bit-build1.zip` : null,

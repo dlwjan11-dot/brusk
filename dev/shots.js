@@ -48,11 +48,12 @@ server.listen(0, '127.0.0.1', () => {
   fs.writeFileSync(path.join(ud, 'settings.json'), JSON.stringify({ language: lang, theme, downloadDir: dl, categoryFolders: false, connections: 8, maxConcurrent: 3, clipboardMonitor: false }));
 
   const js = s => encodeURIComponent(s);
+  const ADD = (process.env.ADD_URLS || `${base}/Report.pdf\n${base}/missing.zip`).replace(/\n/g, '\\n');
   const steps = [
     process.env.FAKE_MAC ? `main=${js("document.documentElement.classList.add('mac')")}` : 'main',
     `details=${js("document.querySelectorAll('.row')[0].click()")}`,
     `parts=${js("document.querySelector('[data-tab=parts]')?.click()")}`,
-    `add=${js(`document.querySelector('[data-close]')?.click(); document.getElementById('btn-add').click(); setTimeout(()=>{const ta=document.getElementById('links'); ta.value='${base}/Report.pdf\\n${base}/missing.zip'; ta.dispatchEvent(new Event('input'));},200)`)}`,
+    `add=${js(`document.querySelector('[data-close]')?.click(); document.getElementById('btn-add').click(); setTimeout(()=>{const ta=document.getElementById('links'); ta.value='${ADD}'; ta.dispatchEvent(new Event('input'));},200)`)}`,
     `settings=${js("document.querySelector('.overlay')?.remove(); document.getElementById('btn-settings').click()")}`,
     `sched=${js("document.querySelector('[data-s=schedule]').click()")}`,
     `browser=${js("document.querySelector('[data-s=browser]').click()")}`,

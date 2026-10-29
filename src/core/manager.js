@@ -9,6 +9,7 @@ const { HttpTransfer } = require('./http-transfer');
 const { probe, setProxy, HttpError } = require('./http');
 const { RateLimiter, categoryFor, safeFilename, uniquePath, newId, sleep } = require('./util');
 const video = require('./video');
+const gallery = require('./gallery');
 const { Aria2, readTorrent, magnetHash, magnetName } = require('./aria2');
 
 const CATEGORY_FOLDERS = { compressed: 'Compressed', documents: 'Documents', music: 'Music', video: 'Video', programs: 'Programs', images: 'Images', torrents: 'Torrents', other: 'General' };
@@ -35,6 +36,8 @@ const DEFAULT_SETTINGS = {
   videoQuality: '1080',
   subtitles: false,
   subtitleLangs: 'ar,en',
+  cookiesBrowser: '',       // '' | firefox | chrome | edge | brave | opera | safari — sign-in for Instagram / X / Facebook pages
+  galleryPosts: 0,          // 0 = every post of a page
   captureTypes: 'zip rar 7z gz xz bz2 tar iso exe msi apk dmg pdf doc docx xls xlsx ppt pptx mp3 m4a flac wav aac ogg mp4 mkv avi mov wmv webm flv m4v torrent bin img cab',
   captureMinSizeKB: 0,
   scheduler: { enabled: false, start: '02:00', stop: '', days: [0, 1, 2, 3, 4, 5, 6] },
@@ -152,6 +155,10 @@ class Manager extends EventEmitter {
       return { kind: 'ftp', url, name: decodeURIComponent(u.pathname.split('/').pop() || u.hostname), size: null };
     }
     if (!/^https?:$/.test(u.protocol)) throw Object.assign(new Error('Unsupported link'), { code: 'BADURL' });
+    if (gallery.isGallerySite(url)) {
+      const g = gallery.describe(url);
+      return { kind: 'gallery', url, name: [g.who, g.site].filter(Boolean).join(' · '), site: g.site, who: g.who, single: g.single };
+    }
     if (video.isVideoSite(url)) return this.inspectVideo(url, { headers, cookies, signal });
     const info = await probe(url, headers, signal);
     if (/\.torrent(\?|$)/i.test(new URL(info.finalUrl).pathname) || info.type === 'application/x-bittorrent') {
@@ -215,7 +222,7 @@ class Manager extends EventEmitter {
    *         size, video: { quality, subtitles }, torrent: { base64, selected:[1,3], name, total } }
    */
   add(item) {
-    const kind = item.kind || (/^magnet:/i.test(item.url) ? 'torrent' : /^(s?ftp|ftps):/i.test(item.url) ? 'ftp' : video.isVideoSite(item.url) ? 'video' : 'http');
+    const kind = item.kind || (/^magnet:/i.test(item.url) ? 'torrent' : /^(s?ftp|ftps):/i.test(item.url) ? 'ftp' : gallery.isGallerySite(item.url) ? 'gallery' : video.isVideoSite(item.url) ? 'video' : 'http');
     if (!item.force) {
       const dup = this.downloads.find(d => d.url === item.url && d.status !== 'completed' && (kind !== 'video' || d.video?.quality === item.video?.quality));
       if (dup) return { duplicate: true, id: dup.id };
@@ -246,6 +253,14 @@ class Manager extends EventEmitter {
         d.torrent.files = t.files; d.torrent.name = t.name; d.torrent.infoHash = t.infoHash; d.filename = t.name;
         d.total = t.files.filter(f => !d.torrent.selected || d.torrent.selected.includes(f.index)).reduce((n, f) => n + f.length, 0);
       }
+    }
+    if (kind === 'gallery') {
+      const g = gallery.describe(item.url);
+      d.category = 'images';
+      d.directory = item.directory || this.folderFor('images');
+      d.gallery = { posts: g.single ? 0 : Math.max(0, Number(item.gallery?.posts ?? this.settings.galleryPosts) || 0), types: item.gallery?.types || 'all', site: g.site, who: g.who, single: g.single };
+      d.filename = item.filename || [g.who, g.site].filter(Boolean).join(' · ') || item.url;
+      d.bytes = 0;
     }
     if (kind === 'ftp' && !d.filename) d.filename = safeFilename(decodeURIComponent(new URL(item.url).pathname.split('/').pop() || 'download'));
     this.downloads.push(d);
@@ -368,7 +383,7 @@ class Manager extends EventEmitter {
     const limiter = new RateLimiter((d.speedLimit || 0) * 1024);
     d.status = d.kind === 'video' || (d.kind === 'torrent' && !d.torrent?.file) ? 'preparing' : 'downloading';
     d.error = null; d.notice = d.notice || null; d.pausing = false; d.startedAt = Date.now();
-    const runner = { http: () => this.runHttp(d, controller.signal, limiter), video: () => this.runVideo(d, controller.signal), torrent: () => this.runTorrent(d, controller.signal), ftp: () => this.runFtp(d, controller.signal) }[d.kind];
+    const runner = { http: () => this.runHttp(d, controller.signal, limiter), video: () => this.runVideo(d, controller.signal), gallery: () => this.runGallery(d, controller.signal), torrent: () => this.runTorrent(d, controller.signal), ftp: () => this.runFtp(d, controller.signal) }[d.kind];
     const promise = (async () => {
       try {
         await runner();
@@ -409,6 +424,28 @@ class Manager extends EventEmitter {
     });
     const saver = setInterval(() => this.save(), 2000);
     try { await t.run(signal); } finally { clearInterval(saver); }
+  }
+
+  async runGallery(d, signal) {
+    d.status = 'downloading'; d.connections = 1;
+    this.changed();
+    const before = d.downloaded || 0;
+    const res = await gallery.downloadGallery(this.tools, d, {
+      signal, dataDir: this.dataDir,
+      rateLimit: this.settings.speedLimit ? `${this.settings.speedLimit}k` : (d.speedLimit ? `${d.speedLimit}k` : null),
+      proxy: this.settings.proxy, cookiesBrowser: this.settings.cookiesBrowser || '',
+      onProgress: p => {
+        d.downloaded = p.files; d.bytes = p.bytes;
+        if (p.dir) d.path = p.dir;
+        const now = Date.now();
+        if (!d._t || now - d._t > 1000) { d.speed = d._b != null ? Math.max(0, (p.bytes - d._b) / ((now - d._t) / 1000)) : 0; d._t = now; d._b = p.bytes; }
+        this.changed();
+      },
+    });
+    d.downloaded = res.files; d.bytes = res.bytes; d.total = null;
+    if (res.dir) d.path = res.dir;
+    if (!res.dir && res.files === before) { const e = new Error('NOTHING_FOUND'); e.code = 'NOTHING_FOUND'; throw e; }
+    delete d._t; delete d._b;
   }
 
   async runVideo(d, signal) {
@@ -656,8 +693,9 @@ class Manager extends EventEmitter {
 function describeError(e) {
   if (!e) return 'Unknown error';
   if (e.code === 'NOSPACE') return 'NOSPACE';
+  if (e.gallery || e.code === 'NOTHING_FOUND') return e.code === 'NOTHING_FOUND' ? 'NOTHING_FOUND' : e.message;
   if (e instanceof HttpError || e.status) return `HTTP ${e.status}`;
-  if (e.code === 'ENOENT' && /yt-dlp|aria2c|deno|ffmpeg/.test(e.path || e.message)) return 'TOOL_MISSING';
+  if (e.code === 'TOOL_MISSING' || (e.code === 'ENOENT' && /yt-dlp|aria2c|deno|ffmpeg|gallery-dl/.test(e.path || e.message))) return 'TOOL_MISSING';
   if (['ENOTFOUND', 'EAI_AGAIN'].includes(e.code || e.cause?.code)) return 'NO_INTERNET';
   if (['ECONNREFUSED', 'ECONNRESET', 'ETIMEDOUT', 'UND_ERR_CONNECT_TIMEOUT', 'UND_ERR_SOCKET', 'UND_ERR_BODY_TIMEOUT', 'UND_ERR_HEADERS_TIMEOUT'].includes(e.code || e.cause?.code)) return 'CONNECTION';
   if (e.code === 'EACCES' || e.code === 'EPERM') return 'NO_PERMISSION';

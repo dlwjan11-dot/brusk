@@ -31,9 +31,12 @@
       if (e.composedPath()[0]?.classList?.contains('x')) { host.style.display = 'none'; current = null; return; }
       const src = current?.currentSrc || current?.src || '';
       const direct = /^https?:/.test(src) && !/blob:/.test(src) ? src : null;
-      const msg = direct && !/youtube|vimeo|dailymotion|twitch|tiktok|facebook|instagram/.test(location.hostname)
-        ? { type: 'send', items: [{ url: direct, referrer: location.href, pageUrl: location.href, pageTitle: document.title }] }
-        : { type: 'page-video', pageUrl: location.href, title: document.title };
+      const post = postUrlFor(current);
+      const msg = post
+        ? { type: 'send', items: [{ url: post, kind: 'gallery', referrer: location.href, pageUrl: location.href, pageTitle: document.title }] }
+        : direct && !/youtube|vimeo|dailymotion|twitch|tiktok|facebook|instagram|twitter|x\.com/.test(location.hostname)
+          ? { type: 'send', items: [{ url: direct, referrer: location.href, pageUrl: location.href, pageTitle: document.title }] }
+          : { type: 'page-video', pageUrl: location.href, title: document.title };
       send(msg);
     }, true);
     (document.body || document.documentElement).appendChild(host);
@@ -63,6 +66,16 @@
         else finish(why(r?.error));
       });
     } catch (e) { finish(why(e.message)); }
+  }
+
+  // In an Instagram / X / Threads feed the page address is the feed, not the post: find the post the video belongs to.
+  function postUrlFor(v) {
+    if (!v || !/(^|\.)(instagram\.com|x\.com|twitter\.com|threads\.net|threads\.com)$/.test(location.hostname)) return null;
+    const own = /\/(p|reel|reels|status|post)\//.test(location.pathname) ? location.href : null;
+    const box = v.closest('article') || v.closest('[role="article"]') || v.parentElement?.closest('div[data-pressable-container]');
+    const a = box && [...box.querySelectorAll('a[href]')].find(l => /\/(p|reel|reels)\/[\w-]+|\/status\/\d+|\/post\/[\w-]+/.test(l.getAttribute('href')));
+    if (a) { try { return new URL(a.getAttribute('href'), location.href).href.replace(/\/(photo|video|analytics)\/\d+$/, ''); } catch {} }
+    return own;
   }
 
   function place(v) {

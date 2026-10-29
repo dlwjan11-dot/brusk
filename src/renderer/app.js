@@ -123,7 +123,7 @@ function selectedDownloads() { return S.downloads.filter(d => S.selected.has(d.i
 function progressHtml(d) {
   const pct = d.total ? Math.min(100, d.downloaded / d.total * 100) : 0;
   const cls = d.status === 'completed' ? 'done' : d.status === 'error' ? 'err' : d.status === 'seeding' ? 'seed' : ['paused', 'waiting', 'queued'].includes(d.status) ? 'paused' : '';
-  const indet = (ACTIVE.includes(d.status) && !d.total) || d.phase === 'merge' || d.phase === 'meta';
+  const indet = (ACTIVE.includes(d.status) && !d.total) || d.phase === 'merge' || d.phase === 'meta' || (d.kind === 'gallery' && ACTIVE.includes(d.status));
   const segs = d.kind === 'http' && d.total && d.segments?.length > 1 && d.status !== 'completed';
   let inner = `<i style="width:${d.status === 'completed' ? 100 : pct.toFixed(2)}%"></i>`;
   if (segs) {
@@ -136,6 +136,14 @@ function progressHtml(d) {
 }
 function metaHtml(d) {
   const parts = [];
+  if (d.kind === 'gallery') {
+    if (d.status !== 'error' || d.downloaded) parts.push(`<span>${esc(t('n_files', { n: d.downloaded || 0 }))}</span>` + (d.bytes ? `<span class="ltr"> · ${fmtSize(d.bytes)}</span>` : ''));
+    if (d.status === 'downloading') parts.push(`<span class="ltr">${fmtSpeed(d.speed)}</span>`);
+    if (d.gallery?.posts && !d.gallery.single) parts.push(`<span>${esc(t('g_last', { n: d.gallery.posts }))}</span>`);
+    if (d.status === 'error') parts.push(`<span class="err">${esc(errText(d.error))}</span>`);
+    if (d.status === 'completed' && d.completedAt) parts.push(`<span>${esc(fmtDate(d.completedAt))}</span>`);
+    return parts.join('<span class="dot"></span>');
+  }
   const sizeTxt = d.status === 'completed' ? fmtSize(d.total) : d.total ? `${fmtSize(d.downloaded)} / ${fmtSize(d.total)}` : d.downloaded ? fmtSize(d.downloaded) : '';
   if (d.phase === 'merge') parts.push(esc(t('ph_merge')));
   else if (d.phase === 'meta') parts.push(esc(t('ph_meta')));
@@ -155,7 +163,7 @@ function metaHtml(d) {
 }
 function rowHtml(d) {
   const st = d.status;
-  const main = st === 'completed' ? ['open', 'folder'] : st === 'seeding' ? ['folder'] : ['downloading', 'preparing', 'queued'].includes(st) ? ['pause'] : ['resume'];
+  const main = st === 'completed' ? (d.kind === 'gallery' ? ['folder'] : ['open', 'folder']) : st === 'seeding' ? ['folder'] : ['downloading', 'preparing', 'queued'].includes(st) ? ['pause'] : ['resume'];
   const btn = a => `<button class="ibtn" data-act="${a}" title="${esc(t(a === 'folder' ? 'open_folder' : a))}">${icon({ open: 'file', folder: 'folder', pause: 'pause', resume: 'play' }[a])}</button>`;
   return `
     <div class="ficon ${esc(d.category)}">${icon(CAT_ICON[d.category] || 'file')}</div>
@@ -439,7 +447,7 @@ class AddDialog {
       if (add.length) ta.value = (ta.value.trim() ? ta.value.trim() + '\n' : '') + add.join('\n');
       this.syncText();
     }
-    for (const it of items) this.addEntry({ url: it.url, captureId: it.captureId, from: 'browser', name: it.filename, size: it.size, hint: it.kind, hasCookies: it.hasCookies, pageTitle: it.pageTitle });
+    for (const it of items) this.addEntry({ url: it.url, captureId: it.captureId, from: 'browser', name: it.filename, size: it.size, hint: it.kind, hasCookies: it.hasCookies, pageTitle: it.pageTitle, preset: it.gallery });
     for (const f of torrentFiles) this.addEntry({ url: f, file: f, from: 'file' });
   }
 
@@ -473,6 +481,7 @@ class AddDialog {
     e.kind = info.kind; e.info = info;
     if (info.kind === 'http') { e.name = info.name || e.name; e.size = info.size ?? e.size; e.category = info.category; e.status = 'ready'; }
     else if (info.kind === 'ftp') { e.name = info.name; e.status = 'ready'; }
+    else if (info.kind === 'gallery') { e.name = info.name || info.url; e.status = 'ready'; e.posts = info.single ? 0 : (e.preset?.posts ?? S.settings.galleryPosts ?? 0); e.types = e.preset?.types || 'all'; e.category = 'images'; }
     else if (info.kind === 'video') {
       e.name = info.title; e.status = 'ready';
       e.quality = pickQuality(info.qualities, S.settings.videoQuality);
@@ -506,6 +515,8 @@ class AddDialog {
     if (f === 'name') e.name = ev.target.value;
     if (f === 'quality') e.quality = ev.target.value;
     if (f === 'subs') e.subs = ev.target.checked;
+    if (f === 'posts') e.posts = Number(ev.target.value) || 0;
+    if (f === 'types') e.types = ev.target.value;
     if (f === 'sel') { const i = Number(ev.target.value); ev.target.checked ? e.sel.add(i) : e.sel.delete(i); this.renderEntrySummary(e, box); }
     this.updateButtons();
   }
@@ -525,7 +536,7 @@ class AddDialog {
 
   entryHtml(e) {
     const kind = e.kind || (e.status === 'checking' ? null : 'http');
-    const cat = e.kind === 'video' || e.kind === 'playlist' ? 'video' : e.kind === 'torrent' ? 'torrents' : e.category || 'other';
+    const cat = e.kind === 'video' || e.kind === 'playlist' ? 'video' : e.kind === 'torrent' ? 'torrents' : e.kind === 'gallery' ? 'images' : e.category || 'other';
     let sub = '', opts = '';
     if (e.status === 'checking') {
       const tp = S.toolProgress;
@@ -535,6 +546,7 @@ class AddDialog {
     else if (e.status === 'error') sub = `<span class="badge err">${esc(t('err_link'))}</span><span>${esc(t('err_' + e.error) !== 'err_' + e.error ? t('err_' + e.error) : errText(e.error))}</span>`;
     else {
       sub = `<span class="badge ${kind}">${esc(t('k_' + kind))}</span>`;
+      if (e.kind === 'gallery') sub += `<span>${esc(e.info.single ? t('g_one_post') : t('g_page'))}</span>` + (e.hasCookies || S.settings.cookiesBrowser ? '' : `<span class="note">${esc(t('g_login_hint'))}</span>`);
       if (e.kind === 'http') sub += `<span class="ltr">${e.size != null ? fmtSize(e.size) : esc(t('size_unknown'))}</span>${e.info ? `<span>${esc(e.info.resumable ? t('resumable') : t('not_resumable'))}</span>` : ''}`;
       if (e.kind === 'video') sub += `${e.info.uploader ? `<span>${esc(e.info.uploader)}</span>` : ''}${e.info.duration ? `<span class="ltr">${fmtEta(e.info.duration)}</span>` : ''}`;
       if (e.kind === 'playlist') sub += `<span class="sum">${esc(t('videos_selected', { n: e.sel.size }))}</span>`;
@@ -542,6 +554,11 @@ class AddDialog {
       if (e.status === 'meta') sub += `<span class="spinner"></span><span>${esc(t('meta_wait'))}</span><span class="linkish" data-a="skip">${esc(t('meta_skip'))}</span>`;
       if (e.hasCookies) sub += `<span>· ${esc(t('with_cookies'))}</span>`;
       if (e.duplicate) sub += `<span class="badge err">${esc(t('duplicate'))}</span><span class="linkish" data-a="force">${esc(t('add_anyway'))}</span>`;
+    }
+    if (e.status === 'ready' && e.kind === 'gallery') {
+      const sel = (f, cur, list) => `<select data-f="${f}">${list.map(([v, l]) => `<option value="${v}" ${String(cur) === String(v) ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select>`;
+      opts = (e.info.single ? '' : `<label>${esc(t('g_posts'))} ${sel('posts', e.posts, [[0, t('g_all')], [12, '12'], [30, '30'], [100, '100'], [500, '500']])}</label>`) +
+        `<label>${esc(t('g_types'))} ${sel('types', e.types, [['all', t('g_both')], ['images', t('g_images')], ['videos', t('g_videos')]])}</label>`;
     }
     if (e.status === 'ready' && e.kind === 'video') {
       opts = `<label>${esc(t('quality'))} <select data-f="quality">${e.info.qualities.map(q => `<option value="${esc(q.id)}" ${q.id === e.quality ? 'selected' : ''}>${esc(q.label)}${q.size ? ' · ' + fmtSize(q.size) : ''}</option>`).join('')}</select></label>
@@ -601,6 +618,7 @@ class AddDialog {
       const base = { start, directory: dir, captureId: e.captureId, force: e.force };
       if (e.kind === 'http') items.push({ ...base, key: e.key, url: e.url, kind: 'http', filename: e.name, size: e.size, category: e.category });
       else if (e.kind === 'ftp') items.push({ ...base, key: e.key, url: e.url, kind: 'ftp', filename: e.name });
+      else if (e.kind === 'gallery') items.push({ ...base, key: e.key, url: e.url, kind: 'gallery', filename: e.name, gallery: { posts: e.posts, types: e.types } });
       else if (e.kind === 'video') {
         const q = e.info.qualities.find(x => x.id === e.quality);
         items.push({ ...base, key: e.key, url: e.url, kind: 'video', filename: e.name, size: q?.size || null, video: { quality: e.quality, title: e.name, subtitles: e.subs ? S.settings.subtitleLangs.split(/[,\s]+/).filter(Boolean) : [] } });
@@ -714,12 +732,13 @@ async function settingsPane(tab) {
       const st = await api.toolsStatus();
       const tool = (name, desc) => `<div class="tool"><div style="flex:1"><div class="tname">${name}${name === 'yt-dlp' && st.ytdlpVersion ? ` <span class="tdesc">${esc(st.ytdlpVersion)}</span>` : ''}</div><div class="tdesc">${esc(t(desc))}</div></div>
         <span class="tstate ${st[name] ? 'ok' : 'no'}">${esc(st[name] ? t('tool_ok') : t('tool_missing'))}</span>
-        <button class="btn sm" data-do="tool" data-tool="${name}">${esc(st[name] ? t('tool_update') : t('tool_install'))}</button></div>`;
+        ${name === 'gallery-dl' ? '' : `<button class="btn sm" data-do="tool" data-tool="${name}">${esc(st[name] ? t('tool_update') : t('tool_install'))}</button>`}</div>`;
       return [
         field(t('s_vquality'), `<select data-k="videoQuality">${['2160', '1440', '1080', '720', '480', '360'].map(q => `<option value="${q}" ${String(s.videoQuality) === q ? 'selected' : ''}>${q}p</option>`).join('')}</select>`),
         field(t('s_subs'), sw('subtitles', s.subtitles)),
         field(t('s_sublangs'), `<input type="text" data-k="subtitleLangs" value="${esc(s.subtitleLangs)}" style="min-width:140px;direction:ltr">`),
-        `<div class="field col"><div class="lbl"><b>${esc(t('s_tools'))}</b></div>${tool('yt-dlp', 'tool_desc_ytdlp')}${tool('ffmpeg', 'tool_desc_ffmpeg')}${tool('deno', 'tool_desc_deno')}${tool('aria2c', 'tool_desc_aria2c')}</div>`,
+        `<div class="field col"><div class="lbl"><b>${esc(t('s_tools'))}</b></div>${tool('yt-dlp', 'tool_desc_ytdlp')}${tool('ffmpeg', 'tool_desc_ffmpeg')}${tool('deno', 'tool_desc_deno')}${tool('gallery-dl', 'tool_desc_gallerydl')}${tool('aria2c', 'tool_desc_aria2c')}</div>`,
+        field(t('s_signin'), `<select data-k="cookiesBrowser">${[['', t('s_signin_none')], ['firefox', 'Firefox'], ['chrome', 'Chrome'], ['edge', 'Edge'], ['brave', 'Brave'], ['opera', 'Opera'], ...(api.platform === 'darwin' ? [['safari', 'Safari']] : [])].map(([v, l]) => `<option value="${v}" ${s.cookiesBrowser === v ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select>`, t('s_signin_hint')),
       ].join('');
     }
     case 'torrent': return [

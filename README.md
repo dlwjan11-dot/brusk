@@ -73,6 +73,12 @@
 - اختيار الجودة لحد 4K، أو صوت فقط بصيغة MP3 أو M4A.
 - قوائم تشغيل كاملة، وترجمة.
 
+**الصور والمنشورات**
+- صور إنستغرام، ووسائط فيسبوك و X و Threads و Pinterest و Reddit وغيرهم.
+- منشور واحد، أو كل منشورات صفحة كاملة، أو آخر عدد بتختاره.
+- صور بس، أو فيديو بس، أو الاتنين.
+- إنستغرام و X بيطلبوا تسجيل دخول: نزّل من إضافة المتصفح، أو اختار متصفحك من **الإعدادات ← الفيديو والصور**.
+
 **التورنت**
 - روابط magnet وملفات `.torrent`.
 - اختيار الملفات قبل ما يبلش التحميل.
@@ -159,6 +165,12 @@
 - هەر کوالیتییەک تا 4K، یان تەنها دەنگ بە MP3 یان M4A.
 - لیستی لێدانی تەواو، و ژێرنووس.
 
+**وێنە و پۆست**
+- وێنەکانی ئینستاگرام، و میدیای فەیسبووک و X و Threads و Pinterest و Reddit و هیتر.
+- یەک پۆست، یان هەموو پۆستەکانی پەڕەیەکی تەواو، یان ژمارەیەک کە خۆت هەڵیدەبژێریت.
+- تەنها وێنە، تەنها ڤیدیۆ، یان هەردووکیان.
+- ئینستاگرام و X پێویستیان بە چوونەژوورەوەیە: لە پاشکۆی وێبگەڕەوە بینێرە، یان لە **ڕێکخستنەکان ← ڤیدیۆ و وێنە** وێبگەڕەکەت هەڵبژێرە.
+
 **تۆرێنت**
 - بەستەری magnet و فایلی `.torrent`.
 - هەڵبژاردنی فایلەکان پێش دەستپێکردنی داگرتن.
@@ -243,6 +255,12 @@ Then click the Brusk icon in your browser, press **Connect**, and allow it in th
 - Any quality up to 4K, or audio only as MP3 or M4A.
 - Whole playlists, and subtitles.
 
+**Pictures and posts**
+- Instagram pictures, and media from Facebook, X, Threads, Pinterest, Reddit and more.
+- One post, every post on a page, or the latest number you choose.
+- Pictures only, video only, or both.
+- Instagram and X need a sign-in: send it from the browser extension, or pick your browser in **Settings → Video & pictures**.
+
 **Torrents**
 - Magnet links and `.torrent` files.
 - Choose which files you want before it starts.
@@ -286,7 +304,7 @@ npm run dist:mac   # بناء نسخة الماك · build for macOS (needs rcod
 | `android/` | تطبيق الأندرويد · Android app (Kotlin, Compose, youtubedl-android) |
 | `docs/` | الموقع · website |
 
-الأدوات المساعدة · Helper tools: [yt-dlp](https://github.com/yt-dlp/yt-dlp), [aria2](https://github.com/aria2/aria2), [FFmpeg](https://ffmpeg.org), [Deno](https://deno.com), [Electron](https://www.electronjs.org). كل أداة بتنفحص بـ SHA-256 قبل ما تنحفظ · Every tool is checked against its SHA-256 before it is kept.
+الأدوات المساعدة · Helper tools: [yt-dlp](https://github.com/yt-dlp/yt-dlp), [gallery-dl](https://github.com/mikf/gallery-dl), [aria2](https://github.com/aria2/aria2), [FFmpeg](https://ffmpeg.org), [Deno](https://deno.com), [Electron](https://www.electronjs.org). كل أداة بتنفحص بـ SHA-256 قبل ما تنحفظ · Every tool is checked against its SHA-256 before it is kept.
 
 ## الرخصة · License
 

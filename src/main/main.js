@@ -6,6 +6,7 @@ const { execFile } = require('child_process');
 const { Manager } = require('../core/manager');
 const { Tools } = require('../core/tools');
 const { ytdlpVersion, isVideoSite } = require('../core/video');
+const { isGallerySite } = require('../core/gallery');
 const { Bridge } = require('./bridge');
 const T = require('./strings');
 
@@ -119,11 +120,11 @@ function onBrowserAdd(items, { silent }) {
     const headers = {};
     if (i.referrer) headers.referer = i.referrer;
     if (i.userAgent) headers['user-agent'] = i.userAgent;
-    const kind = i.kind || (/^magnet:/i.test(i.url) ? 'torrent' : isVideoSite(i.url) ? 'video' : 'http');
+    const kind = i.kind || (/^magnet:/i.test(i.url) ? 'torrent' : isGallerySite(i.url) ? 'gallery' : isVideoSite(i.url) ? 'video' : 'http');
     if (kind === 'http' && i.cookies?.length) headers.cookie = cookieHeader(i.cookies);
-    pendingCaptures.set(id, { headers, cookies: kind === 'video' ? i.cookies : [] });
+    pendingCaptures.set(id, { headers, cookies: kind === 'video' || kind === 'gallery' ? i.cookies : [] });
     setTimeout(() => pendingCaptures.delete(id), 30 * 60_000);
-    return { url: i.url, captureId: id, filename: i.filename, size: i.size, kind, pageTitle: i.pageTitle, pageUrl: i.pageUrl, hasCookies: Boolean(i.cookies?.length) };
+    return { url: i.url, captureId: id, filename: i.filename, size: i.size, kind, gallery: i.gallery, pageTitle: i.pageTitle, pageUrl: i.pageUrl, hasCookies: Boolean(i.cookies?.length) };
   });
   if (silent) { for (const p of prepared) addItem({ ...p, start: 'now' }); return; }
   showWindow();

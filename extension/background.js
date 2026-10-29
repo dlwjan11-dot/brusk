@@ -152,7 +152,29 @@ chrome.tabs.onUpdated.addListener((tabId, info) => { if (info.status === 'loadin
 chrome.tabs.onRemoved.addListener(tabId => media.delete(tabId));
 
 /** Best thing to download for a page: the page itself on video sites, else the stream list, else the biggest file. */
+// Pictures and posts (gallery-dl in the app). Facebook/TikTok videos stay with the video downloader.
+const GALLERY_HOSTS = /(^|\.)(instagram\.com|x\.com|twitter\.com|threads\.net|threads\.com|bsky\.app|pinterest\.[a-z.]+|reddit\.com|tumblr\.com|flickr\.com|imgur\.com|deviantart\.com|artstation\.com|behance\.net)$/i;
+function isGallerySite(url) {
+  try {
+    const u = new URL(url); const host = u.hostname.replace(/^(www|m|mobile|old)\./, '');
+    if (/(^|\.)facebook\.com$/.test(host)) return !/\/(watch|videos?|reel|reels)\b/i.test(u.pathname) && !u.searchParams.has('v');
+    if (/(^|\.)tiktok\.com$/.test(host)) return /\/photo\//.test(u.pathname);
+    if (/(^|\.)reddit\.com$/.test(host)) return /\/(gallery|user|u|comments)\//.test(u.pathname);
+    return GALLERY_HOSTS.test(host);
+  } catch { return false; }
+}
+function profileOf(url) {
+  try {
+    const u = new URL(url); const parts = u.pathname.split('/').filter(Boolean);
+    if (/instagram\.com$/.test(u.hostname) && parts[0] && !/^(p|reel|reels|tv|explore|stories)$/.test(parts[0])) return `${u.origin}/${parts[0]}/`;
+    if (/(x|twitter)\.com$/.test(u.hostname) && parts[0] && !/^(i|home|explore|search|notifications|messages)$/.test(parts[0])) return `${u.origin}/${parts[0]}/media`;
+    return url;
+  } catch { return url; }
+}
+function isSinglePost(url) { return /\/(p|reel|reels|tv|status|post|photo|photos|pin|gallery|comments)\//i.test(url) || /fbid=/.test(url); }
+
 function bestFor(tabId, pageUrl, title) {
+  if (isGallerySite(pageUrl)) return { url: pageUrl, kind: 'gallery', pageTitle: title };
   if (isVideoSite(pageUrl)) return { url: pageUrl, kind: 'video', pageTitle: title };
   const list = media.get(tabId) || [];
   const stream = list.find(m => m.kind === 'list');
@@ -172,6 +194,8 @@ function buildMenus(lang) {
     chrome.contextMenus.create({ id: 'media', title: tr3(lang, 'تحميل هذا الملف بـ بروسك', 'Download this with Brusk', 'داگرتنی ئەم فایلە بە بروسک'), contexts: ['video', 'audio', 'image'] });
     chrome.contextMenus.create({ id: 'selection', title: tr3(lang, 'تحميل كل الروابط المحددة بـ بروسك', 'Download all selected links with Brusk', 'داگرتنی هەموو بەستەرە دیاریکراوەکان بە بروسک'), contexts: ['selection'] });
     chrome.contextMenus.create({ id: 'page', title: tr3(lang, 'تحميل فيديو هذه الصفحة بـ بروسك', "Download this page's video with Brusk", 'داگرتنی ڤیدیۆی ئەم پەڕەیە بە بروسک'), contexts: ['page'] });
+    chrome.contextMenus.create({ id: 'allposts', title: tr3(lang, 'تحميل كل منشورات هذه الصفحة بـ بروسك', 'Download every post on this page with Brusk', 'داگرتنی هەموو پۆستەکانی ئەم پەڕەیە بە بروسک'), contexts: ['page'],
+      documentUrlPatterns: ['*://*.instagram.com/*', '*://*.x.com/*', '*://*.twitter.com/*', '*://*.facebook.com/*', '*://*.threads.net/*', '*://*.threads.com/*', '*://bsky.app/*', '*://*.pinterest.com/*', '*://*.reddit.com/*', '*://*.tumblr.com/*', '*://*.flickr.com/*'] });
   });
 }
 chrome.runtime.onInstalled.addListener(async () => {
@@ -184,7 +208,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     if (info.menuItemId === 'link') await send([{ url: info.linkUrl, referrer: info.pageUrl, pageUrl: info.pageUrl }]);
     if (info.menuItemId === 'media') {
       const src = info.srcUrl;
-      if (!src || src.startsWith('blob:')) await send([bestFor(tab.id, info.frameUrl || info.pageUrl, tab.title)]);
+      if (!src || src.startsWith('blob:') || (isGallerySite(info.pageUrl) && info.mediaType !== 'image')) await send([bestFor(tab.id, info.frameUrl || info.pageUrl, tab.title)]);
       else await send([{ url: src, referrer: info.pageUrl, pageUrl: info.pageUrl, kind: info.mediaType === 'image' ? 'http' : undefined }]);
     }
     if (info.menuItemId === 'selection') {
@@ -192,6 +216,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
       if (links?.length) await send(links.map(url => ({ url, referrer: info.pageUrl, pageUrl: info.pageUrl })));
     }
     if (info.menuItemId === 'page') await send([bestFor(tab.id, info.pageUrl, tab.title)]);
+    if (info.menuItemId === 'allposts') await send([{ url: profileOf(info.pageUrl), kind: 'gallery', pageTitle: tab.title, gallery: { posts: 0, types: 'all' } }]);
   } catch (e) { notify(e.message); }
 });
 
@@ -216,7 +241,9 @@ async function handleMessage(msg, sender) {
     switch (msg.type) {
       case 'status': {
         const info = await ping(true);
-        return { running: Boolean(info), paired: Boolean(info?.paired), language: info?.language, capture: await enabled(), media: msg.tabId != null ? media.get(msg.tabId) || [] : [] };
+        const url = msg.tabUrl || '';
+        return { running: Boolean(info), paired: Boolean(info?.paired), language: info?.language, capture: await enabled(), media: msg.tabId != null ? media.get(msg.tabId) || [] : [],
+          gallery: isGallerySite(url) ? { single: isSinglePost(url), profile: profileOf(url) } : null };
       }
       case 'pair': return pair().then(() => ({ ok: true }), e => ({ ok: false, error: e.message }));
       case 'capture': await chrome.storage.local.set({ capture: Boolean(msg.on) }); return { ok: true };
@@ -227,6 +254,7 @@ async function handleMessage(msg, sender) {
         return send([bestFor(tabId, pageUrl, msg.title || sender.tab?.title)]).then(() => ({ ok: true }), e => { notify(e.message); return { ok: false, error: e.message }; });
       }
       case 'has-media': return { count: (media.get(sender.tab?.id) || []).length };
+      case 'send-gallery': return send([{ url: msg.url, kind: 'gallery', pageTitle: msg.title, gallery: msg.gallery }]).then(() => ({ ok: true }), e => ({ ok: false, error: e.message }));
     }
     return null;
   }

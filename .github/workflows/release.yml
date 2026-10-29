@@ -22,6 +22,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: '22', cache: npm }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: Build gallery-dl
+        run: set -o pipefail; python scripts/build-gallery-dl.py vendor/win 2>&1 | tee gdl.log
       - name: Build
         run: |
           set -o pipefail
@@ -34,7 +38,7 @@ jobs:
       - name: Save log
         if: always()
         env: { GH_TOKEN: '${{ github.token }}' }
-        run: scripts/ci-log.sh windows "${{ job.status }}" build.log
+        run: scripts/ci-log.sh windows "${{ job.status }}" build.log gdl.log
 
   mac:
     if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[release]')
@@ -43,6 +47,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: '22', cache: npm }
+      # Intel Python (runs through Rosetta) so one gallery-dl works on every Mac
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12', architecture: x64 }
+      - name: Build gallery-dl
+        run: set -o pipefail; python scripts/build-gallery-dl.py vendor/mac 2>&1 | tee gdl.log
       - name: Build
         env: { CSC_IDENTITY_AUTO_DISCOVERY: 'false' }
         run: |
@@ -67,7 +76,7 @@ jobs:
       - name: Save log
         if: always()
         env: { GH_TOKEN: '${{ github.token }}' }
-        run: scripts/ci-log.sh mac "${{ job.status }}" build.log
+        run: scripts/ci-log.sh mac "${{ job.status }}" build.log gdl.log
 
   android:
     if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[release]')
