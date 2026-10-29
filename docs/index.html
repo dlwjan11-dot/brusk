@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>برق — مدير تحميل سريع</title>
+<meta name="description" content="برق: مدير تحميل مجاني لـ Windows و macOS. تحميل على عدة اتصالات، استكمال، فيديو يوتيوب، تورنت، وإضافة للمتصفح.">
+<meta property="og:title" content="برق — Barq Download Manager">
+<meta property="og:description" content="مدير تحميل مجاني وسريع لـ Windows و macOS، بالعربي والإنجليزي.">
+<meta property="og:image" content="https://dlwjan11-dot.github.io/barq/img/main-ar.jpg">
+<link rel="icon" href="img/favicon.png">
+<style>
+  :root {
+    --bg: #f6f7fb; --panel: #fff; --line: #e3e6ee; --text: #171b26; --text-2: #5b6275; --text-3: #8d94a6;
+    --accent: #2f6bff; --accent-2: #1d55e0; --accent-soft: #e6eeff; --bolt: #f5b301; --ok: #18a058;
+    --hero-1: #0f1a3d; --hero-2: #1d3fa8;
+    --font: "Segoe UI", -apple-system, "SF Arabic", "Noto Sans Arabic", Tahoma, system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #0f1115; --panel: #161920; --line: #262b36; --text: #e8eaf0; --text-2: #a2a9b8; --text-3: #6f7686; --accent-soft: #1b2645; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.65 var(--font); }
+  a { color: var(--accent); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+  .bolt { fill: var(--bolt); }
+
+  header.hero { background: radial-gradient(120% 90% at 80% 0%, var(--hero-2), var(--hero-1)); color: #fff; padding: 22px 0 70px; overflow: hidden; }
+  nav.top { display: flex; align-items: center; gap: 12px; }
+  nav.top .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 19px; }
+  nav.top .brand img { width: 34px; height: 34px; border-radius: 9px; }
+  nav.top .sp { flex: 1; }
+  nav.top a.l, nav.top button { color: #dfe7ff; text-decoration: none; font-size: 14.5px; background: none; border: 1px solid rgba(255,255,255,.25); border-radius: 8px; padding: 6px 12px; cursor: pointer; font-family: inherit; }
+  nav.top a.l:hover, nav.top button:hover { background: rgba(255,255,255,.1); }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: 40px; align-items: center; margin-top: 54px; }
+  .hero h1 { font-size: 46px; line-height: 1.2; margin: 0 0 14px; }
+  .hero h1 span { color: #ffd24a; }
+  .hero p.lead { font-size: 18.5px; color: #cdd8ff; margin: 0 0 28px; max-width: 460px; }
+  .dl-main { display: inline-flex; align-items: center; gap: 10px; background: #fff; color: #1847c2; font-weight: 700; font-size: 17px; text-decoration: none; padding: 14px 24px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+  .dl-main:hover { transform: translateY(-1px); }
+  .dl-main svg { width: 20px; height: 20px; }
+  .hero small { display: block; margin-top: 12px; color: #a9b8ea; font-size: 13.5px; }
+  .hero small a { color: #fff; }
+  .shot { border-radius: 14px; box-shadow: 0 30px 70px rgba(0,0,0,.45); width: 100%; display: block; border: 1px solid rgba(255,255,255,.15); }
+
+  section { padding: 64px 0; }
+  h2 { font-size: 30px; margin: 0 0 8px; }
+  .sub { color: var(--text-2); margin: 0 0 32px; }
+  .downloads { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+  .card.rec { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .card h3 { margin: 0 0 4px; font-size: 19px; display: flex; align-items: center; gap: 8px; }
+  .card h3 svg { width: 22px; height: 22px; fill: currentColor; }
+  .card .meta { color: var(--text-3); font-size: 13.5px; margin-bottom: 16px; }
+  .btn { display: flex; justify-content: space-between; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; font-size: 14.5px; padding: 10px 14px; border-radius: 9px; background: var(--accent); color: #fff; margin-top: 8px; }
+  .btn:hover { background: var(--accent-2); }
+  .btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+  .btn.ghost:hover { background: var(--accent-soft); }
+  .btn span.s { font-weight: 400; opacity: .75; font-size: 12.5px; direction: ltr; unicode-bidi: isolate; }
+  .tag { font-size: 11.5px; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 20px; margin-inline-start: auto; }
+
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .feat { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+  .feat .ico { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-soft); display: grid; place-items: center; margin-bottom: 12px; }
+  .feat .ico svg { width: 21px; height: 21px; fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .feat h3 { margin: 0 0 6px; font-size: 17px; }
+  .feat p { margin: 0; color: var(--text-2); font-size: 14.5px; }
+
+  .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .gallery figure { margin: 0; }
+  .gallery img { width: 100%; border-radius: 12px; border: 1px solid var(--line); display: block; }
+  .gallery figcaption { color: var(--text-2); font-size: 14px; margin-top: 8px; text-align: center; }
+
+  .steps { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .steps .card ol { margin: 8px 0 0; padding-inline-start: 22px; color: var(--text-2); }
+  .steps .card li { margin: 6px 0; }
+  code { font-family: Consolas, Menlo, monospace; background: var(--accent-soft); color: var(--text); padding: 2px 7px; border-radius: 6px; font-size: 13.5px; direction: ltr; unicode-bidi: isolate; display: inline-block; }
+  .alt { background: var(--panel); border-block: 1px solid var(--line); }
+  footer { padding: 30px 0; color: var(--text-3); font-size: 14px; text-align: center; }
+
+  [data-lang="en"] .ar, [data-lang="ar"] .en { display: none !important; }
+
+  @media (max-width: 860px) {
+    .hero-grid, .downloads, .features, .gallery, .steps { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 36px; }
+    nav.top a.l.hide-sm { display: none; }
+  }
+</style>
+</head>
+<body data-lang="ar">
+<header class="hero">
+  <div class="wrap">
+    <nav class="top">
+      <div class="brand"><img src="img/icon.png" alt=""><span class="ar">برق</span><span class="en">Barq</span></div>
+      <span class="sp"></span>
+      <a class="l hide-sm" href="#download"><span class="ar">تنزيل</span><span class="en">Download</span></a>
+      <a class="l hide-sm" href="https://github.com/dlwjan11-dot/barq">GitHub</a>
+      <button id="lang" type="button">English</button>
+    </nav>
+    <div class="hero-grid">
+      <div>
+        <h1 class="ar">نزّل أسرع،<br>بـ <span>برق</span></h1>
+        <h1 class="en">Download faster<br>with <span>Barq</span></h1>
+        <p class="lead ar">مدير تحميل مجاني لـ Windows و macOS. بيقسم الملف على عدة اتصالات، بيكمّل من وين وقف، وبينزّل فيديوهات يوتيوب والتورنت، والتقاط مباشر من المتصفح.</p>
+        <p class="lead en">A free download manager for Windows and macOS. Several connections per file, resume where it stopped, YouTube videos, torrents, and one-click capture from your browser.</p>
+        <a class="dl-main" id="dl-main" href="#download">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12m0 0-5-5m5 5 5-5M5 20h14"/></svg>
+          <span id="dl-main-text" class="ar">تنزيل برق</span><span class="en" id="dl-main-text-en">Download Barq</span>
+        </a>
+        <small><span class="ar">مجاني ومفتوح المصدر · بدون إعلانات · عربي وإنجليزي</span><span class="en">Free and open source · No ads · Arabic and English</span></small>
+      </div>
+      <img class="shot" src="img/main-ar.jpg" alt="Barq">
+    </div>
+  </div>
+</header>
+
+<section id="download">
+  <div class="wrap">
+    <h2><span class="ar">التنزيل</span><span class="en">Download</span></h2>
+    <p class="sub"><span class="ar">اختار نظام جهازك، وبعدين ركّب الإضافة لمتصفحك.</span><span class="en">Pick your system, then add the extension to your browser.</span></p>
+    <div class="downloads">
+      <div class="card" data-os="win">
+        <h3><svg viewBox="0 0 24 24"><path d="M3 5.5 10 4.5v7H3v-6Zm8-1.1L21 3v8.5H11V4.4ZM3 12.5h7v7l-7-1v-6Zm8 0h10V21l-10-1.4v-7.1Z"/></svg>Windows<span class="tag ar" hidden>جهازك</span><span class="tag en" hidden>Your system</span></h3>
+        <div class="meta">Windows 10 / 11 · 64-bit</div>
+        <a class="btn" href="https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Setup-Windows.exe"><span class="ar">برنامج التنصيب</span><span class="en">Installer</span><span class="s">.exe</span></a>
+      </div>
+      <div class="card" data-os="mac">
+        <h3><svg viewBox="0 0 24 24"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7a4.6 4.6 0 0 0-3.6-2c-1.5-.2-3 .9-3.7.9-.8 0-2-.9-3.2-.8A4.8 4.8 0 0 0 4 9.4c-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8s1.9.8 3.2.8c1.3 0 2.1-1.2 2.9-2.4a10 10 0 0 0 1.3-2.7 4.2 4.2 0 0 1-2.3-3.9ZM14 5.4a4.3 4.3 0 0 0 1-3.1 4.4 4.4 0 0 0-2.9 1.5 4.1 4.1 0 0 0-1 3 3.6 3.6 0 0 0 2.9-1.4Z"/></svg>macOS<span class="tag ar" hidden>جهازك</span><span class="tag en" hidden>Your system</span></h3>
+        <div class="meta">macOS 12 <span class="ar">أو أحدث</span><span class="en">or newer</span></div>
+        <a class="btn" href="https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Mac-AppleSilicon.zip">Apple Silicon (M1–M4)<span class="s">.zip</span></a>
+        <a class="btn ghost" href="https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Mac-Intel.zip">Intel<span class="s">.zip</span></a>
+      </div>
+      <div class="card">
+        <h3><svg viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:1.9;stroke-linejoin:round"><path d="M10 4a2 2 0 1 1 4 0v2h4v4h-2a2 2 0 1 0 0 4h2v4h-4v-2a2 2 0 1 0-4 0v2H6v-4h2a2 2 0 1 0 0-4H6V6h4V4Z"/></svg><span class="ar">إضافة المتصفح</span><span class="en">Browser extension</span></h3>
+        <div class="meta">Firefox · Chrome · Edge · Brave</div>
+        <a class="btn" href="https://addons.mozilla.org/firefox/addon/barq-download-manager/">Firefox<span class="s">addons.mozilla.org</span></a>
+        <a class="btn ghost" href="https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Chrome-Extension.zip">Chrome / Edge<span class="s">.zip</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <h2><span class="ar">كل شي بتحتاجه</span><span class="en">Everything you need</span></h2>
+    <p class="sub"><span class="ar">جمعنا أحسن ميزات مدراء التحميل وصلّحنا مشاكلهم.</span><span class="en">The best of download managers, with their problems fixed.</span></p>
+    <div class="features">
+      <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z"/></svg></div>
+        <h3><span class="ar">تقسيم ذكي</span><span class="en">Smart splitting</span></h3>
+        <p class="ar">حتى 32 اتصال للملف. الاتصال يلي بيخلص بياخد نص أكبر جزء باقي، فالسرعة بتضل عالية للآخر.</p>
+        <p class="en">Up to 32 connections per file. A finished connection takes half of the biggest part left, so speed stays high to the end.</p></div>
+      <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.9-3M4 4v4h4M4 13a8 8 0 0 0 14.9 3M20 20v-4h-4"/></svg></div>
+        <h3><span class="ar">استكمال بعد أي شي</span><span class="en">Resume after anything</span></h3>
+        <p class="ar">انقطع النت أو سكّرت الجهاز؟ برق بيكمّل من نفس النقطة، وبيعيد المحاولة لحاله.</p>
+        <p class="en">Lost the connection or shut down? Barq picks up at the same byte and retries by itself.</p></div>
+      <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg></div>
+        <h3><span class="ar">يوتيوب ومواقع الفيديو</span><span class="en">YouTube and video sites</span></h3>
+        <p class="ar">اختار الجودة لحد 4K، أو صوت فقط MP3، قوائم تشغيل كاملة، وترجمة.</p>
+        <p class="en">Pick any quality up to 4K, audio-only MP3, whole playlists, and subtitles.</p></div>
+      <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M6 3v8a6 6 0 0 0 12 0V3h-4v8a2 2 0 0 1-4 0V3H6ZM6 7h4M14 7h4"/></svg></div>
+        <h3><span class="ar">تورنت و magnet</span><span class="en">Torrents and magnet</span></h3>
+        <p class="ar">اختار الملفات يلي بدك ياها قبل ما يبلش، مع حد سرعة الرفع ونسبة المشاركة.</p>
+        <p class="en">Choose which files you want before it starts, with upload limits and share ratio.</p></div>
+      <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <h3><span class="ar">جدولة وحد سرعة</span><span class="en">Scheduler and speed limit</span></h3>
+        <p class="ar">نزّل بالليل، وطفي الجهاز لما يخلص. حد سرعة عام أو لكل ملف.</p>
+        <p class="en">Download at night and shut down when done. Limit speed overall or per file.</p></div>
+      <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 5h12M9 3v2c0 4-2 7-6 9M5 9c0 2.5 3 5 7 6M13 21l4-10 4 10M14.5 17h5"/></svg></div>
+        <h3><span class="ar">عربي من اليمين لليسار</span><span class="en">Arabic, right to left</span></h3>
+        <p class="ar">واجهة عربية كاملة وإنجليزية، مع الوضع الفاتح والداكن.</p>
+        <p class="en">A complete Arabic and English interface, in light and dark.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="ar">لقطات</span><span class="en">Screenshots</span></h2>
+    <p class="sub"></p>
+    <div class="gallery">
+      <figure><img src="img/add-ar.jpg" alt="" loading="lazy"><figcaption><span class="ar">الصق عدة روابط مرة وحدة، وبرق بيفحصها</span><span class="en">Paste several links; Barq checks each one</span></figcaption></figure>
+      <figure><img src="img/main-en-dark.jpg" alt="" loading="lazy"><figcaption><span class="ar">الوضع الداكن بالإنجليزي، مع خريطة الاتصالات</span><span class="en">Dark mode in English, with the connection map</span></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="install">
+  <div class="wrap">
+    <h2><span class="ar">التركيب</span><span class="en">Installing</span></h2>
+    <p class="sub"><span class="ar">البرنامج مجاني وغير موقّع من Microsoft أو Apple، فأول مرة بيطلع تحذير. هيك بتتجاوزه:</span><span class="en">Barq is free and not signed by Microsoft or Apple, so the first launch shows a warning. Here is how to get past it:</span></p>
+    <div class="steps">
+      <div class="card"><h3>Windows</h3>
+        <ol class="ar"><li>شغّل <code>Barq-Setup-Windows.exe</code>.</li><li>إذا طلعت شاشة زرقا "Windows protected your PC"، اضغط <b>More info</b> وبعدين <b>Run anyway</b>.</li><li>كمّل التنصيب عادي.</li></ol>
+        <ol class="en"><li>Run <code>Barq-Setup-Windows.exe</code>.</li><li>If a blue "Windows protected your PC" screen appears, click <b>More info</b>, then <b>Run anyway</b>.</li><li>Finish the installer.</li></ol>
+      </div>
+      <div class="card"><h3>macOS</h3>
+        <ol class="ar"><li>فكّ الضغط واسحب <b>Barq</b> لمجلد Applications.</li><li>افتح Terminal والصق: <code>xattr -cr /Applications/Barq.app</code></li><li>افتح برق. (أو: System Settings ← Privacy &amp; Security ← <b>Open Anyway</b>)</li></ol>
+        <ol class="en"><li>Unzip and drag <b>Barq</b> into Applications.</li><li>Open Terminal and paste: <code>xattr -cr /Applications/Barq.app</code></li><li>Open Barq. (Or: System Settings → Privacy &amp; Security → <b>Open Anyway</b>)</li></ol>
+      </div>
+      <div class="card"><h3>Firefox</h3>
+        <ol class="ar"><li>ركّب الإضافة من صفحة Firefox Add-ons.</li><li>اضغط أيقونة برق ثم <b>ربط</b>، ووافق بنافذة البرنامج.</li></ol>
+        <ol class="en"><li>Install the add-on from Firefox Add-ons.</li><li>Click the Barq icon, then <b>Connect</b>, and allow it in the app.</li></ol>
+      </div>
+      <div class="card"><h3>Chrome / Edge / Brave</h3>
+        <ol class="ar"><li>فكّ ضغط <code>Barq-Chrome-Extension.zip</code>.</li><li>افتح <code>chrome://extensions</code> وفعّل <b>Developer mode</b>.</li><li>اضغط <b>Load unpacked</b> واختار المجلد، ثم <b>ربط</b>.</li></ol>
+        <ol class="en"><li>Unzip <code>Barq-Chrome-Extension.zip</code>.</li><li>Open <code>chrome://extensions</code> and turn on <b>Developer mode</b>.</li><li>Click <b>Load unpacked</b>, pick the folder, then <b>Connect</b>.</li></ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="ar">برق · من صنع <a href="https://abdulmedia.com">Abdulmedia</a> · مفتوح المصدر على <a href="https://github.com/dlwjan11-dot/barq">GitHub</a> · نزّل فقط المحتوى المسموح لك بتنزيله.</span>
+    <span class="en">Barq · made by <a href="https://abdulmedia.com">Abdulmedia</a> · open source on <a href="https://github.com/dlwjan11-dot/barq">GitHub</a> · Only download content you have the right to.</span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var body = document.body, btn = document.getElementById('lang');
+    function setLang(l) {
+      body.dataset.lang = l;
+      document.documentElement.lang = l;
+      document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+      btn.textContent = l === 'ar' ? 'English' : 'العربية';
+      document.title = l === 'ar' ? 'برق — مدير تحميل سريع' : 'Barq — fast download manager';
+      try { localStorage.setItem('barq-lang', l); } catch (e) {}
+    }
+    var saved = null;
+    try { saved = localStorage.getItem('barq-lang'); } catch (e) {}
+    setLang(saved || (/^ar/.test(navigator.language || '') ? 'ar' : (navigator.language ? 'en' : 'ar')));
+    btn.onclick = function () { setLang(body.dataset.lang === 'ar' ? 'en' : 'ar'); };
+
+    // Point the big button at the right file for this computer.
+    var ua = navigator.userAgent, os = /Windows/.test(ua) ? 'win' : /Macintosh|Mac OS X/.test(ua) ? 'mac' : null;
+    var main = document.getElementById('dl-main');
+    if (os) {
+      var card = document.querySelector('[data-os="' + os + '"]');
+      card.classList.add('rec');
+      card.querySelectorAll('.tag').forEach(function (t) { t.hidden = false; });
+      main.href = card.querySelector('a.btn').href;
+      document.getElementById('dl-main-text').textContent = os === 'win' ? 'تنزيل لـ Windows' : 'تنزيل للماك';
+      document.getElementById('dl-main-text-en').textContent = os === 'win' ? 'Download for Windows' : 'Download for Mac';
+    }
+  })();
+</script>
+</body>
+</html>

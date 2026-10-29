@@ -1,0 +1,145 @@
+{
+  "name": "barq",
+  "productName": "Barq",
+  "version": "1.0.3",
+  "description": "Barq - fast download manager for Windows and macOS (multi-connection, video, torrents, browser capture)",
+  "main": "src/main/main.js",
+  "author": "Abdulrahman (Abdulmedia)",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.js",
+    "fetch-tools": "node scripts/fetch-tools.js",
+    "dist": "node scripts/fetch-tools.js && electron-builder --win --x64",
+    "dist:mac": "node scripts/fetch-tools.js mac && electron-builder --mac && node scripts/sign-mac.js"
+  },
+  "dependencies": {
+    "undici": "^8.12.3"
+  },
+  "devDependencies": {
+    "electron": "45.1.0",
+    "electron-builder": "^26.18.0"
+  },
+  "build": {
+    "appId": "com.abdulmedia.barq",
+    "productName": "Barq",
+    "copyright": "Abdulmedia",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "asar": true,
+    "protocols": [
+      {
+        "name": "Magnet link",
+        "schemes": [
+          "magnet"
+        ]
+      }
+    ],
+    "fileAssociations": [
+      {
+        "ext": "torrent",
+        "name": "Torrent file",
+        "description": "BitTorrent file"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico",
+      "artifactName": "Barq-${version}-portable.${ext}",
+      "signExecutable": false,
+      "extraResources": [
+        {
+          "from": "vendor/win",
+          "to": "tools",
+          "filter": [
+            "**/*"
+          ]
+        },
+        {
+          "from": "extension",
+          "to": "extension",
+          "filter": [
+            "**/*"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Barq",
+      "artifactName": "Barq-Setup-${version}.${ext}",
+      "installerLanguages": [
+        "ar_SA",
+        "en_US"
+      ],
+      "language": "1025"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "zip",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon-mac.png",
+      "category": "public.app-category.utilities",
+      "artifactName": "Barq-${version}-mac-${arch}.${ext}",
+      "identity": null,
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false,
+      "darkModeSupport": true,
+      "minimumSystemVersion": "12.0",
+      "extraResources": [
+        {
+          "from": "vendor/mac",
+          "to": "tools",
+          "filter": [
+            "**/*"
+          ]
+        },
+        {
+          "from": "extension",
+          "to": "extension",
+          "filter": [
+            "**/*"
+          ]
+        }
+      ],
+      "extendInfo": {
+        "NSDownloadsFolderUsageDescription": "Barq saves your downloads here.",
+        "LSMultipleInstancesProhibited": true
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dlwjan11-dot/barq.git"
+  }
+}
