@@ -205,7 +205,7 @@ function ipc() {
   h('add', items => items.map(i => addItem(i)));
   h('control', (id, action, opts) => manager.control(id, action, opts));
   h('bulk', (action, ids) => manager.bulk(action, ids));
-  h('open', async id => { const d = manager.find(id); if (d?.path && fs.existsSync(d.path)) return shell.openPath(d.path); return 'missing'; });
+  h('open', async id => { const d = manager.find(id); const f = d?.kind === 'gallery' && d.textFile ? d.textFile : d?.path; if (f && fs.existsSync(f)) return shell.openPath(f); return 'missing'; });
   h('reveal', id => { const d = manager.find(id); if (d?.path && fs.existsSync(d.path)) shell.showItemInFolder(d.path); else if (d?.directory) shell.openPath(d.directory); });
   h('openFolder', dir => shell.openPath(dir || manager.settings.downloadDir));
   h('chooseFolder', async def => { const r = await dialog.showOpenDialog(win, { defaultPath: def, properties: ['openDirectory', 'createDirectory'] }); return r.canceled ? null : r.filePaths[0]; });

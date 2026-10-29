@@ -77,6 +77,7 @@
 - صور إنستغرام، ووسائط فيسبوك و X و Threads و Pinterest و Reddit وغيرهم.
 - منشور واحد، أو كل منشورات صفحة كاملة، أو آخر عدد بتختاره.
 - صور بس، أو فيديو بس، أو الاتنين.
+- نصوص المنشورات (الكابشن، التاريخ، الرابط) بملف `posts.txt` وملف `posts.csv` بيفتح بإكسل، مع الصور أو النصوص بس.
 - إنستغرام و X بيطلبوا تسجيل دخول: نزّل من إضافة المتصفح، أو اختار متصفحك من **الإعدادات ← الفيديو والصور**.
 
 **التورنت**
@@ -169,6 +170,7 @@
 - وێنەکانی ئینستاگرام، و میدیای فەیسبووک و X و Threads و Pinterest و Reddit و هیتر.
 - یەک پۆست، یان هەموو پۆستەکانی پەڕەیەکی تەواو، یان ژمارەیەک کە خۆت هەڵیدەبژێریت.
 - تەنها وێنە، تەنها ڤیدیۆ، یان هەردووکیان.
+- دەقی پۆستەکان (کاپشن، بەروار، بەستەر) لە فایلی `posts.txt` و `posts.csv` کە بە Excel دەکرێتەوە، لەگەڵ وێنەکان یان تەنها دەق.
 - ئینستاگرام و X پێویستیان بە چوونەژوورەوەیە: لە پاشکۆی وێبگەڕەوە بینێرە، یان لە **ڕێکخستنەکان ← ڤیدیۆ و وێنە** وێبگەڕەکەت هەڵبژێرە.
 
 **تۆرێنت**
@@ -259,6 +261,7 @@ Then click the Brusk icon in your browser, press **Connect**, and allow it in th
 - Instagram pictures, and media from Facebook, X, Threads, Pinterest, Reddit and more.
 - One post, every post on a page, or the latest number you choose.
 - Pictures only, video only, or both.
+- Post texts (caption, date, link) saved as `posts.txt` and a `posts.csv` that opens in Excel, with the media or texts only.
 - Instagram and X need a sign-in: send it from the browser extension, or pick your browser in **Settings → Video & pictures**.
 
 **Torrents**

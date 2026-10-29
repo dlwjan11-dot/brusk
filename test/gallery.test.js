@@ -56,3 +56,47 @@ test('a gallery job downloads every file, and a second run skips what is there',
   assert.equal(d3.status, 'error');
   await m.shutdown(); srv.close();
 });
+
+test('post texts become posts.txt and posts.csv, merged across runs', async () => {
+  const { postInfo, writePosts } = require('../src/core/gallery');
+  const ig = postInfo({ category: 'instagram', post_shortcode: 'C1abc', username: 'natgeo', description: 'صورة من الصحراء\n#nature', date: '2024-05-01 10:20:30' });
+  assert.deepEqual(ig, { key: 'instagram:C1abc', date: '2024-05-01 10:20', author: '@natgeo', url: 'https://www.instagram.com/p/C1abc/', text: 'صورة من الصحراء\n#nature' });
+  const tw = postInfo({ category: 'twitter', tweet_id: 99, author: { name: 'nasa' }, content: 'Launch, "today"', date: '2024-06-01 08:00:00' });
+  assert.equal(tw.url, 'https://x.com/nasa/status/99');
+  const rd = postInfo({ category: 'reddit', id: 'x1', title: 'Title', selftext: 'Body', permalink: '/r/a/comments/x1/t/' });
+  assert.equal(rd.text, 'Title\n\nBody'); assert.equal(rd.url, 'https://www.reddit.com/r/a/comments/x1/t/');
+  assert.equal(postInfo({ category: 'tumblr', id: 5, body: '<p>Hi &amp; bye</p>' }).text, 'Hi & bye');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'brusk-posts-'));
+  await writePosts(dir, [ig]);
+  const f = await writePosts(dir, [tw, { ...ig, text: 'edited' }]);
+  const txt = fs.readFileSync(f, 'utf8');
+  assert.ok(txt.indexOf('nasa') < txt.indexOf('natgeo'), 'newest first');
+  assert.ok(txt.includes('edited') && !txt.includes('الصحراء'));
+  const csv = fs.readFileSync(path.join(dir, 'posts.csv'), 'utf8');
+  assert.ok(csv.startsWith('﻿date,author,link,text'));
+  assert.ok(csv.includes('"Launch, ""today"""'));
+  assert.equal(csv.trim().split('\r\n').length, 3);
+});
+
+test('texts only does not download files or mark them done', { skip: !has }, async () => {
+  const PNG = fs.readFileSync(path.join(__dirname, '..', 'assets', 'tray.png'));
+  const srv = http.createServer((req, res) => { res.writeHead(200, { 'content-type': 'image/png', 'content-length': PNG.length }); res.end(PNG); });
+  await new Promise(r => srv.listen(0, '127.0.0.1', r));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'brusk-gdl-'));
+  const m = new Manager({ dataDir: path.join(dir, 'data'), tools: new Tools(null, path.join(dir, 'tools')) });
+  await m.init();
+  await m.updateSettings({ downloadDir: path.join(dir, 'dl'), categoryFolders: true });
+  const wait = id => new Promise((resolve, reject) => {
+    const t = setTimeout(() => reject(new Error('timeout')), 60000);
+    const c = () => { const d = m.find(id); if (['completed', 'error'].includes(d.status)) { clearTimeout(t); m.off('changed', c); resolve(d); } };
+    m.on('changed', c); c();
+  });
+  const url = `http://127.0.0.1:${srv.address().port}/pic.png`;
+  const a = await wait(m.add({ url, kind: 'gallery', gallery: { text: 'only' } }).id);
+  assert.equal(a.status, 'error');            // a bare picture link has no post text
+  assert.equal(a.error, 'NOTHING_FOUND');
+  const b = await wait(m.add({ url, kind: 'gallery', force: true, gallery: { text: 'with' } }).id);
+  assert.equal(b.status, 'completed', b.error);
+  assert.equal(b.downloaded, 1, 'the picture was not marked as done by the texts-only run');
+  await m.shutdown(); srv.close();
+});

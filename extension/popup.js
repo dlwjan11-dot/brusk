@@ -5,21 +5,21 @@ const T = {
     off_text: 'افتح برنامج بروسك على الكمبيوتر، ثم أعد فتح هذه النافذة.',
     pair_text: 'اربط الإضافة ببرنامج بروسك مرة وحدة، وبعدها كل التحميلات بتروح لبروسك.', pair: 'ربط', pairing: 'وافق على الطلب بنافذة بروسك…', denied: 'تم رفض الربط',
     capture: 'التقاط التحميلات من المتصفح', capture_hint: 'الملفات بالأنواع المحددة بإعدادات بروسك',
-    page_video: 'تحميل فيديو هذه الصفحة', sent: 'أُرسل إلى بروسك ✓', found: 'ملفات وسائط بهذه الصفحة', none: 'ما لقينا فيديو بهذه الصفحة بعد. شغّل الفيديو وارجع.', get: 'تحميل', stream: 'بث', g_title: 'صور ومنشورات', g_post: 'تحميل هذا المنشور', g_all: 'تحميل كل منشورات الصفحة', g_hint: 'صور وفيديو، مع تسجيل دخولك بالمتصفح',
+    page_video: 'تحميل فيديو هذه الصفحة', sent: 'أُرسل إلى بروسك ✓', found: 'ملفات وسائط بهذه الصفحة', none: 'ما لقينا فيديو بهذه الصفحة بعد. شغّل الفيديو وارجع.', get: 'تحميل', stream: 'بث', g_title: 'صور ومنشورات', g_post: 'تحميل هذا المنشور', g_all: 'تحميل كل منشورات الصفحة', g_hint: 'صور وفيديو، مع تسجيل دخولك بالمتصفح', g_with_text: 'مع نصوص المنشورات (ملف txt و csv)', g_text_only: 'نصوص منشورات الصفحة بس',
   },
   en: {
     title: 'Brusk', ok: 'Connected', off: 'Not running', warn: 'Not connected',
     off_text: 'Open the Brusk app on this computer, then open this window again.',
     pair_text: 'Connect the extension to Brusk once; after that your downloads go to Brusk.', pair: 'Connect', pairing: 'Allow the request in the Brusk window…', denied: 'Connection was refused',
     capture: 'Take over browser downloads', capture_hint: 'Files of the types set in Brusk settings',
-    page_video: "Download this page's video", sent: 'Sent to Brusk ✓', found: 'Media on this page', none: 'No video found on this page yet. Play the video and come back.', get: 'Get', stream: 'stream', g_title: 'Pictures & posts', g_post: 'Download this post', g_all: 'Download every post on this page', g_hint: 'Pictures and video, with your browser sign-in',
+    page_video: "Download this page's video", sent: 'Sent to Brusk ✓', found: 'Media on this page', none: 'No video found on this page yet. Play the video and come back.', get: 'Get', stream: 'stream', g_title: 'Pictures & posts', g_post: 'Download this post', g_all: 'Download every post on this page', g_hint: 'Pictures and video, with your browser sign-in', g_with_text: 'With the post texts (txt and csv file)', g_text_only: 'Only the texts of the posts on this page',
   },
   ckb: {
     title: 'بروسک', ok: 'پەیوەستە', off: 'کراوە نییە', warn: 'پەیوەست نەکراوە',
     off_text: 'بەرنامەی بروسک لەسەر کۆمپیوتەرەکە بکەرەوە، پاشان ئەم پەنجەرەیە دووبارە بکەرەوە.',
     pair_text: 'یەک جار پاشکۆکە بە بەرنامەی بروسکەوە پەیوەست بکە، دوای ئەوە هەموو داگرتنەکان دەچن بۆ بروسک.', pair: 'پەیوەستکردن', pairing: 'لە پەنجەرەی بروسک داواکارییەکە پەسەند بکە…', denied: 'پەیوەستکردن ڕەتکرایەوە',
     capture: 'وەرگرتنی داگرتنەکان لە وێبگەڕ', capture_hint: 'ئەو جۆرە فایلانەی لە ڕێکخستنەکانی بروسکدا دیاریکراون',
-    page_video: 'داگرتنی ڤیدیۆی ئەم پەڕەیە', sent: 'نێردرا بۆ بروسک ✓', found: 'فایلی میدیا لەم پەڕەیەدا', none: 'هێشتا هیچ ڤیدیۆیەک لەم پەڕەیەدا نەدۆزرایەوە. ڤیدیۆکە لێبدە و بگەڕێوە.', get: 'داگرتن', stream: 'پەخش', g_title: 'وێنە و پۆست', g_post: 'داگرتنی ئەم پۆستە', g_all: 'داگرتنی هەموو پۆستەکانی پەڕەکە', g_hint: 'وێنە و ڤیدیۆ، لەگەڵ چوونەژوورەوەی وێبگەڕەکەت',
+    page_video: 'داگرتنی ڤیدیۆی ئەم پەڕەیە', sent: 'نێردرا بۆ بروسک ✓', found: 'فایلی میدیا لەم پەڕەیەدا', none: 'هێشتا هیچ ڤیدیۆیەک لەم پەڕەیەدا نەدۆزرایەوە. ڤیدیۆکە لێبدە و بگەڕێوە.', get: 'داگرتن', stream: 'پەخش', g_title: 'وێنە و پۆست', g_post: 'داگرتنی ئەم پۆستە', g_all: 'داگرتنی هەموو پۆستەکانی پەڕەکە', g_hint: 'وێنە و ڤیدیۆ، لەگەڵ چوونەژوورەوەی وێبگەڕەکەت', g_with_text: 'لەگەڵ دەقی پۆستەکان (فایلی txt و csv)', g_text_only: 'تەنها دەقی پۆستەکانی ئەم پەڕەیە',
   },
 };
 const ui = chrome.i18n.getUILanguage();
@@ -54,16 +54,20 @@ async function draw() {
       <label class="switch"><input type="checkbox" id="cap" ${st.capture ? 'checked' : ''}><span></span></label></div>
     ${st.gallery ? `<div class="card"><div style="font-weight:600">${esc(L.g_title)}</div><p class="muted" style="margin:2px 0 10px">${esc(L.g_hint)}</p>
       ${st.gallery.single ? `<button id="gpost" style="margin-bottom:8px">${esc(L.g_post)}</button>` : ''}
-      <button id="gall" class="${st.gallery.single ? 'ghost' : ''}">${esc(L.g_all)}</button></div>` : `<button id="pv">${esc(L.page_video)}</button>`}
+      <button id="gall" class="${st.gallery.single ? 'ghost' : ''}">${esc(L.g_all)}</button>
+      <label class="muted" style="display:flex;gap:6px;align-items:center;margin:10px 0 8px"><input type="checkbox" id="gtext"> ${esc(L.g_with_text)}</label>
+      <button id="gtonly" class="ghost">${esc(L.g_text_only)}</button></div>` : `<button id="pv">${esc(L.page_video)}</button>`}
     <h4>${esc(L.found)}</h4>
     ${media.length ? media.slice().reverse().map((m, i) => `<div class="media">${m.kind === 'list' ? `<span class="tag">${esc(L.stream)}</span>` : ''}<span class="n" title="${esc(m.url)}">${esc(decodeURIComponent(new URL(m.url).pathname.split('/').pop() || m.url))}</span><span class="s">${size(m.size)}</span><button data-i="${media.length - 1 - i}">${esc(L.get)}</button></div>`).join('') : `<p class="muted">${esc(L.none)}</p>`}`;
   $('#cap').onchange = e => chrome.runtime.sendMessage({ type: 'capture', on: e.target.checked });
-  const gsend = async (btn, url, posts) => {
-    const r = await chrome.runtime.sendMessage({ type: 'send-gallery', url, title: tab.title, gallery: { posts, types: 'all' } });
+  const gsend = async (btn, url, posts, text) => {
+    text = text || ($('#gtext')?.checked ? 'with' : 'none');
+    const r = await chrome.runtime.sendMessage({ type: 'send-gallery', url, title: tab.title, gallery: { posts, types: 'all', text } });
     btn.textContent = r.ok ? L.sent : r.error;
   };
   if ($('#gpost')) $('#gpost').onclick = e => gsend(e.target, tab.url, 0);
   if ($('#gall')) $('#gall').onclick = e => gsend(e.target, st.gallery.profile, 0);
+  if ($('#gtonly')) $('#gtonly').onclick = e => gsend(e.target, st.gallery.profile, 0, 'only');
   if ($('#pv')) $('#pv').onclick = async () => {
     const r = await chrome.runtime.sendMessage({ type: 'page-video', tabId: tab.id, pageUrl: tab.url, title: tab.title });
     $('#pv').textContent = r.ok ? L.sent : r.error;

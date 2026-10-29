@@ -38,6 +38,7 @@ const DEFAULT_SETTINGS = {
   subtitleLangs: 'ar,en',
   cookiesBrowser: '',       // '' | firefox | chrome | edge | brave | opera | safari — sign-in for Instagram / X / Facebook pages
   galleryPosts: 0,          // 0 = every post of a page
+  galleryText: 'none',      // post texts: none | with (beside the media) | only
   captureTypes: 'zip rar 7z gz xz bz2 tar iso exe msi apk dmg pdf doc docx xls xlsx ppt pptx mp3 m4a flac wav aac ogg mp4 mkv avi mov wmv webm flv m4v torrent bin img cab',
   captureMinSizeKB: 0,
   scheduler: { enabled: false, start: '02:00', stop: '', days: [0, 1, 2, 3, 4, 5, 6] },
@@ -258,7 +259,7 @@ class Manager extends EventEmitter {
       const g = gallery.describe(item.url);
       d.category = 'images';
       d.directory = item.directory || this.folderFor('images');
-      d.gallery = { posts: g.single ? 0 : Math.max(0, Number(item.gallery?.posts ?? this.settings.galleryPosts) || 0), types: item.gallery?.types || 'all', site: g.site, who: g.who, single: g.single };
+      d.gallery = { posts: g.single ? 0 : Math.max(0, Number(item.gallery?.posts ?? this.settings.galleryPosts) || 0), types: item.gallery?.types || 'all', text: ['with', 'only'].includes(item.gallery?.text) ? item.gallery.text : (this.settings.galleryText || 'none'), site: g.site, who: g.who, single: g.single };
       d.filename = item.filename || [g.who, g.site].filter(Boolean).join(' · ') || item.url;
       d.bytes = 0;
     }
@@ -436,14 +437,17 @@ class Manager extends EventEmitter {
       proxy: this.settings.proxy, cookiesBrowser: this.settings.cookiesBrowser || '',
       onProgress: p => {
         d.downloaded = p.files; d.bytes = p.bytes;
+        if (p.posts != null) d.posts = p.posts;
         if (p.dir) d.path = p.dir;
         const now = Date.now();
         if (!d._t || now - d._t > 1000) { d.speed = d._b != null ? Math.max(0, (p.bytes - d._b) / ((now - d._t) / 1000)) : 0; d._t = now; d._b = p.bytes; }
         this.changed();
       },
     });
-    d.downloaded = res.files; d.bytes = res.bytes; d.total = null;
+    d.downloaded = res.files; d.bytes = res.bytes; d.total = null; d.posts = res.posts || 0;
+    if (res.textFile) d.textFile = res.textFile;
     if (res.dir) d.path = res.dir;
+    if (d.gallery?.text === 'only' && !res.posts) { const e = new Error('NOTHING_FOUND'); e.code = 'NOTHING_FOUND'; throw e; }
     if (!res.dir && res.files === before) { const e = new Error('NOTHING_FOUND'); e.code = 'NOTHING_FOUND'; throw e; }
     delete d._t; delete d._b;
   }

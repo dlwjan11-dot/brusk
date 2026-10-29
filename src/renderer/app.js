@@ -137,8 +137,10 @@ function progressHtml(d) {
 function metaHtml(d) {
   const parts = [];
   if (d.kind === 'gallery') {
-    if (d.status !== 'error' || d.downloaded) parts.push(`<span>${esc(t('n_files', { n: d.downloaded || 0 }))}</span>` + (d.bytes ? `<span class="ltr"> · ${fmtSize(d.bytes)}</span>` : ''));
-    if (d.status === 'downloading') parts.push(`<span class="ltr">${fmtSpeed(d.speed)}</span>`);
+    const textOnly = d.gallery?.text === 'only';
+    if (!textOnly && (d.status !== 'error' || d.downloaded)) parts.push(`<span>${esc(t('n_files', { n: d.downloaded || 0 }))}</span>` + (d.bytes ? `<span class="ltr"> · ${fmtSize(d.bytes)}</span>` : ''));
+    if (d.gallery?.text && d.gallery.text !== 'none' && (d.posts || textOnly) && d.status !== 'error') parts.push(`<span>${esc(t('n_posts', { n: d.posts || 0 }))}</span>`);
+    if (d.status === 'downloading' && !textOnly) parts.push(`<span class="ltr">${fmtSpeed(d.speed)}</span>`);
     if (d.gallery?.posts && !d.gallery.single) parts.push(`<span>${esc(t('g_last', { n: d.gallery.posts }))}</span>`);
     if (d.status === 'error') parts.push(`<span class="err">${esc(errText(d.error))}</span>`);
     if (d.status === 'completed' && d.completedAt) parts.push(`<span>${esc(fmtDate(d.completedAt))}</span>`);
@@ -163,8 +165,8 @@ function metaHtml(d) {
 }
 function rowHtml(d) {
   const st = d.status;
-  const main = st === 'completed' ? (d.kind === 'gallery' ? ['folder'] : ['open', 'folder']) : st === 'seeding' ? ['folder'] : ['downloading', 'preparing', 'queued'].includes(st) ? ['pause'] : ['resume'];
-  const btn = a => `<button class="ibtn" data-act="${a}" title="${esc(t(a === 'folder' ? 'open_folder' : a))}">${icon({ open: 'file', folder: 'folder', pause: 'pause', resume: 'play' }[a])}</button>`;
+  const main = st === 'completed' ? (d.kind === 'gallery' ? (d.textFile ? ['open', 'folder'] : ['folder']) : ['open', 'folder']) : st === 'seeding' ? ['folder'] : ['downloading', 'preparing', 'queued'].includes(st) ? ['pause'] : ['resume'];
+  const btn = a => `<button class="ibtn" data-act="${a}" title="${esc(t(a === 'folder' ? 'open_folder' : a === 'open' && d.kind === 'gallery' ? 'g_open_text' : a))}">${icon({ open: 'file', folder: 'folder', pause: 'pause', resume: 'play' }[a])}</button>`;
   return `
     <div class="ficon ${esc(d.category)}">${icon(CAT_ICON[d.category] || 'file')}</div>
     <div class="rmain">
@@ -481,7 +483,7 @@ class AddDialog {
     e.kind = info.kind; e.info = info;
     if (info.kind === 'http') { e.name = info.name || e.name; e.size = info.size ?? e.size; e.category = info.category; e.status = 'ready'; }
     else if (info.kind === 'ftp') { e.name = info.name; e.status = 'ready'; }
-    else if (info.kind === 'gallery') { e.name = info.name || info.url; e.status = 'ready'; e.posts = info.single ? 0 : (e.preset?.posts ?? S.settings.galleryPosts ?? 0); e.types = e.preset?.types || 'all'; e.category = 'images'; }
+    else if (info.kind === 'gallery') { e.name = info.name || info.url; e.status = 'ready'; e.posts = info.single ? 0 : (e.preset?.posts ?? S.settings.galleryPosts ?? 0); e.types = e.preset?.types || 'all'; e.text = e.preset?.text || S.settings.galleryText || 'none'; e.category = 'images'; }
     else if (info.kind === 'video') {
       e.name = info.title; e.status = 'ready';
       e.quality = pickQuality(info.qualities, S.settings.videoQuality);
@@ -517,6 +519,7 @@ class AddDialog {
     if (f === 'subs') e.subs = ev.target.checked;
     if (f === 'posts') e.posts = Number(ev.target.value) || 0;
     if (f === 'types') e.types = ev.target.value;
+    if (f === 'text') { e.text = ev.target.value; this.render?.(); }
     if (f === 'sel') { const i = Number(ev.target.value); ev.target.checked ? e.sel.add(i) : e.sel.delete(i); this.renderEntrySummary(e, box); }
     this.updateButtons();
   }
@@ -558,7 +561,8 @@ class AddDialog {
     if (e.status === 'ready' && e.kind === 'gallery') {
       const sel = (f, cur, list) => `<select data-f="${f}">${list.map(([v, l]) => `<option value="${v}" ${String(cur) === String(v) ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select>`;
       opts = (e.info.single ? '' : `<label>${esc(t('g_posts'))} ${sel('posts', e.posts, [[0, t('g_all')], [12, '12'], [30, '30'], [100, '100'], [500, '500']])}</label>`) +
-        `<label>${esc(t('g_types'))} ${sel('types', e.types, [['all', t('g_both')], ['images', t('g_images')], ['videos', t('g_videos')]])}</label>`;
+        (e.text === 'only' ? '' : `<label>${esc(t('g_types'))} ${sel('types', e.types, [['all', t('g_both')], ['images', t('g_images')], ['videos', t('g_videos')]])}</label>`) +
+        `<label>${esc(t('g_text'))} ${sel('text', e.text, [['none', t('g_text_none')], ['with', t('g_text_with')], ['only', t('g_text_only')]])}</label>`;
     }
     if (e.status === 'ready' && e.kind === 'video') {
       opts = `<label>${esc(t('quality'))} <select data-f="quality">${e.info.qualities.map(q => `<option value="${esc(q.id)}" ${q.id === e.quality ? 'selected' : ''}>${esc(q.label)}${q.size ? ' · ' + fmtSize(q.size) : ''}</option>`).join('')}</select></label>
@@ -618,7 +622,7 @@ class AddDialog {
       const base = { start, directory: dir, captureId: e.captureId, force: e.force };
       if (e.kind === 'http') items.push({ ...base, key: e.key, url: e.url, kind: 'http', filename: e.name, size: e.size, category: e.category });
       else if (e.kind === 'ftp') items.push({ ...base, key: e.key, url: e.url, kind: 'ftp', filename: e.name });
-      else if (e.kind === 'gallery') items.push({ ...base, key: e.key, url: e.url, kind: 'gallery', filename: e.name, gallery: { posts: e.posts, types: e.types } });
+      else if (e.kind === 'gallery') items.push({ ...base, key: e.key, url: e.url, kind: 'gallery', filename: e.name, gallery: { posts: e.posts, types: e.types, text: e.text } });
       else if (e.kind === 'video') {
         const q = e.info.qualities.find(x => x.id === e.quality);
         items.push({ ...base, key: e.key, url: e.url, kind: 'video', filename: e.name, size: q?.size || null, video: { quality: e.quality, title: e.name, subtitles: e.subs ? S.settings.subtitleLangs.split(/[,\s]+/).filter(Boolean) : [] } });
