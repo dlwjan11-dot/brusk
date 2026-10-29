@@ -1,0 +1,10 @@
+total 901776
+drwxr-xr-x  2 runner runner      4096 Oct 29 14:12 .
+drwxr-xr-x 13 runner runner      4096 Oct 29 14:12 ..
+-rw-r--r--  1 runner runner     35944 Oct 29 14:12 Brusk-Chrome-Extension.zip
+-rw-r--r--  1 runner runner 191237570 Oct 29 14:12 Brusk-Mac-AppleSilicon.dmg
+-rw-r--r--  1 runner runner 178793483 Oct 29 14:12 Brusk-Mac-AppleSilicon.zip
+-rw-r--r--  1 runner runner 199688385 Oct 29 14:12 Brusk-Mac-Intel.dmg
+-rw-r--r--  1 runner runner 185994704 Oct 29 14:12 Brusk-Mac-Intel.zip
+-rw-r--r--  1 runner runner 167643823 Oct 29 14:12 Brusk-Setup-Windows.exe
+https://github.com/dlwjan11-dot/brusk/releases/tag/v1.3.1
