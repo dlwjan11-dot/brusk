@@ -1,8 +1,8 @@
 {
-  "name": "barq",
-  "productName": "Barq",
-  "version": "1.0.3",
-  "description": "Barq - fast download manager for Windows and macOS (multi-connection, video, torrents, browser capture)",
+  "name": "brusk",
+  "productName": "Brusk",
+  "version": "1.1.0",
+  "description": "Brusk - fast download manager for Windows and macOS (multi-connection, video, torrents, browser capture)",
   "main": "src/main/main.js",
   "author": "Abdulrahman (Abdulmedia)",
   "license": "MIT",
@@ -22,8 +22,8 @@
     "electron-builder": "^26.18.0"
   },
   "build": {
-    "appId": "com.abdulmedia.barq",
-    "productName": "Barq",
+    "appId": "com.abdulmedia.brusk",
+    "productName": "Brusk",
     "copyright": "Abdulmedia",
     "directories": {
       "output": "dist"
@@ -65,7 +65,7 @@
         }
       ],
       "icon": "assets/icon.ico",
-      "artifactName": "Barq-${version}-portable.${ext}",
+      "artifactName": "Brusk-${version}-portable.${ext}",
       "signExecutable": false,
       "extraResources": [
         {
@@ -90,8 +90,8 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "Barq",
-      "artifactName": "Barq-Setup-${version}.${ext}",
+      "shortcutName": "Brusk",
+      "artifactName": "Brusk-Setup-${version}.${ext}",
       "installerLanguages": [
         "ar_SA",
         "en_US"
@@ -110,7 +110,7 @@
       ],
       "icon": "assets/icon-mac.png",
       "category": "public.app-category.utilities",
-      "artifactName": "Barq-${version}-mac-${arch}.${ext}",
+      "artifactName": "Brusk-${version}-mac-${arch}.${ext}",
       "identity": null,
       "hardenedRuntime": false,
       "gatekeeperAssess": false,
@@ -133,13 +133,13 @@
         }
       ],
       "extendInfo": {
-        "NSDownloadsFolderUsageDescription": "Barq saves your downloads here.",
+        "NSDownloadsFolderUsageDescription": "Brusk saves your downloads here.",
         "LSMultipleInstancesProhibited": true
       }
     }
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dlwjan11-dot/barq.git"
+    "url": "https://github.com/dlwjan11-dot/brusk.git"
   }
 }

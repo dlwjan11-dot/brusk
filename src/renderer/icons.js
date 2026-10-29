@@ -1,5 +1,5 @@
 'use strict';
-// Stroke icons (24x24), drawn for Barq.
+// Stroke icons (24x24), drawn for Brusk.
 const P = {
   play: '<path d="M7 4.5v15l12-7.5-12-7.5Z"/>',
   pause: '<path d="M8 5v14M16 5v14"/>',

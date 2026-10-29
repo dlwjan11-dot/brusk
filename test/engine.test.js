@@ -73,7 +73,7 @@ test('multi-connection download with dynamic splitting, UTF-8 file name', async 
   assert.equal(path.basename(d.path), 'ملف.bin');
   assert.equal(sha(d.path), HASH);
   assert.ok(stats.maxParallel >= 6, 'parallel connections: ' + stats.maxParallel);
-  assert.ok(!fs.existsSync(d.path + '.barq'));
+  assert.ok(!fs.existsSync(d.path + '.brusk'));
   await m.shutdown(); s.close();
 });
 

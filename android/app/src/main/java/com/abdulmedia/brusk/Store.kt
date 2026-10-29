@@ -1,4 +1,4 @@
-package com.abdulmedia.barq
+package com.abdulmedia.brusk
 
 import android.content.Context
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +23,7 @@ data class Item(
     val size: Long = 0,
     val uri: String? = null,               // content:// of the saved file
     val mime: String? = null,
-    val folder: String? = null,            // e.g. Movies/Barq
+    val folder: String? = null,            // e.g. Movies/Brusk
     val error: String? = null,
     val createdAt: Long = System.currentTimeMillis(),
 ) {

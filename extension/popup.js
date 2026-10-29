@@ -1,18 +1,18 @@
 'use strict';
 const T = {
   ar: {
-    title: 'برق', ok: 'متصل', off: 'غير مفتوح', warn: 'غير مربوط',
-    off_text: 'افتح برنامج برق على الكمبيوتر، ثم أعد فتح هذه النافذة.',
-    pair_text: 'اربط الإضافة ببرنامج برق مرة وحدة، وبعدها كل التحميلات بتروح لبرق.', pair: 'ربط', pairing: 'وافق على الطلب بنافذة برق…', denied: 'تم رفض الربط',
-    capture: 'التقاط التحميلات من المتصفح', capture_hint: 'الملفات بالأنواع المحددة بإعدادات برق',
-    page_video: 'تحميل فيديو هذه الصفحة', sent: 'أُرسل إلى برق ✓', found: 'ملفات وسائط بهذه الصفحة', none: 'ما لقينا فيديو بهذه الصفحة بعد. شغّل الفيديو وارجع.', get: 'تحميل', stream: 'بث',
+    title: 'بروسك', ok: 'متصل', off: 'غير مفتوح', warn: 'غير مربوط',
+    off_text: 'افتح برنامج بروسك على الكمبيوتر، ثم أعد فتح هذه النافذة.',
+    pair_text: 'اربط الإضافة ببرنامج بروسك مرة وحدة، وبعدها كل التحميلات بتروح لبروسك.', pair: 'ربط', pairing: 'وافق على الطلب بنافذة بروسك…', denied: 'تم رفض الربط',
+    capture: 'التقاط التحميلات من المتصفح', capture_hint: 'الملفات بالأنواع المحددة بإعدادات بروسك',
+    page_video: 'تحميل فيديو هذه الصفحة', sent: 'أُرسل إلى بروسك ✓', found: 'ملفات وسائط بهذه الصفحة', none: 'ما لقينا فيديو بهذه الصفحة بعد. شغّل الفيديو وارجع.', get: 'تحميل', stream: 'بث',
   },
   en: {
-    title: 'Barq', ok: 'Connected', off: 'Not running', warn: 'Not connected',
-    off_text: 'Open the Barq app on this computer, then open this window again.',
-    pair_text: 'Connect the extension to Barq once; after that your downloads go to Barq.', pair: 'Connect', pairing: 'Allow the request in the Barq window…', denied: 'Connection was refused',
-    capture: 'Take over browser downloads', capture_hint: 'Files of the types set in Barq settings',
-    page_video: "Download this page's video", sent: 'Sent to Barq ✓', found: 'Media on this page', none: 'No video found on this page yet. Play the video and come back.', get: 'Get', stream: 'stream',
+    title: 'Brusk', ok: 'Connected', off: 'Not running', warn: 'Not connected',
+    off_text: 'Open the Brusk app on this computer, then open this window again.',
+    pair_text: 'Connect the extension to Brusk once; after that your downloads go to Brusk.', pair: 'Connect', pairing: 'Allow the request in the Brusk window…', denied: 'Connection was refused',
+    capture: 'Take over browser downloads', capture_hint: 'Files of the types set in Brusk settings',
+    page_video: "Download this page's video", sent: 'Sent to Brusk ✓', found: 'Media on this page', none: 'No video found on this page yet. Play the video and come back.', get: 'Get', stream: 'stream',
   },
 };
 let L = T[/^ar/.test(chrome.i18n.getUILanguage()) ? 'ar' : 'en'];

@@ -1,4 +1,4 @@
-package com.abdulmedia.barq
+package com.abdulmedia.brusk
 
 import android.Manifest
 import android.content.ClipboardManager
@@ -90,7 +90,7 @@ class MainActivity : ComponentActivity() {
         if (Build.VERSION.SDK_INT >= 33 &&
             ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
         ) askNotify.launch(Manifest.permission.POST_NOTIFICATIONS)
-        setContent { BarqTheme { App() } }
+        setContent { BruskTheme { App() } }
     }
 }
 
@@ -206,7 +206,7 @@ private fun DownloadRow(item: Item) {
                     Status.RUNNING -> (if (item.progress >= 0) "${item.progress.toInt()}%" + (if (item.eta > 0) " · " + s.left(DownloadService.formatEta(item.eta)) else "") else s.stRunning) to MaterialTheme.colorScheme.primary
                     Status.MERGING -> s.stMerging to MaterialTheme.colorScheme.primary
                     Status.SAVING -> s.stSaving to MaterialTheme.colorScheme.primary
-                    Status.DONE -> listOf(s.stDone, fmtSize(item.size), item.folder.orEmpty()).filter { it.isNotEmpty() }.joinToString(" · ") to BarqColors.Ok
+                    Status.DONE -> listOf(s.stDone, fmtSize(item.size), item.folder.orEmpty()).filter { it.isNotEmpty() }.joinToString(" · ") to BruskColors.Ok
                     Status.FAILED -> (item.error ?: s.stFailed) to MaterialTheme.colorScheme.error
                     Status.CANCELLED -> s.stCancelled to MaterialTheme.colorScheme.onSurfaceVariant
                 }

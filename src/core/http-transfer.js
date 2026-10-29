@@ -76,7 +76,7 @@ class HttpTransfer {
       d.filename = safeFilename(d.filename || info.name || 'download');
       d.path = uniquePath(d.directory, d.filename, this.opts.takenPaths);
       d.filename = path.basename(d.path);
-      d.tempPath = d.path + '.barq';
+      d.tempPath = d.path + '.brusk';
     }
     await fsp.mkdir(path.dirname(d.path), { recursive: true });
 
@@ -156,7 +156,7 @@ class HttpTransfer {
       if (n > 0) await sleep(Math.min(800, n * 60), inner.signal).catch(() => {});
       for (;;) {
         if (inner.signal.aborted) return;
-        if (n >= hostLimit(info.finalUrl, wanted)) return;   // server asked for fewer connections
+        if (n >= hostLimit(info.finalUrl, wanted) && active > 0) return;   // server asked for fewer connections
         const seg = claim();
         if (!seg) return;
         active++; d.connections = active;
@@ -174,8 +174,14 @@ class HttpTransfer {
       }
     };
 
+    const unfinished = () => d.segments.some(s => s.end == null || s.pos <= s.end);
     try {
-      await Promise.all(Array.from({ length: wanted }, (_, i) => worker(i)));
+      // Normally one round; another round only if every connection backed off at the same moment.
+      for (let round = 0; round < 20; round++) {
+        await Promise.all(Array.from({ length: wanted }, (_, i) => worker(i)));
+        if (inner.signal.aborted || fatal || !info.ranges || !unfinished()) break;
+        await sleep(1000, inner.signal).catch(() => {});
+      }
     } finally {
       signal.removeEventListener('abort', onAbort);
       for (const s of d.segments) delete s.active;

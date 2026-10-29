@@ -168,7 +168,7 @@ function renderList() {
   const items = filtered();
   if (!items.length) {
     S.rows.clear(); S.sigs.clear();
-    list.innerHTML = `<div class="empty"><div><div class="big"><svg viewBox="0 0 24 24"><path d="M13.2 2 4.5 13.4h6.1L9.8 22l8.7-11.4h-6.1L13.2 2Z"/></svg></div><h3>${esc(t('empty_title'))}</h3><p>${esc(t('empty_text'))}</p></div></div>`;
+    list.innerHTML = `<div class="empty"><div><div class="big"><svg viewBox="0 0 24 24"><path d="M14.3 0.8 4.6 12.6h6.3L9.6 20.2 19.4 8.4h-6.3L14.3 0.8ZM6.45 21.9h11.1a.65.65 0 0 1 0 1.3H6.45a.65.65 0 0 1 0-1.3Z"/></svg></div><h3>${esc(t('empty_title'))}</h3><p>${esc(t('empty_text'))}</p></div></div>`;
     return;
   }
   if (list.querySelector('.empty')) list.innerHTML = '';
@@ -750,10 +750,10 @@ async function settingsPane(tab) {
         <div class="field col"><div class="lbl">${esc(t('s_capture'))}</div><input type="text" data-k="captureTypes" value="${esc(s.captureTypes)}" style="direction:ltr;width:100%"></div>
         ${field(t('s_minsize'), `<input type="number" min="0" data-k="captureMinSizeKB" value="${s.captureMinSizeKB}">`)}`;
     }
-    case 'about': return `<div class="about"><svg class="bolt" viewBox="0 0 24 24"><path d="M13.2 2 4.5 13.4h6.1L9.8 22l8.7-11.4h-6.1L13.2 2Z"/></svg>
+    case 'about': return `<div class="about"><svg class="bolt" viewBox="0 0 24 24"><path d="M14.3 0.8 4.6 12.6h6.3L9.6 20.2 19.4 8.4h-6.3L14.3 0.8ZM6.45 21.9h11.1a.65.65 0 0 1 0 1.3H6.45a.65.65 0 0 1 0-1.3Z"/></svg>
       <h3>${esc(t('app'))} <span class="tdesc ltr">v${esc(s.version)}</span></h3><p class="note">${esc(t('s_about_text'))}</p>
       <p class="note">yt-dlp · FFmpeg · aria2 · Deno · Electron</p>
-      <p><button class="btn sm" data-do="link" data-url="https://dlwjan11-dot.github.io/barq/">${icon('globe')}dlwjan11-dot.github.io/barq</button></p></div>`;
+      <p><button class="btn sm" data-do="link" data-url="https://dlwjan11-dot.github.io/brusk/">${icon('globe')}dlwjan11-dot.github.io/brusk</button></p></div>`;
   }
   return '';
 }

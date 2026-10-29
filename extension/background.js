@@ -1,5 +1,5 @@
 'use strict';
-/* Barq browser extension — background service worker */
+/* Brusk browser extension — background service worker */
 const PORTS = [47800, 47801, 31760, 31761, 23741, 23742, 18764, 18765, 52819, 61871];   // same list as the app
 const VIDEO_SITES = /(^|\.)(youtube\.com|youtu\.be|vimeo\.com|dailymotion\.com|twitch\.tv|tiktok\.com|twitter\.com|x\.com|facebook\.com|fb\.watch|instagram\.com|reddit\.com|soundcloud\.com|bilibili\.com|rumble\.com|streamable\.com|kick\.com|ok\.ru|vk\.com|aparat\.com|coursera\.org|udemy\.com|ted\.com)$/i;
 const MEDIA_EXT = /\.(m3u8|mpd|mp4|webm|mkv|mov|m4v|flv|mp3|m4a|aac|ogg|opus|wav|flac)(\?|#|$)/i;
@@ -110,7 +110,7 @@ async function handleDownload(item) {
   try {
     await send([{ url, referrer: item.referrer, filename: name, size: size > 0 ? size : undefined, mime: item.mime }]);
   } catch {
-    // Barq isn't reachable: give the download back to the browser.
+    // Brusk isn't reachable: give the download back to the browser.
     skipOnce.add(url);
     chrome.downloads.download({ url });
   }
@@ -163,10 +163,10 @@ function extOf(m) { const e = (new URL(m.url).pathname.match(/\.([a-z0-9]{2,4})$
 chrome.runtime.onInstalled.addListener(() => {
   const ar = /^ar/.test(chrome.i18n.getUILanguage());
   chrome.contextMenus.removeAll(() => {
-    chrome.contextMenus.create({ id: 'link', title: ar ? 'تحميل بـ برق' : 'Download with Barq', contexts: ['link'] });
-    chrome.contextMenus.create({ id: 'media', title: ar ? 'تحميل هذا الملف بـ برق' : 'Download this with Barq', contexts: ['video', 'audio', 'image'] });
-    chrome.contextMenus.create({ id: 'selection', title: ar ? 'تحميل كل الروابط المحددة بـ برق' : 'Download all selected links with Barq', contexts: ['selection'] });
-    chrome.contextMenus.create({ id: 'page', title: ar ? 'تحميل فيديو هذه الصفحة بـ برق' : "Download this page's video with Barq", contexts: ['page'] });
+    chrome.contextMenus.create({ id: 'link', title: ar ? 'تحميل بـ بروسك' : 'Download with Brusk', contexts: ['link'] });
+    chrome.contextMenus.create({ id: 'media', title: ar ? 'تحميل هذا الملف بـ بروسك' : 'Download this with Brusk', contexts: ['video', 'audio', 'image'] });
+    chrome.contextMenus.create({ id: 'selection', title: ar ? 'تحميل كل الروابط المحددة بـ بروسك' : 'Download all selected links with Brusk', contexts: ['selection'] });
+    chrome.contextMenus.create({ id: 'page', title: ar ? 'تحميل فيديو هذه الصفحة بـ بروسك' : "Download this page's video with Brusk", contexts: ['page'] });
   });
 });
 
@@ -188,11 +188,11 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 
 function notify(code) {
   const ar = /^ar/.test(chrome.i18n.getUILanguage());
-  const text = code === 'not-running' ? (ar ? 'برنامج برق غير مفتوح' : 'Barq is not running') : code === 'not-paired' ? (ar ? 'اربط الإضافة ببرق أولاً' : 'Connect the extension to Barq first') : code;
+  const text = code === 'not-running' ? (ar ? 'برنامج بروسك غير مفتوح' : 'Brusk is not running') : code === 'not-paired' ? (ar ? 'اربط الإضافة ببروسك أولاً' : 'Connect the extension to Brusk first') : code;
   chrome.action.setBadgeBackgroundColor({ color: '#e5484d' });
   chrome.action.setBadgeText({ text: '!' });
   chrome.action.setTitle({ title: text });
-  setTimeout(() => { chrome.action.setBadgeText({ text: '' }); chrome.action.setTitle({ title: 'Barq' }); }, 5000);
+  setTimeout(() => { chrome.action.setBadgeText({ text: '' }); chrome.action.setTitle({ title: 'Brusk' }); }, 5000);
 }
 
 /* ---------- messages from the popup and pages ---------- */

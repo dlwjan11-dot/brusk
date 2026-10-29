@@ -7,15 +7,15 @@ plugins {
 }
 
 android {
-    namespace = "com.abdulmedia.barq"
+    namespace = "com.abdulmedia.brusk"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.abdulmedia.barq"
+        applicationId = "com.abdulmedia.brusk"
         minSdk = 29
         targetSdk = 35
         versionCode = 1
-        versionName = "1.0.0"
+        versionName = "1.1.0"
     }
 
     // The release key comes from the build machine (GitHub secret); without it the debug key is used.

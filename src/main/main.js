@@ -11,7 +11,7 @@ const T = require('./strings');
 
 const WIN = process.platform === 'win32';
 const MAC = process.platform === 'darwin';
-app.setAppUserModelId('com.abdulmedia.barq');
+app.setAppUserModelId('com.abdulmedia.brusk');
 
 if (process.env.BARQ_USER_DATA) app.setPath('userData', process.env.BARQ_USER_DATA);   // development only
 if (!app.requestSingleInstanceLock()) { app.quit(); process.exit(0); }
@@ -33,7 +33,7 @@ function createWindow(show = true) {
   const dark = isDark();
   win = new BrowserWindow({
     width: 1180, height: 740, minWidth: 880, minHeight: 560, show: false,
-    title: 'Barq', icon, backgroundColor: dark ? '#0f1115' : '#f6f7fb',
+    title: 'Brusk', icon, backgroundColor: dark ? '#0f1115' : '#f6f7fb',
     titleBarStyle: MAC ? 'hiddenInset' : 'hidden',
     trafficLightPosition: MAC ? { x: 14, y: 14 } : undefined,
     titleBarOverlay: WIN ? overlayColors(dark) : false,
@@ -65,7 +65,7 @@ function createTray() {
   const img = nativeImage.createFromPath(path.join(__dirname, '..', '..', 'assets', MAC ? 'trayTemplate.png' : 'tray.png'));
   if (MAC) img.setTemplateImage(true);   // follows the light/dark menu bar
   tray = new Tray(img.isEmpty() ? nativeImage.createFromPath(icon) : img);
-  tray.setToolTip('Barq');
+  tray.setToolTip('Brusk');
   if (!MAC) tray.on('click', showWindow);   // on macOS a click opens the menu
   updateTray();
 }
@@ -82,7 +82,7 @@ function updateTray() {
     { label: t('tray_quit'), click: () => { quitting = true; app.quit(); } },
   ]));
   const snap = manager.snapshot();
-  tray.setToolTip(snap.active ? `Barq — ${snap.active} · ${fmtSpeed(snap.totalSpeed)}` : 'Barq');
+  tray.setToolTip(snap.active ? `Brusk — ${snap.active} · ${fmtSpeed(snap.totalSpeed)}` : 'Brusk');
 }
 function fmtSpeed(b) { if (!b) return '0 KB/s'; const u = ['B/s', 'KB/s', 'MB/s', 'GB/s']; let i = 0; while (b >= 1024 && i < 3) { b /= 1024; i++; } return `${b.toFixed(i > 1 ? 1 : 0)} ${u[i]}`; }
 
@@ -139,7 +139,7 @@ async function askPair(name) {
   showWindow();
   const r = await dialog.showMessageBox(win, {
     type: 'question', buttons: [t('pair_allow'), t('pair_deny')], defaultId: 0, cancelId: 1,
-    title: 'Barq', message: t('pair_title').replace('{name}', name), detail: t('pair_detail'),
+    title: 'Brusk', message: t('pair_title').replace('{name}', name), detail: t('pair_detail'),
   });
   send('browsers', bridge.list());
   return r.response === 0;
@@ -302,14 +302,14 @@ function macMenu() {
   const ar = manager?.settings.language !== 'en';
   const L = (a, e) => (ar ? a : e);
   Menu.setApplicationMenu(Menu.buildFromTemplate([
-    { label: 'Barq', submenu: [
-      { role: 'about', label: L('حول برق', 'About Barq') },
+    { label: 'Brusk', submenu: [
+      { role: 'about', label: L('حول بروسك', 'About Brusk') },
       { type: 'separator' },
       { label: L('الإعدادات…', 'Settings…'), accelerator: 'Cmd+,', click: () => { showWindow(); send('open-settings'); } },
       { type: 'separator' },
-      { role: 'hide', label: L('إخفاء برق', 'Hide Barq') }, { role: 'hideOthers', label: L('إخفاء الباقي', 'Hide Others') }, { role: 'unhide', label: L('إظهار الكل', 'Show All') },
+      { role: 'hide', label: L('إخفاء بروسك', 'Hide Brusk') }, { role: 'hideOthers', label: L('إخفاء الباقي', 'Hide Others') }, { role: 'unhide', label: L('إظهار الكل', 'Show All') },
       { type: 'separator' },
-      { label: L('إنهاء برق', 'Quit Barq'), accelerator: 'Cmd+Q', click: () => { quitting = true; app.quit(); } },
+      { label: L('إنهاء بروسك', 'Quit Brusk'), accelerator: 'Cmd+Q', click: () => { quitting = true; app.quit(); } },
     ] },
     { label: L('ملف', 'File'), submenu: [
       { label: L('إضافة رابط', 'Add link'), accelerator: 'Cmd+N', click: () => { showWindow(); send('open-add', { urls: [] }); } },

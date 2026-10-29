@@ -1,4 +1,4 @@
-package com.abdulmedia.barq
+package com.abdulmedia.brusk
 
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
@@ -34,7 +34,7 @@ import kotlinx.coroutines.withContext
 import java.net.URL
 import java.util.Locale
 
-object BarqColors {
+object BruskColors {
     val Accent = Color(0xFF2F6BFF)
     val Bolt = Color(0xFFFFC414)
     val Ok = Color(0xFF18A058)
@@ -43,12 +43,12 @@ object BarqColors {
 }
 
 private val Light: ColorScheme = lightColorScheme(
-    primary = BarqColors.Accent, onPrimary = Color.White,
+    primary = BruskColors.Accent, onPrimary = Color.White,
     primaryContainer = Color(0xFFE6EEFF), onPrimaryContainer = Color(0xFF1847C2),
     background = Color(0xFFF6F7FB), onBackground = Color(0xFF171B26),
     surface = Color.White, onSurface = Color(0xFF171B26),
     surfaceVariant = Color(0xFFF0F2F7), onSurfaceVariant = Color(0xFF5B6275),
-    outline = Color(0xFFE3E6EE), error = BarqColors.Err,
+    outline = Color(0xFFE3E6EE), error = BruskColors.Err,
 )
 private val Dark: ColorScheme = darkColorScheme(
     primary = Color(0xFF4D82FF), onPrimary = Color.White,
@@ -63,7 +63,7 @@ val LocalStrings = staticCompositionLocalOf { Strings(true) }
 
 /** Theme + language + reading direction (Arabic right to left). */
 @Composable
-fun BarqTheme(content: @Composable () -> Unit) {
+fun BruskTheme(content: @Composable () -> Unit) {
     val lang by Prefs.lang.collectAsState()
     val ar = lang == "ar"
     MaterialTheme(colorScheme = if (isSystemInDarkTheme()) Dark else Light) {
@@ -79,7 +79,7 @@ fun BarqTheme(content: @Composable () -> Unit) {
 fun BoltBadge(size: Dp = 40.dp) {
     Box(
         Modifier.size(size).clip(RoundedCornerShape(size * 0.26f))
-            .background(androidx.compose.ui.graphics.Brush.verticalGradient(listOf(Color(0xFF18287A), BarqColors.Accent))),
+            .background(androidx.compose.ui.graphics.Brush.verticalGradient(listOf(Color(0xFF141840), Color(0xFF2B5CFF)))),
         contentAlignment = Alignment.Center,
     ) {
         Image(painterResource(R.drawable.ic_bolt), null, Modifier.size(size * 0.6f))

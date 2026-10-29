@@ -1,4 +1,4 @@
-package com.abdulmedia.barq
+package com.abdulmedia.brusk
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -148,7 +148,7 @@ class DownloadService : Service() {
         private const val ONGOING_ID = 7001
         private const val CHANNEL_RUN = "running"
         private const val CHANNEL_DONE = "done"
-        private const val ACTION_CANCEL = "com.abdulmedia.barq.CANCEL"
+        private const val ACTION_CANCEL = "com.abdulmedia.brusk.CANCEL"
         private const val EXTRA_ID = "id"
 
         fun createChannels(ctx: Context) {

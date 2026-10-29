@@ -1,4 +1,4 @@
-// Development helper: run Barq with demo data under a virtual display and save screenshots.
+// Development helper: run Brusk with demo data under a virtual display and save screenshots.
 // usage: node dev/shots.js <outdir> [lang] [theme]
 'use strict';
 const http = require('http');

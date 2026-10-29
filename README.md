@@ -1,13 +1,13 @@
-<p align="center"><img src="docs/img/icon.png" width="96" alt="Barq"></p>
-<h1 align="center">برق · Barq</h1>
+<p align="center"><img src="docs/img/icon.png" width="96" alt="Brusk"></p>
+<h1 align="center">بروسك · Brusk</h1>
 <p align="center"><b>مدير تحميل سريع ومجاني لـ Windows و macOS و Android</b><br>A fast, free download manager for Windows, macOS and Android</p>
 <p align="center">
-  <a href="https://dlwjan11-dot.github.io/barq/"><b>🌐 الموقع · Website</b></a> &nbsp;·&nbsp;
-  <a href="https://github.com/dlwjan11-dot/barq/releases/latest"><b>⬇️ التنزيل · Download</b></a> &nbsp;·&nbsp;
+  <a href="https://dlwjan11-dot.github.io/brusk/"><b>🌐 الموقع · Website</b></a> &nbsp;·&nbsp;
+  <a href="https://github.com/dlwjan11-dot/brusk/releases/latest"><b>⬇️ التنزيل · Download</b></a> &nbsp;·&nbsp;
   <a href="#العربية">العربية</a> &nbsp;·&nbsp;
   <a href="#english">English</a>
 </p>
-<p align="center"><img src="docs/img/main-ar.jpg" width="820" alt="Barq"></p>
+<p align="center"><img src="docs/img/main-ar.jpg" width="820" alt="Brusk"></p>
 
 ---
 
@@ -15,18 +15,20 @@
 
 ## العربية
 
-برق مدير تحميل مجاني ومفتوح المصدر، بيشتغل على Windows والماك والأندرويد، وواجهته بالعربي والإنجليزي. بيقسم الملف على عدة اتصالات حتى ينزل أسرع، وبيكمّل من وين وقف، وبينزّل فيديوهات يوتيوب والتورنت، وفيه إضافة للمتصفح بتبعتله التحميلات لحالها.
+**بروسك** يعني **البرق** بالكردي.
+
+بروسك مدير تحميل مجاني ومفتوح المصدر، بيشتغل على Windows والماك والأندرويد، وواجهته بالعربي والإنجليزي. بيقسم الملف على عدة اتصالات حتى ينزل أسرع، وبيكمّل من وين وقف، وبينزّل فيديوهات يوتيوب والتورنت، وفيه إضافة للمتصفح بتبعتله التحميلات لحالها.
 
 ### التنزيل
 
 | الجهاز | الملف |
 |---|---|
-| Windows 10 و 11 | [Barq-Setup-Windows.exe](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Setup-Windows.exe) |
-| ماك Apple Silicon ‏(M1 إلى M4) | [Barq-Mac-AppleSilicon.zip](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Mac-AppleSilicon.zip) |
-| ماك Intel | [Barq-Mac-Intel.zip](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Mac-Intel.zip) |
-| أندرويد 10 أو أحدث | [Barq-Android.apk](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Android.apk) (للموبايلات القديمة: [32-bit](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Android-32bit.apk)) |
-| إضافة Chrome و Edge و Brave | [Barq-Chrome-Extension.zip](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Chrome-Extension.zip) |
-| إضافة Firefox | من [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/barq-download-manager/) |
+| Windows 10 و 11 | [Brusk-Setup-Windows.exe](https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Setup-Windows.exe) |
+| ماك Apple Silicon ‏(M1 إلى M4) | [Brusk-Mac-AppleSilicon.dmg](https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Mac-AppleSilicon.dmg) |
+| ماك Intel | [Brusk-Mac-Intel.dmg](https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Mac-Intel.dmg) |
+| أندرويد 10 أو أحدث | [Brusk-Android.apk](https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Android.apk) (للموبايلات القديمة: [32-bit](https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Android-32bit.apk)) |
+| إضافة Chrome و Edge و Brave | [Brusk-Chrome-Extension.zip](https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Chrome-Extension.zip) |
+| إضافة Firefox | من [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/brusk-download-manager/) |
 
 لتعرف نوع الماك: اضغط على  ثم **About This Mac**. إذا مكتوب **Chip: Apple M…** فجهازك Apple Silicon.
 
@@ -35,23 +37,23 @@
 البرنامج مجاني ومو موقّع من Microsoft أو Apple، فأول مرة بيطلع تحذير:
 
 - **Windows:** إذا طلعت شاشة "Windows protected your PC"، اضغط **More info** وبعدين **Run anyway**.
-- **الماك:** فكّ الضغط واسحب Barq لمجلد Applications. بعدين افتح Terminal والصق:
-  `xattr -cr /Applications/Barq.app`
+- **الماك:** افتح ملف الـ dmg واسحب Brusk لمجلد Applications. بعدين افتح Terminal والصق:
+  `xattr -cr /Applications/Brusk.app`
   أو جرّب افتحه، وروح على System Settings ← Privacy & Security واضغط **Open Anyway**.
 
 ### الأندرويد
 
-نزّل `Barq-Android.apk` من الموبايل وافتحه. إذا سألك، اسمح بـ **تثبيت تطبيقات من هذا المصدر**. بعدها بأي تطبيق (يوتيوب، فيسبوك، إنستغرام، تيك توك…) اضغط **مشاركة** على الفيديو، واختار **تنزيل ببرق**، واختار الجودة. الفيديو بينحفظ بمجلد `Movies/Barq` وبيطلع بالمعرض، والصوت بـ `Music/Barq`.
+نزّل `Brusk-Android.apk` من الموبايل وافتحه. إذا سألك، اسمح بـ **تثبيت تطبيقات من هذا المصدر**. بعدها بأي تطبيق (يوتيوب، فيسبوك، إنستغرام، تيك توك…) اضغط **مشاركة** على الفيديو، واختار **تنزيل ببروسك**، واختار الجودة. الفيديو بينحفظ بمجلد `Movies/Brusk` وبيطلع بالمعرض، والصوت بـ `Music/Brusk`.
 
 ### تركيب إضافة المتصفح
 
 - **Firefox:** ركّبها من صفحة Firefox Add-ons.
 - **Chrome و Edge و Brave:**
-  1. فكّ ضغط `Barq-Chrome-Extension.zip`.
+  1. فكّ ضغط `Brusk-Chrome-Extension.zip`.
   2. افتح `chrome://extensions` (أو `edge://extensions`) وفعّل **Developer mode**.
   3. اضغط **Load unpacked** واختار المجلد.
 
-بعد التركيب، اضغط أيقونة برق بالمتصفح، بعدين **ربط**، ووافق بنافذة البرنامج.
+بعد التركيب، اضغط أيقونة بروسك بالمتصفح، بعدين **ربط**، ووافق بنافذة البرنامج.
 
 ### الميزات
 
@@ -77,7 +79,7 @@
 
 **المتصفح**
 - بيلتقط التحميلات تلقائياً حسب نوع الملف.
-- زر "تحميل بـ برق" فوق الفيديوهات.
+- زر "تحميل بـ بروسك" فوق الفيديوهات.
 - قائمة الزر اليمين: تحميل رابط، أو كل الروابط المحددة، أو فيديو الصفحة.
 
 **عام**
@@ -87,7 +89,7 @@
 
 ### الخصوصية
 
-برق ما بيجمع أي بيانات، وما فيه إعلانات. الإضافة بتبعت الروابط بس لبرنامج برق على نفس جهازك.
+بروسك ما بيجمع أي بيانات، وما فيه إعلانات. الإضافة بتبعت الروابط بس لبرنامج بروسك على نفس جهازك.
 
 نزّل فقط المحتوى المسموح لك بتنزيله.
 
@@ -97,43 +99,45 @@
 
 <h2 id="english">English</h2>
 
-Barq is a free, open-source download manager for Windows, macOS and Android, in Arabic and English. It splits each file across several connections to download faster, resumes where it stopped, downloads YouTube videos and torrents, and comes with a browser extension that hands your downloads to it automatically.
+**Brusk** means **lightning** in Kurdish.
+
+Brusk is a free, open-source download manager for Windows, macOS and Android, in Arabic and English. It splits each file across several connections to download faster, resumes where it stopped, downloads YouTube videos and torrents, and comes with a browser extension that hands your downloads to it automatically.
 
 ### Download
 
 | System | File |
 |---|---|
-| Windows 10 and 11 | [Barq-Setup-Windows.exe](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Setup-Windows.exe) |
-| Mac with Apple Silicon (M1 to M4) | [Barq-Mac-AppleSilicon.zip](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Mac-AppleSilicon.zip) |
-| Mac with Intel | [Barq-Mac-Intel.zip](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Mac-Intel.zip) |
-| Android 10 or newer | [Barq-Android.apk](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Android.apk) (older phones: [32-bit](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Android-32bit.apk)) |
-| Chrome, Edge and Brave extension | [Barq-Chrome-Extension.zip](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Chrome-Extension.zip) |
-| Firefox extension | On [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/barq-download-manager/) |
+| Windows 10 and 11 | [Brusk-Setup-Windows.exe](https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Setup-Windows.exe) |
+| Mac with Apple Silicon (M1 to M4) | [Brusk-Mac-AppleSilicon.dmg](https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Mac-AppleSilicon.dmg) |
+| Mac with Intel | [Brusk-Mac-Intel.dmg](https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Mac-Intel.dmg) |
+| Android 10 or newer | [Brusk-Android.apk](https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Android.apk) (older phones: [32-bit](https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Android-32bit.apk)) |
+| Chrome, Edge and Brave extension | [Brusk-Chrome-Extension.zip](https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Chrome-Extension.zip) |
+| Firefox extension | On [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/brusk-download-manager/) |
 
 Not sure which Mac you have? Click  → **About This Mac**. If it says **Chip: Apple M…**, it's Apple Silicon.
 
 ### First launch
 
-Barq is free and isn't signed by Microsoft or Apple, so the first launch shows a warning:
+Brusk is free and isn't signed by Microsoft or Apple, so the first launch shows a warning:
 
 - **Windows:** if you see "Windows protected your PC", click **More info**, then **Run anyway**.
-- **Mac:** unzip and drag Barq into Applications. Then open Terminal and paste:
-  `xattr -cr /Applications/Barq.app`
+- **Mac:** open the dmg and drag Brusk into Applications. Then open Terminal and paste:
+  `xattr -cr /Applications/Brusk.app`
   Or try to open it, then go to System Settings → Privacy & Security and click **Open Anyway**.
 
 ### Android
 
-Download `Barq-Android.apk` on your phone and open it. If asked, allow **Install from this source**. Then in any app (YouTube, Facebook, Instagram, TikTok…) tap **Share** on a video, choose **Download with Barq**, and pick a quality. Videos are saved to `Movies/Barq` and show up in your gallery; audio goes to `Music/Barq`.
+Download `Brusk-Android.apk` on your phone and open it. If asked, allow **Install from this source**. Then in any app (YouTube, Facebook, Instagram, TikTok…) tap **Share** on a video, choose **Download with Brusk**, and pick a quality. Videos are saved to `Movies/Brusk` and show up in your gallery; audio goes to `Music/Brusk`.
 
 ### Installing the browser extension
 
 - **Firefox:** install it from Firefox Add-ons.
 - **Chrome, Edge and Brave:**
-  1. Unzip `Barq-Chrome-Extension.zip`.
+  1. Unzip `Brusk-Chrome-Extension.zip`.
   2. Open `chrome://extensions` (or `edge://extensions`) and turn on **Developer mode**.
   3. Click **Load unpacked** and pick the folder.
 
-Then click the Barq icon in your browser, press **Connect**, and allow it in the Barq window.
+Then click the Brusk icon in your browser, press **Connect**, and allow it in the Brusk window.
 
 ### Features
 
@@ -159,7 +163,7 @@ Then click the Barq icon in your browser, press **Connect**, and allow it in the
 
 **Browser**
 - Takes over downloads automatically by file type.
-- A "Download with Barq" button on videos.
+- A "Download with Brusk" button on videos.
 - Right-click menu: download a link, all selected links, or the page's video.
 
 **General**
@@ -169,7 +173,7 @@ Then click the Barq icon in your browser, press **Connect**, and allow it in the
 
 ### Privacy
 
-Barq collects no data and shows no ads. The extension sends links only to the Barq app on your own computer.
+Brusk collects no data and shows no ads. The extension sends links only to the Brusk app on your own computer.
 
 Only download content you have the right to download.
 

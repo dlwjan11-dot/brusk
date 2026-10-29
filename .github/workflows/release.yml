@@ -1,0 +1,159 @@
+name: Release
+
+# Push a tag like v1.1.0 and GitHub builds every version of Brusk and publishes them.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    defaults: { run: { shell: bash } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22', cache: npm }
+      - name: Build
+        run: |
+          set -o pipefail
+          { npm ci && node scripts/fetch-tools.js && npx electron-builder --win --x64 --publish never; } 2>&1 | tee build.log
+          mkdir -p out
+          cp dist/Brusk-Setup-*.exe out/Brusk-Setup-Windows.exe
+          ls -la out
+      - uses: actions/upload-artifact@v4
+        with: { name: windows, path: out/ }
+      - name: Save log
+        if: always()
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: scripts/ci-log.sh windows "${{ job.status }}" build.log
+
+  mac:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22', cache: npm }
+      - name: Build
+        env: { CSC_IDENTITY_AUTO_DISCOVERY: 'false' }
+        run: |
+          set -o pipefail
+          { npm ci && node scripts/fetch-tools.js mac && npx electron-builder --mac dir --arm64 --x64 --publish never; } 2>&1 | tee build.log
+      - name: Sign (ad hoc) and package
+        run: |
+          set -eo pipefail
+          mkdir -p out
+          for pair in "mac-arm64:AppleSilicon" "mac:Intel"; do
+            dir="${pair%%:*}"; label="${pair##*:}"
+            app="dist/$dir/Brusk.app"
+            codesign --force --deep --sign - "$app" 2>&1 | tee -a build.log
+            codesign --verify --deep --strict "$app" 2>&1 | tee -a build.log
+            ditto -c -k --sequesterRsrc --keepParent "$app" "out/Brusk-Mac-$label.zip"
+            stage="$(mktemp -d)"; cp -R "$app" "$stage/"; ln -s /Applications "$stage/Applications"
+            hdiutil create -volname "Brusk" -srcfolder "$stage" -ov -format UDZO "out/Brusk-Mac-$label.dmg" 2>&1 | tee -a build.log
+          done
+          ls -la out | tee -a build.log
+      - uses: actions/upload-artifact@v4
+        with: { name: mac, path: out/ }
+      - name: Save log
+        if: always()
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: scripts/ci-log.sh mac "${{ job.status }}" build.log
+
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '17' }
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Signing key
+        env:
+          KEYSTORE: ${{ secrets.BARQ_KEYSTORE }}
+          KEYSTORE_PASSWORD: ${{ secrets.BARQ_KEYSTORE_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE" ] && [ -n "$KEYSTORE_PASSWORD" ]; then
+            echo "$KEYSTORE" | base64 -d > "$RUNNER_TEMP/brusk.jks"
+            echo "BARQ_KS_PATH=$RUNNER_TEMP/brusk.jks" >> "$GITHUB_ENV"
+            echo "BARQ_KS_PASS=$KEYSTORE_PASSWORD" >> "$GITHUB_ENV"
+            echo "SIGNED=1" >> "$GITHUB_ENV"
+          else
+            echo "No release key: the Android app is built but not published"
+          fi
+      - name: Build
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          set -o pipefail
+          ./gradlew assembleRelease --no-daemon --stacktrace 2>&1 | tee ../build.log
+      - name: Collect
+        if: env.SIGNED == '1'
+        run: |
+          mkdir -p out
+          cp android/app/build/outputs/apk/release/app-arm64-v8a-release.apk out/Brusk-Android.apk
+          cp android/app/build/outputs/apk/release/app-armeabi-v7a-release.apk out/Brusk-Android-32bit.apk
+      - uses: actions/upload-artifact@v4
+        if: env.SIGNED == '1'
+        with: { name: android, path: out/ }
+      - name: Save log
+        if: always()
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: scripts/ci-log.sh android "${{ job.status }} signed=${SIGNED:-0}" build.log
+
+  extensions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package
+        run: |
+          mkdir -p out
+          (cd extension && zip -q -r ../out/Brusk-Chrome-Extension.zip .)
+          ./scripts/build-firefox.sh
+          ls -la out
+      - uses: actions/upload-artifact@v4
+        with: { name: extensions, path: out/Brusk-Chrome-Extension.zip }
+
+  publish:
+    needs: [windows, mac, android, extensions]
+    if: always() && needs.windows.result == 'success' && needs.mac.result == 'success' && needs.extensions.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: { path: artifacts, merge-multiple: true }
+      - name: Publish the release
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: |
+          set -o pipefail
+          VERSION=$(node -p "require('./package.json').version")
+          TAG="${GITHUB_REF_NAME}"
+          [[ "$TAG" == v* ]] || TAG="v$VERSION"
+          ls -la artifacts | tee publish.log
+          cat > notes.md <<EOF
+          ## بروسك $VERSION · Brusk $VERSION
+
+          | | |
+          |---|---|
+          | **Windows 10 / 11** | \`Brusk-Setup-Windows.exe\` |
+          | **Mac — Apple Silicon (M1–M4)** | \`Brusk-Mac-AppleSilicon.dmg\` |
+          | **Mac — Intel** | \`Brusk-Mac-Intel.dmg\` |
+          | **Android 10+** | \`Brusk-Android.apk\` (older phones: \`Brusk-Android-32bit.apk\`) |
+          | **Chrome / Edge / Brave** | \`Brusk-Chrome-Extension.zip\` |
+
+          **أول تشغيل · First launch:** Windows → More info → Run anyway. Mac → \`xattr -cr /Applications/Brusk.app\`
+
+          الموقع · Website: https://dlwjan11-dot.github.io/brusk/
+          EOF
+          sed -i 's/^          //' notes.md
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" artifacts/* --clobber 2>&1 | tee -a publish.log
+          else
+            gh release create "$TAG" artifacts/* --title "Brusk $VERSION — بروسك" --notes-file notes.md --latest 2>&1 | tee -a publish.log
+          fi
+      - name: Save log
+        if: always()
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: scripts/ci-log.sh publish "${{ job.status }}" publish.log

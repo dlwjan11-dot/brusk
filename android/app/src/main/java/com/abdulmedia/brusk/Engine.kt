@@ -1,4 +1,4 @@
-package com.abdulmedia.barq
+package com.abdulmedia.brusk
 
 import android.content.ContentValues
 import android.content.Context
@@ -31,7 +31,7 @@ data class VideoInfo(
 object Engine {
     val ready = CompletableDeferred<Unit>()
 
-    /** Unpacks Python, yt-dlp and FFmpeg the first time (a few seconds). Called from BarqApp. */
+    /** Unpacks Python, yt-dlp and FFmpeg the first time (a few seconds). Called from BruskApp. */
     fun init(ctx: Context) {
         try {
             YoutubeDL.getInstance().init(ctx)
@@ -158,17 +158,17 @@ object Engine {
     fun cancel(id: String) { runCatching { YoutubeDL.getInstance().destroyProcessById(id) } }
 
     /**
-     * Put the file where people look for it: videos in Movies/Barq (shows in the gallery),
-     * sound in Music/Barq, anything else in Download/Barq.
+     * Put the file where people look for it: videos in Movies/Brusk (shows in the gallery),
+     * sound in Music/Brusk, anything else in Download/Brusk.
      */
     fun saveToPhone(ctx: Context, file: File, title: String): Triple<Uri, String, String> {
         val ext = file.extension.lowercase()
         val mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext) ?: "application/octet-stream"
         val (collection, folder) = when {
-            mime.startsWith("video/") -> MediaStore.Video.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY) to "${Environment.DIRECTORY_MOVIES}/Barq"
-            mime.startsWith("audio/") -> MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY) to "${Environment.DIRECTORY_MUSIC}/Barq"
-            mime.startsWith("image/") -> MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY) to "${Environment.DIRECTORY_PICTURES}/Barq"
-            else -> MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY) to "${Environment.DIRECTORY_DOWNLOADS}/Barq"
+            mime.startsWith("video/") -> MediaStore.Video.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY) to "${Environment.DIRECTORY_MOVIES}/Brusk"
+            mime.startsWith("audio/") -> MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY) to "${Environment.DIRECTORY_MUSIC}/Brusk"
+            mime.startsWith("image/") -> MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY) to "${Environment.DIRECTORY_PICTURES}/Brusk"
+            else -> MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY) to "${Environment.DIRECTORY_DOWNLOADS}/Brusk"
         }
         val name = safeName(title).ifEmpty { file.nameWithoutExtension } + "." + ext
         val values = ContentValues().apply {

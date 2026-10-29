@@ -9,13 +9,13 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name=".BarqApp"
+        android:name=".BruskApp"
         android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:extractNativeLibs="true"
-        android:theme="@style/Theme.Barq"
+        android:theme="@style/Theme.Brusk"
         android:localeConfig="@xml/locales_config">
 
         <activity
@@ -34,9 +34,9 @@
             android:name=".ShareActivity"
             android:exported="true"
             android:label="@string/share_label"
-            android:theme="@style/Theme.Barq.Sheet"
+            android:theme="@style/Theme.Brusk.Sheet"
             android:excludeFromRecents="true"
-            android:taskAffinity="com.abdulmedia.barq.share"
+            android:taskAffinity="com.abdulmedia.brusk.share"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />

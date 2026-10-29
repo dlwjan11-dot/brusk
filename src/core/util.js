@@ -45,7 +45,7 @@ function uniquePath(dir, filename, taken = new Set()) {
   const ext = path.extname(filename);
   const base = ext ? filename.slice(0, -ext.length) : filename;
   let candidate = path.join(dir, filename);
-  for (let i = 1; fs.existsSync(candidate) || fs.existsSync(candidate + '.barq') || taken.has(candidate.toLowerCase()); i++) {
+  for (let i = 1; fs.existsSync(candidate) || fs.existsSync(candidate + '.brusk') || taken.has(candidate.toLowerCase()); i++) {
     candidate = path.join(dir, `${base} (${i})${ext}`);
   }
   return candidate;

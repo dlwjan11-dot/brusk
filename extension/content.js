@@ -1,10 +1,10 @@
 'use strict';
-/* Barq: a small "Download" button over videos on the page. */
+/* Brusk: a small "Download" button over videos on the page. */
 (() => {
   if (window.__barqContent) return;
   window.__barqContent = true;
   const ar = /^ar/.test(navigator.language || '') || document.documentElement.lang?.startsWith('ar');
-  const LABEL = ar ? 'تحميل بـ برق' : 'Download with Barq';
+  const LABEL = ar ? 'تحميل بـ بروسك' : 'Download with Brusk';
 
   let host = null, btn = null, current = null, hideTimer = null;
 
@@ -18,7 +18,7 @@
       button:hover{filter:brightness(1.08)} svg{width:15px;height:15px;fill:#ffc414}
       .x{all:initial;cursor:pointer;color:#fff;opacity:.7;font:14px/1 sans-serif;padding:0 2px 0 4px} .x:hover{opacity:1}
       .ok{background:linear-gradient(180deg,#22b06b,#178a52)}</style>
-      <button part="b"><svg viewBox="0 0 24 24"><path d="M13.2 2 4.5 13.4h6.1L9.8 22l8.7-11.4h-6.1L13.2 2Z"/></svg><span>${LABEL}</span><span class="x" title="×">×</span></button>`;
+      <button part="b"><svg viewBox="0 0 24 24"><path d="M14.3 0.8 4.6 12.6h6.3L9.6 20.2 19.4 8.4h-6.3L14.3 0.8ZM6.45 21.9h11.1a.65.65 0 0 1 0 1.3H6.45a.65.65 0 0 1 0-1.3Z"/></svg><span>${LABEL}</span><span class="x" title="×">×</span></button>`;
     btn = root.querySelector('button');
     btn.addEventListener('mouseenter', () => clearTimeout(hideTimer));
     btn.addEventListener('mouseleave', scheduleHide);
@@ -46,8 +46,8 @@
       setTimeout(() => { btn.classList.remove('ok'); span.textContent = LABEL; scheduleHide(); }, ok ? 2500 : 6000);
     };
     const why = code => ({
-      'not-running': ar ? 'برنامج برق مو مفتوح' : 'Barq is not running',
-      'not-paired': ar ? 'اربط الإضافة ببرق أولاً (من أيقونة برق)' : 'Connect the extension first (Barq icon)',
+      'not-running': ar ? 'برنامج بروسك مو مفتوح' : 'Brusk is not running',
+      'not-paired': ar ? 'اربط الإضافة ببروسك أولاً (من أيقونة بروسك)' : 'Connect the extension first (Brusk icon)',
     }[code] || (/context invalidated|receiving end|Could not establish/i.test(code || '') ? (ar ? 'أعد تحميل الصفحة (F5) وجرّب' : 'Reload the page (F5) and try again') : `${ar ? 'تعذّر الإرسال' : 'Could not send'}: ${code || '?'}`));
     span.textContent = ar ? 'جاري الإرسال…' : 'Sending…';
     const timer = setTimeout(() => finish(why('Could not establish connection')), 10000);
@@ -55,7 +55,7 @@
       chrome.runtime.sendMessage(msg, r => {
         const err = chrome.runtime.lastError;
         if (err) return finish(why(err.message));
-        if (r?.ok) finish(ar ? 'أُرسل إلى برق ✓' : 'Sent to Barq ✓', true);
+        if (r?.ok) finish(ar ? 'أُرسل إلى بروسك ✓' : 'Sent to Brusk ✓', true);
         else finish(why(r?.error));
       });
     } catch (e) { finish(why(e.message)); }

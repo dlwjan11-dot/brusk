@@ -1,4 +1,4 @@
-package com.abdulmedia.barq
+package com.abdulmedia.brusk
 
 import android.Manifest
 import android.content.Intent
@@ -55,7 +55,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 
-/** The sheet that opens when you choose "Download with Barq" in another app's Share menu. */
+/** The sheet that opens when you choose "Download with Brusk" in another app's Share menu. */
 class ShareActivity : ComponentActivity() {
     private val askNotify = registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
 
@@ -68,7 +68,7 @@ class ShareActivity : ComponentActivity() {
         ) askNotify.launch(Manifest.permission.POST_NOTIFICATIONS)
 
         setContent {
-            BarqTheme {
+            BruskTheme {
                 // tap outside the sheet to close it
                 Box(
                     Modifier.fillMaxSize().clickable(remember { MutableInteractionSource() }, null) { finish() },

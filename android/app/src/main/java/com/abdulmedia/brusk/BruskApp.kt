@@ -1,9 +1,9 @@
-package com.abdulmedia.barq
+package com.abdulmedia.brusk
 
 import android.app.Application
 import kotlin.concurrent.thread
 
-class BarqApp : Application() {
+class BruskApp : Application() {
     override fun onCreate() {
         super.onCreate()
         Prefs.init(this)

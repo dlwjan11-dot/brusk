@@ -1,18 +1,18 @@
-package com.abdulmedia.barq
+package com.abdulmedia.brusk
 
 /** All the app's text, in Arabic and English. */
 class Strings(val ar: Boolean) {
     private fun t(a: String, e: String) = if (ar) a else e
 
-    val appName = t("برق", "Barq")
+    val appName = t("بروسك", "Brusk")
     val tagline = t("الصق رابط أو شارك من أي تطبيق", "Paste a link, or share from any app")
     val pasteHint = t("رابط فيديو من يوتيوب، فيسبوك، إنستغرام، تيك توك…", "A video link from YouTube, Facebook, Instagram, TikTok…")
     val paste = t("لصق", "Paste")
     val go = t("تنزيل", "Download")
     val howTitle = t("أسهل طريقة", "The easy way")
     val howText = t(
-        "بأي تطبيق، اضغط مشاركة على الفيديو، واختار \"تنزيل ببرق\".",
-        "In any app, tap Share on the video and choose \"Download with Barq\".",
+        "بأي تطبيق، اضغط مشاركة على الفيديو، واختار \"تنزيل ببروسك\".",
+        "In any app, tap Share on the video and choose \"Download with Brusk\".",
     )
     val emptyTitle = t("ما في تنزيلات بعد", "No downloads yet")
     val downloads = t("التنزيلات", "Downloads")
@@ -27,7 +27,7 @@ class Strings(val ar: Boolean) {
     val clearDone = t("مسح المكتملة", "Clear finished")
 
     val reading = t("جاري قراءة الرابط…", "Reading the link…")
-    val preparing = t("أول مرة: جاري تجهيز برق…", "First run: getting Barq ready…")
+    val preparing = t("أول مرة: جاري تجهيز بروسك…", "First run: getting Brusk ready…")
     val chooseQuality = t("اختار الجودة", "Choose quality")
     val audioOnly = t("صوت فقط", "Audio only")
     val best = t("أفضل جودة", "Best quality")
@@ -66,10 +66,10 @@ class Strings(val ar: Boolean) {
     val updated = t("تم التحديث", "Updated")
     val about = t("حول", "About")
     val aboutText = t(
-        "برق مجاني ومفتوح المصدر. ما بيجمع أي بيانات. نزّل فقط المحتوى المسموح لك بتنزيله.",
-        "Barq is free and open source. It collects no data. Only download content you have the right to.",
+        "بروسك مجاني ومفتوح المصدر. ما بيجمع أي بيانات. نزّل فقط المحتوى المسموح لك بتنزيله.",
+        "Brusk is free and open source. It collects no data. Only download content you have the right to.",
     )
-    val website = "dlwjan11-dot.github.io/barq"
+    val website = "dlwjan11-dot.github.io/brusk"
 
     /** Turn yt-dlp's English error lines into something a person understands. */
     fun explain(error: String?): String {

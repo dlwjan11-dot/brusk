@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Barq"
+rootProject.name = "Brusk"
 include(":app")
