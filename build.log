@@ -1,0 +1,32 @@
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated rimraf@2.6.3: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated boolean@3.2.0: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+
+added 284 packages, and audited 285 packages in 4s
+
+47 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+aria2c.exe ok
+yt-dlp.exe ok
+  • electron-builder  version=26.18.0 os=10.0.26100
+  • loaded configuration  file=package.json ("build" field)
+  • executing @electron/rebuild  electronVersion=45.1.0 arch=x64 buildFromSource=false workspaceRoot=D:\a\brusk\brusk projectDir=./ appDir=./
+  • installing native dependencies  arch=x64
+  • completed installing native dependencies
+  • packaging       platform=win32 arch=x64 electron=45.1.0 appOutDir=dist\win-unpacked
+  • downloaded      label=electron progress=100%
+  • downloaded electron zip extracted successfully  output=D:\a\brusk\brusk\dist\win-unpacked
+  • searching for node modules  pm=npm searchDir=D:\a\brusk\brusk
+  • updating asar integrity executable resource  executablePath=dist\win-unpacked\Brusk.exe
+  • file signing skipped via signExecutable configuration  file=dist\win-unpacked\Brusk.exe
+  • building        target=zip arch=x64 file=dist\Brusk-1.3.1-portable.zip
+  • downloaded      label=7zip-win-x64.tar.gz progress=100%
+  • building        target=nsis file=dist\Brusk-Setup-1.3.1.exe archs=x64 oneClick=false perMachine=false
+  • downloaded      label=nsis-3.0.4.1.7z progress=100%
+  • downloaded      label=nsis-resources-3.4.1.7z progress=100%
+  • file signing skipped via signExecutable configuration  file=dist\Brusk-Setup-1.3.1.__uninstaller.exe
+  • file signing skipped via signExecutable configuration  file=dist\Brusk-Setup-1.3.1.exe
+  • building block map  blockMapFile=dist\Brusk-Setup-1.3.1.exe.blockmap
