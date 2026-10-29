@@ -1,113 +1,191 @@
 <p align="center"><img src="docs/img/icon.png" width="96" alt="Barq"></p>
-<h1 align="center">برق — Barq Download Manager</h1>
-<p align="center"><b><a href="https://dlwjan11-dot.github.io/barq/">الموقع والتنزيل · Website &amp; download</a></b> · <a href="https://github.com/dlwjan11-dot/barq/releases/latest">آخر نسخة · Latest release</a></p>
+<h1 align="center">برق · Barq</h1>
+<p align="center"><b>مدير تحميل سريع ومجاني لـ Windows و macOS</b><br>A fast, free download manager for Windows and macOS</p>
+<p align="center">
+  <a href="https://dlwjan11-dot.github.io/barq/"><b>🌐 الموقع · Website</b></a> &nbsp;·&nbsp;
+  <a href="https://github.com/dlwjan11-dot/barq/releases/latest"><b>⬇️ التنزيل · Download</b></a> &nbsp;·&nbsp;
+  <a href="#العربية">العربية</a> &nbsp;·&nbsp;
+  <a href="#english">English</a>
+</p>
 <p align="center"><img src="docs/img/main-ar.jpg" width="820" alt="Barq"></p>
 
-A free, open-source download manager for **Windows and macOS**, in Arabic and English: up to 32 connections per file with smart splitting, resume, YouTube and video sites (yt-dlp), torrents and magnet links (aria2), scheduler, speed limits, and browser extensions for Firefox, Chrome and Edge.
+---
 
+<div dir="rtl">
 
-مدير تحميل سريع لـ Windows، متل Internet Download Manager: تحميل على عدة اتصالات، استكمال، فيديو يوتيوب والمواقع، تورنت، وإضافة للمتصفح. الواجهة عربي وإنجليزي.
+## العربية
 
-## التشغيل
-- **Barq-Setup-1.0.0.exe**: برنامج التنصيب. البرنامج غير موقّع لهلق، فـ Windows ممكن يعرض تحذير "SmartScreen": اضغط **More info ← Run anyway**.
-- **Barq-1.0.0-portable.zip**: نسخة بدون تنصيب. فكّ الضغط وشغّل `Barq.exe`.
+برق مدير تحميل مجاني ومفتوح المصدر، بيشتغل على Windows والماك، وواجهته بالعربي والإنجليزي. بيقسم الملف على عدة اتصالات حتى ينزل أسرع، وبيكمّل من وين وقف، وبينزّل فيديوهات يوتيوب والتورنت، وفيه إضافة للمتصفح بتبعتله التحميلات لحالها.
 
-## الميزات
+### التنزيل
+
+| الجهاز | الملف |
+|---|---|
+| Windows 10 و 11 | [Barq-Setup-Windows.exe](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Setup-Windows.exe) |
+| ماك Apple Silicon ‏(M1 إلى M4) | [Barq-Mac-AppleSilicon.zip](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Mac-AppleSilicon.zip) |
+| ماك Intel | [Barq-Mac-Intel.zip](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Mac-Intel.zip) |
+| إضافة Chrome و Edge و Brave | [Barq-Chrome-Extension.zip](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Chrome-Extension.zip) |
+| إضافة Firefox | من [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/barq-download-manager/) |
+
+لتعرف نوع الماك: اضغط على  ثم **About This Mac**. إذا مكتوب **Chip: Apple M…** فجهازك Apple Silicon.
+
+### أول تشغيل
+
+البرنامج مجاني ومو موقّع من Microsoft أو Apple، فأول مرة بيطلع تحذير:
+
+- **Windows:** إذا طلعت شاشة "Windows protected your PC"، اضغط **More info** وبعدين **Run anyway**.
+- **الماك:** فكّ الضغط واسحب Barq لمجلد Applications. بعدين افتح Terminal والصق:
+  `xattr -cr /Applications/Barq.app`
+  أو جرّب افتحه، وروح على System Settings ← Privacy & Security واضغط **Open Anyway**.
+
+### تركيب إضافة المتصفح
+
+- **Firefox:** ركّبها من صفحة Firefox Add-ons.
+- **Chrome و Edge و Brave:**
+  1. فكّ ضغط `Barq-Chrome-Extension.zip`.
+  2. افتح `chrome://extensions` (أو `edge://extensions`) وفعّل **Developer mode**.
+  3. اضغط **Load unpacked** واختار المجلد.
+
+بعد التركيب، اضغط أيقونة برق بالمتصفح، بعدين **ربط**، ووافق بنافذة البرنامج.
+
+### الميزات
+
 **التحميل**
-- تقسيم ذكي على 1–32 اتصال. الاتصال يلي بيخلص بياخد نص أكبر جزء باقي، فكل الاتصالات بتضل شغالة للآخر.
-- الأجزاء بتنكتب مباشرة بملف واحد، بدون مرحلة دمج بالآخر.
-- استكمال بعد الإيقاف أو انقطاع النت أو إغلاق البرنامج. إذا تغيّر الملف على السيرفر بيبدأ من جديد وبيخبرك.
-- إعادة محاولة تلقائية للاتصالات المقطوعة. أخطاء متل 404 و 403 بتوقف فوراً بدل ما تعيد للأبد.
-- إذا السيرفر قال إنه مشغول (429/503) بيخفف عدد الاتصالات بشكل مؤقت.
-- حد سرعة لكل التحميلات، أو لكل تحميل لحاله.
-- صف انتظار: عدد التحميلات بنفس الوقت قابل للتعديل، ومع ترتيب الدور.
-- جدولة: وقت بداية ووقت نهاية وأيام محددة. وبعد ما يخلص كل شي: إطفاء الجهاز، أو سكون، أو إغلاق البرنامج.
-- تصنيفات تلقائية حسب النوع (فيديو، صوتيات، مستندات، مضغوطة، برامج، صور، تورنت)، ومجلد لكل نوع.
-- فحص المساحة قبل التحميل، والاسم الحقيقي للملف (مع العربي)، وأسماء آمنة على Windows.
-- منع تكرار نفس الرابط، وتحديث الرابط إذا انتهت صلاحيته مع الاحتفاظ بالجزء المحمّل.
-- التحقق من الملف بـ SHA-256، ودعم البروكسي (HTTP و SOCKS5).
-- الكمبيوتر ما بيدخل وضع السكون وفي تحميل شغال.
+- حتى 32 اتصال للملف الواحد، مع تقسيم ذكي: الاتصال يلي بيخلص بياخد نص أكبر جزء باقي، فالسرعة بتضل عالية للآخر.
+- استكمال بعد الإيقاف أو انقطاع النت أو إغلاق الجهاز.
+- إعادة محاولة تلقائية للاتصالات المقطوعة.
+- حد سرعة لكل التحميلات، أو لكل ملف لحاله.
+- صف انتظار، وجدولة بوقت وأيام محددة.
+- بعد ما تخلص التحميلات: إطفاء الجهاز، أو سكون، أو إغلاق البرنامج.
+- تصنيف تلقائي حسب نوع الملف، مع مجلد لكل نوع.
+- دعم البروكسي، وفحص الملف بـ SHA-256.
 
-**الفيديو**: يوتيوب، فيميو، تيك توك، تويتر/X، فيسبوك، إنستغرام وغيرهم كتير.
-- اختيار الجودة مع الحجم.
-- صوت فقط بصيغة M4A أو MP3.
-- قوائم تشغيل وقنوات كاملة.
-- ترجمة مدمجة بالفيديو.
-- روابط بث m3u8.
+**الفيديو**
+- يوتيوب، فيميو، تيك توك، X، فيسبوك، إنستغرام، ومواقع كتير غيرهم.
+- اختيار الجودة لحد 4K، أو صوت فقط بصيغة MP3 أو M4A.
+- قوائم تشغيل كاملة، وترجمة.
 
-**التورنت**: روابط magnet وملفات `.torrent`.
-- اختيار الملفات قبل البدء.
-- نسبة مشاركة وحد سرعة رفع.
-- عرض الأجهزة المتصلة وتقدّم كل ملف.
-- بيشتغل كمان مع روابط FTP.
+**التورنت**
+- روابط magnet وملفات `.torrent`.
+- اختيار الملفات قبل ما يبلش التحميل.
+- حد سرعة الرفع ونسبة المشاركة.
 
-**المتصفح** (Chrome و Edge و Brave و Opera):
+**المتصفح**
 - بيلتقط التحميلات تلقائياً حسب نوع الملف.
-- زر "تحميل بـ برق" فوق أي فيديو.
+- زر "تحميل بـ برق" فوق الفيديوهات.
 - قائمة الزر اليمين: تحميل رابط، أو كل الروابط المحددة، أو فيديو الصفحة.
-- كشف ملفات الفيديو والبث بالصفحة.
-- بيبعت تسجيل الدخول (الكوكيز) مع التحميل.
 
-**عام**:
-- مراقبة الروابط المنسوخة.
-- أيقونة بجانب الساعة.
-- إشعارات عند انتهاء التحميل.
-- سحب وإفلات ملفات التورنت.
+**عام**
+- واجهة عربية كاملة من اليمين لليسار، وإنجليزية.
 - وضع فاتح وداكن.
-- اختصارات: `Ctrl+V` للصق، `Ctrl+N` لرابط جديد، `Space` للإيقاف أو الاستئناف، `Delete` للحذف.
+- مراقبة الروابط المنسوخة، وأيقونة جنب الساعة، وإشعارات.
 
-## تركيب إضافة المتصفح
-1. من البرنامج: **الإعدادات ← المتصفح ← افتح مجلد الإضافة**.
-2. افتح `chrome://extensions` (أو `edge://extensions`) وفعّل **Developer mode**.
-3. اسحب المجلد للصفحة (أو **Load unpacked**).
-4. اضغط أيقونة برق بالمتصفح ← **ربط**، ووافق بنافذة برق.
+### الخصوصية
 
-## الماك (macOS 12 أو أحدث)
-- **Barq-1.0.2-mac-arm64.zip**: لأجهزة Apple Silicon (M1 ،M2 ،M3 ،M4…).
-- **Barq-1.0.2-mac-x64.zip**: لأجهزة Intel.
-- لتعرف نوع جهازك:  ← About This Mac. إذا مكتوب "Chip: Apple M…" فهو Apple Silicon.
-- فكّ الضغط واسحب Barq إلى Applications. البرنامج موقّع توقيع محلي بس، مو من Apple، فأول مرة:
-  افتح Terminal واكتب `xattr -cr /Applications/Barq.app`، أو جرّب افتحه ثم من System Settings ← Privacy & Security اضغط **Open Anyway**.
-- التورنت على Apple Silicon بيحتاج Rosetta (الماك بيعرض تنزيلها تلقائياً أول مرة).
-- البناء من Linux: `npx electron-builder --mac` ثم `node scripts/sign-mac.js` (يحتاج rcodesign).
+برق ما بيجمع أي بيانات، وما فيه إعلانات. الإضافة بتبعت الروابط بس لبرنامج برق على نفس جهازك.
 
-## فايرفوكس
-- الملف `Barq-Firefox.xpi` (يتبنى بـ `scripts/build-firefox.sh`).
-- تجربة مؤقتة: `about:debugging` ← This Firefox ← Load Temporary Add-on ← اختر الملف (تنمسح عند إغلاق فايرفوكس).
-- تركيب دائم: ارفعه على addons.mozilla.org كـ "On your own" ليتوقّع مجاناً، بعدها اسحب الملف الموقّع لفايرفوكس.
+نزّل فقط المحتوى المسموح لك بتنزيله.
 
-## الأخطاء يلي انصلحت من المشاريع التلاتة
-| المشكلة | بأي مشروع | الحل ببرق |
-|---|---|---|
-| تقسيم ثابت: الاتصال يلي بيخلص بيقعد فاضي | Awesome Downloader | تقسيم ذكي، الاتصال الفاضي بياخد نص أكبر جزء |
-| فشل اتصال واحد بيلغي كل التحميل | Awesome Downloader | إعادة محاولة لكل اتصال لحاله |
-| كل جزء بملف لحاله ودمج بطيء بالآخر | Awesome Downloader | كتابة مباشرة بملف واحد |
-| يوتيوب بيعتمد على بروتوكول بينكسر | Awesome Downloader | yt-dlp مع زر تحديث |
-| الإضافة بتتركب يدوياً بدون شرح | Awesome / Gunda | خطوات مشروحة داخل البرنامج، وربط بموافقة |
-| ما في تقسيم أبداً (اتصال واحد) | Gunda | حتى 32 اتصال |
-| ما في حد سرعة ولا جدولة ولا بروكسي | Gunda / DownloadCraft | كلها موجودة |
-| ما في إضافة متصفح | DownloadCraft | موجودة |
-| ما في دعم للعربي (RTL) | الكل | واجهة عربية كاملة من اليمين لليسار |
+</div>
 
-## للمطوّر
-```
+---
+
+<h2 id="english">English</h2>
+
+Barq is a free, open-source download manager for Windows and macOS, in Arabic and English. It splits each file across several connections to download faster, resumes where it stopped, downloads YouTube videos and torrents, and comes with a browser extension that hands your downloads to it automatically.
+
+### Download
+
+| System | File |
+|---|---|
+| Windows 10 and 11 | [Barq-Setup-Windows.exe](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Setup-Windows.exe) |
+| Mac with Apple Silicon (M1 to M4) | [Barq-Mac-AppleSilicon.zip](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Mac-AppleSilicon.zip) |
+| Mac with Intel | [Barq-Mac-Intel.zip](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Mac-Intel.zip) |
+| Chrome, Edge and Brave extension | [Barq-Chrome-Extension.zip](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Chrome-Extension.zip) |
+| Firefox extension | On [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/barq-download-manager/) |
+
+Not sure which Mac you have? Click  → **About This Mac**. If it says **Chip: Apple M…**, it's Apple Silicon.
+
+### First launch
+
+Barq is free and isn't signed by Microsoft or Apple, so the first launch shows a warning:
+
+- **Windows:** if you see "Windows protected your PC", click **More info**, then **Run anyway**.
+- **Mac:** unzip and drag Barq into Applications. Then open Terminal and paste:
+  `xattr -cr /Applications/Barq.app`
+  Or try to open it, then go to System Settings → Privacy & Security and click **Open Anyway**.
+
+### Installing the browser extension
+
+- **Firefox:** install it from Firefox Add-ons.
+- **Chrome, Edge and Brave:**
+  1. Unzip `Barq-Chrome-Extension.zip`.
+  2. Open `chrome://extensions` (or `edge://extensions`) and turn on **Developer mode**.
+  3. Click **Load unpacked** and pick the folder.
+
+Then click the Barq icon in your browser, press **Connect**, and allow it in the Barq window.
+
+### Features
+
+**Downloads**
+- Up to 32 connections per file with smart splitting: a connection that finishes takes half of the biggest part left, so speed stays high to the end.
+- Resume after pausing, losing the connection, or shutting down.
+- Automatic retries for dropped connections.
+- Speed limits for everything, or per file.
+- A queue, and a scheduler with set times and days.
+- When everything is done: shut down, sleep, or quit.
+- Automatic categories by file type, with a folder for each.
+- Proxy support and SHA-256 file checks.
+
+**Video**
+- YouTube, Vimeo, TikTok, X, Facebook, Instagram and many more.
+- Any quality up to 4K, or audio only as MP3 or M4A.
+- Whole playlists, and subtitles.
+
+**Torrents**
+- Magnet links and `.torrent` files.
+- Choose which files you want before it starts.
+- Upload limits and share ratio.
+
+**Browser**
+- Takes over downloads automatically by file type.
+- A "Download with Barq" button on videos.
+- Right-click menu: download a link, all selected links, or the page's video.
+
+**General**
+- A complete right-to-left Arabic interface, and English.
+- Light and dark themes.
+- Copied-link detection, a tray icon, and notifications.
+
+### Privacy
+
+Barq collects no data and shows no ads. The extension sends links only to the Barq app on your own computer.
+
+Only download content you have the right to download.
+
+---
+
+## للمطوّرين · For developers
+
+```bash
 npm install
-npm start                 # تشغيل
-npm test                  # اختبارات المحرك
-npm run dist              # بناء برنامج التنصيب (على Windows، أو Linux مع Wine)
+npm start          # تشغيل · run
+npm test           # الاختبارات · tests
+npm run dist       # بناء نسخة Windows · build for Windows (on Windows, or Linux with Wine)
+npm run dist:mac   # بناء نسخة الماك · build for macOS (needs rcodesign on Linux)
+./scripts/build-firefox.sh   # إضافة Firefox · Firefox add-on
 ```
-- `src/core/`: المحرك.
-  - `http-transfer.js`: التحميل على عدة اتصالات.
-  - `manager.js`: الصف والجدولة.
-  - `video.js`: الفيديو.
-  - `aria2.js`: التورنت.
-  - `tools.js`: الأدوات.
-- `src/main/`: Electron.
-  - `bridge.js`: الاتصال مع الإضافة.
-- `src/renderer/`: الواجهة.
-- `extension/`: إضافة المتصفح.
 
-الأدوات المساعدة:
-- **aria2** و **yt-dlp** مضمّنين بالبرنامج.
-- **FFmpeg** و **Deno** بينزلوا من مصادرهم الرسمية أول مرة بتحتاجهم.
-- كل أداة بتنفحص بـ SHA-256 قبل ما تنحفظ.
+| المجلد · Folder | المحتوى · Contents |
+|---|---|
+| `src/core/` | محرك التحميل · download engine (`http-transfer.js`, `manager.js`, `video.js`, `aria2.js`, `tools.js`) |
+| `src/main/` | Electron، والاتصال مع الإضافة · Electron and the extension link (`bridge.js`) |
+| `src/renderer/` | الواجهة · interface |
+| `extension/` | إضافة المتصفح · browser extension |
+| `docs/` | الموقع · website |
+
+الأدوات المساعدة · Helper tools: [yt-dlp](https://github.com/yt-dlp/yt-dlp), [aria2](https://github.com/aria2/aria2), [FFmpeg](https://ffmpeg.org), [Deno](https://deno.com), [Electron](https://www.electronjs.org). كل أداة بتنفحص بـ SHA-256 قبل ما تنحفظ · Every tool is checked against its SHA-256 before it is kept.
+
+## الرخصة · License
+
+[MIT](LICENSE) · من صنع · Made by [Abdulmedia](https://abdulmedia.com)
