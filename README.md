@@ -1,6 +1,6 @@
 <p align="center"><img src="docs/img/icon.png" width="96" alt="Barq"></p>
 <h1 align="center">برق · Barq</h1>
-<p align="center"><b>مدير تحميل سريع ومجاني لـ Windows و macOS</b><br>A fast, free download manager for Windows and macOS</p>
+<p align="center"><b>مدير تحميل سريع ومجاني لـ Windows و macOS و Android</b><br>A fast, free download manager for Windows, macOS and Android</p>
 <p align="center">
   <a href="https://dlwjan11-dot.github.io/barq/"><b>🌐 الموقع · Website</b></a> &nbsp;·&nbsp;
   <a href="https://github.com/dlwjan11-dot/barq/releases/latest"><b>⬇️ التنزيل · Download</b></a> &nbsp;·&nbsp;
@@ -15,7 +15,7 @@
 
 ## العربية
 
-برق مدير تحميل مجاني ومفتوح المصدر، بيشتغل على Windows والماك، وواجهته بالعربي والإنجليزي. بيقسم الملف على عدة اتصالات حتى ينزل أسرع، وبيكمّل من وين وقف، وبينزّل فيديوهات يوتيوب والتورنت، وفيه إضافة للمتصفح بتبعتله التحميلات لحالها.
+برق مدير تحميل مجاني ومفتوح المصدر، بيشتغل على Windows والماك والأندرويد، وواجهته بالعربي والإنجليزي. بيقسم الملف على عدة اتصالات حتى ينزل أسرع، وبيكمّل من وين وقف، وبينزّل فيديوهات يوتيوب والتورنت، وفيه إضافة للمتصفح بتبعتله التحميلات لحالها.
 
 ### التنزيل
 
@@ -24,6 +24,7 @@
 | Windows 10 و 11 | [Barq-Setup-Windows.exe](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Setup-Windows.exe) |
 | ماك Apple Silicon ‏(M1 إلى M4) | [Barq-Mac-AppleSilicon.zip](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Mac-AppleSilicon.zip) |
 | ماك Intel | [Barq-Mac-Intel.zip](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Mac-Intel.zip) |
+| أندرويد 10 أو أحدث | [Barq-Android.apk](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Android.apk) (للموبايلات القديمة: [32-bit](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Android-32bit.apk)) |
 | إضافة Chrome و Edge و Brave | [Barq-Chrome-Extension.zip](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Chrome-Extension.zip) |
 | إضافة Firefox | من [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/barq-download-manager/) |
 
@@ -37,6 +38,10 @@
 - **الماك:** فكّ الضغط واسحب Barq لمجلد Applications. بعدين افتح Terminal والصق:
   `xattr -cr /Applications/Barq.app`
   أو جرّب افتحه، وروح على System Settings ← Privacy & Security واضغط **Open Anyway**.
+
+### الأندرويد
+
+نزّل `Barq-Android.apk` من الموبايل وافتحه. إذا سألك، اسمح بـ **تثبيت تطبيقات من هذا المصدر**. بعدها بأي تطبيق (يوتيوب، فيسبوك، إنستغرام، تيك توك…) اضغط **مشاركة** على الفيديو، واختار **تنزيل ببرق**، واختار الجودة. الفيديو بينحفظ بمجلد `Movies/Barq` وبيطلع بالمعرض، والصوت بـ `Music/Barq`.
 
 ### تركيب إضافة المتصفح
 
@@ -92,7 +97,7 @@
 
 <h2 id="english">English</h2>
 
-Barq is a free, open-source download manager for Windows and macOS, in Arabic and English. It splits each file across several connections to download faster, resumes where it stopped, downloads YouTube videos and torrents, and comes with a browser extension that hands your downloads to it automatically.
+Barq is a free, open-source download manager for Windows, macOS and Android, in Arabic and English. It splits each file across several connections to download faster, resumes where it stopped, downloads YouTube videos and torrents, and comes with a browser extension that hands your downloads to it automatically.
 
 ### Download
 
@@ -101,6 +106,7 @@ Barq is a free, open-source download manager for Windows and macOS, in Arabic an
 | Windows 10 and 11 | [Barq-Setup-Windows.exe](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Setup-Windows.exe) |
 | Mac with Apple Silicon (M1 to M4) | [Barq-Mac-AppleSilicon.zip](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Mac-AppleSilicon.zip) |
 | Mac with Intel | [Barq-Mac-Intel.zip](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Mac-Intel.zip) |
+| Android 10 or newer | [Barq-Android.apk](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Android.apk) (older phones: [32-bit](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Android-32bit.apk)) |
 | Chrome, Edge and Brave extension | [Barq-Chrome-Extension.zip](https://github.com/dlwjan11-dot/barq/releases/latest/download/Barq-Chrome-Extension.zip) |
 | Firefox extension | On [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/barq-download-manager/) |
 
@@ -114,6 +120,10 @@ Barq is free and isn't signed by Microsoft or Apple, so the first launch shows a
 - **Mac:** unzip and drag Barq into Applications. Then open Terminal and paste:
   `xattr -cr /Applications/Barq.app`
   Or try to open it, then go to System Settings → Privacy & Security and click **Open Anyway**.
+
+### Android
+
+Download `Barq-Android.apk` on your phone and open it. If asked, allow **Install from this source**. Then in any app (YouTube, Facebook, Instagram, TikTok…) tap **Share** on a video, choose **Download with Barq**, and pick a quality. Videos are saved to `Movies/Barq` and show up in your gallery; audio goes to `Music/Barq`.
 
 ### Installing the browser extension
 
@@ -182,6 +192,7 @@ npm run dist:mac   # بناء نسخة الماك · build for macOS (needs rcod
 | `src/main/` | Electron، والاتصال مع الإضافة · Electron and the extension link (`bridge.js`) |
 | `src/renderer/` | الواجهة · interface |
 | `extension/` | إضافة المتصفح · browser extension |
+| `android/` | تطبيق الأندرويد · Android app (Kotlin, Compose, youtubedl-android) |
 | `docs/` | الموقع · website |
 
 الأدوات المساعدة · Helper tools: [yt-dlp](https://github.com/yt-dlp/yt-dlp), [aria2](https://github.com/aria2/aria2), [FFmpeg](https://ffmpeg.org), [Deno](https://deno.com), [Electron](https://www.electronjs.org). كل أداة بتنفحص بـ SHA-256 قبل ما تنحفظ · Every tool is checked against its SHA-256 before it is kept.
