@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Barq Download Manager — برق",
   "short_name": "Barq",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Send downloads and videos from your browser to the Barq download manager. يرسل التحميلات والفيديوهات إلى برنامج برق.",
   "minimum_chrome_version": "116",
   "icons": {
