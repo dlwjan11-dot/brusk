@@ -48,7 +48,9 @@ async function aria2Windows() {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'aria2-'));
   const z = path.join(tmp, 'aria2.zip');
   fs.writeFileSync(z, zip);
-  if (process.platform === 'win32') run('tar', ['-xf', z, '-C', tmp]); else run('unzip', ['-o', '-q', z, '-d', tmp]);
+  // On Windows use the built-in bsdtar (GNU tar from Git Bash reads "C:" as a remote host)
+  if (process.platform === 'win32') run(path.join(process.env.SystemRoot || 'C:\\Windows', 'System32', 'tar.exe'), ['-xf', z, '-C', tmp]);
+  else run('unzip', ['-o', '-q', z, '-d', tmp]);
   fs.copyFileSync(findFile(tmp, 'aria2c.exe'), path.join(out, 'aria2c.exe'));
   fs.copyFileSync(findFile(tmp, 'COPYING'), path.join(out, 'aria2-COPYING.txt'));
   console.log('aria2c.exe ok');
