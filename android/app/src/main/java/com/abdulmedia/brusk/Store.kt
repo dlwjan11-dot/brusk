@@ -97,10 +97,10 @@ object Prefs {
 
     fun init(ctx: Context) {
         val sys = Locale.getDefault().language
-        _lang.value = sp(ctx).getString("lang", null) ?: if (sys == "ar") "ar" else "en"
+        _lang.value = sp(ctx).getString("lang", null) ?: when (sys) { "ar" -> "ar"; "ckb", "ku" -> "ckb"; else -> "en" }
     }
     fun setLang(ctx: Context, l: String) { sp(ctx).edit().putString("lang", l).apply(); _lang.value = l }
-    fun strings() = Strings(_lang.value == "ar")
+    fun strings() = Strings(_lang.value)
 
     /** "ask" or a quality id */
     fun quality(ctx: Context): String = sp(ctx).getString("quality", "ask") ?: "ask"

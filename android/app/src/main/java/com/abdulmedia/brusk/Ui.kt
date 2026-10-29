@@ -59,17 +59,16 @@ private val Dark: ColorScheme = darkColorScheme(
     outline = Color(0xFF262B36), error = Color(0xFFFF6B6F),
 )
 
-val LocalStrings = staticCompositionLocalOf { Strings(true) }
+val LocalStrings = staticCompositionLocalOf { Strings("ar") }
 
-/** Theme + language + reading direction (Arabic right to left). */
+/** Theme + language + reading direction (Arabic and Kurdish right to left). */
 @Composable
 fun BruskTheme(content: @Composable () -> Unit) {
     val lang by Prefs.lang.collectAsState()
-    val ar = lang == "ar"
     MaterialTheme(colorScheme = if (isSystemInDarkTheme()) Dark else Light) {
         CompositionLocalProvider(
-            LocalStrings provides Strings(ar),
-            LocalLayoutDirection provides if (ar) LayoutDirection.Rtl else LayoutDirection.Ltr,
+            LocalStrings provides Strings(lang),
+            LocalLayoutDirection provides if (lang != "en") LayoutDirection.Rtl else LayoutDirection.Ltr,
             content = content,
         )
     }

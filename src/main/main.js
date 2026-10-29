@@ -26,7 +26,7 @@ const bundledTools = app.isPackaged ? path.join(process.resourcesPath, 'tools') 
 const extensionDir = app.isPackaged ? path.join(process.resourcesPath, 'extension') : path.join(resources, 'extension');
 const icon = path.join(__dirname, '..', '..', 'assets', WIN ? 'icon.ico' : 'icon.png');
 
-const t = key => T[manager?.settings.language === 'en' ? 'en' : 'ar'][key] || key;
+const t = key => (T[manager?.settings.language] || T.ar)[key] || T.en[key] || key;
 
 /* ---------------- window ---------------- */
 function createWindow(show = true) {
@@ -299,30 +299,30 @@ app.on('activate', () => showWindow());   // macOS: click on the Dock icon
 /** macOS needs an app menu, or Cmd+C / Cmd+V / Cmd+Q don't work. */
 function macMenu() {
   if (!MAC) return;
-  const ar = manager?.settings.language !== 'en';
-  const L = (a, e) => (ar ? a : e);
+  const lang = manager?.settings.language || 'ar';
+  const L = (a, e, k) => (lang === 'en' ? e : lang === 'ckb' ? k : a);
   Menu.setApplicationMenu(Menu.buildFromTemplate([
     { label: 'Brusk', submenu: [
-      { role: 'about', label: L('حول بروسك', 'About Brusk') },
+      { role: 'about', label: L('حول بروسك', 'About Brusk', 'دەربارەی بروسک') },
       { type: 'separator' },
-      { label: L('الإعدادات…', 'Settings…'), accelerator: 'Cmd+,', click: () => { showWindow(); send('open-settings'); } },
+      { label: L('الإعدادات…', 'Settings…', 'ڕێکخستنەکان…'), accelerator: 'Cmd+,', click: () => { showWindow(); send('open-settings'); } },
       { type: 'separator' },
-      { role: 'hide', label: L('إخفاء بروسك', 'Hide Brusk') }, { role: 'hideOthers', label: L('إخفاء الباقي', 'Hide Others') }, { role: 'unhide', label: L('إظهار الكل', 'Show All') },
+      { role: 'hide', label: L('إخفاء بروسك', 'Hide Brusk', 'شاردنەوەی بروسک') }, { role: 'hideOthers', label: L('إخفاء الباقي', 'Hide Others', 'شاردنەوەی ئەوانی تر') }, { role: 'unhide', label: L('إظهار الكل', 'Show All', 'پیشاندانی هەموو') },
       { type: 'separator' },
-      { label: L('إنهاء بروسك', 'Quit Brusk'), accelerator: 'Cmd+Q', click: () => { quitting = true; app.quit(); } },
+      { label: L('إنهاء بروسك', 'Quit Brusk', 'داخستنی بروسک'), accelerator: 'Cmd+Q', click: () => { quitting = true; app.quit(); } },
     ] },
-    { label: L('ملف', 'File'), submenu: [
-      { label: L('إضافة رابط', 'Add link'), accelerator: 'Cmd+N', click: () => { showWindow(); send('open-add', { urls: [] }); } },
-      { label: L('فتح ملف تورنت…', 'Open torrent file…'), accelerator: 'Cmd+O', click: async () => { const r = await dialog.showOpenDialog({ filters: [{ name: 'Torrent', extensions: ['torrent'] }], properties: ['openFile', 'multiSelections'] }); if (!r.canceled) { showWindow(); send('open-add', { torrentFiles: r.filePaths }); } } },
+    { label: L('ملف', 'File', 'فایل'), submenu: [
+      { label: L('إضافة رابط', 'Add link', 'زیادکردنی بەستەر'), accelerator: 'Cmd+N', click: () => { showWindow(); send('open-add', { urls: [] }); } },
+      { label: L('فتح ملف تورنت…', 'Open torrent file…', 'کردنەوەی فایلی تۆرێنت…'), accelerator: 'Cmd+O', click: async () => { const r = await dialog.showOpenDialog({ filters: [{ name: 'Torrent', extensions: ['torrent'] }], properties: ['openFile', 'multiSelections'] }); if (!r.canceled) { showWindow(); send('open-add', { torrentFiles: r.filePaths }); } } },
       { type: 'separator' },
-      { role: 'close', label: L('إغلاق النافذة', 'Close Window') },
+      { role: 'close', label: L('إغلاق النافذة', 'Close Window', 'داخستنی پەنجەرە') },
     ] },
-    { label: L('تحرير', 'Edit'), submenu: [
-      { role: 'undo', label: L('تراجع', 'Undo') }, { role: 'redo', label: L('إعادة', 'Redo') }, { type: 'separator' },
-      { role: 'cut', label: L('قص', 'Cut') }, { role: 'copy', label: L('نسخ', 'Copy') }, { role: 'paste', label: L('لصق', 'Paste') },
-      { role: 'selectAll', label: L('تحديد الكل', 'Select All') },
+    { label: L('تحرير', 'Edit', 'دەستکاری'), submenu: [
+      { role: 'undo', label: L('تراجع', 'Undo', 'گەڕانەوە') }, { role: 'redo', label: L('إعادة', 'Redo', 'دووبارەکردنەوە') }, { type: 'separator' },
+      { role: 'cut', label: L('قص', 'Cut', 'بڕین') }, { role: 'copy', label: L('نسخ', 'Copy', 'کۆپی') }, { role: 'paste', label: L('لصق', 'Paste', 'لکاندن') },
+      { role: 'selectAll', label: L('تحديد الكل', 'Select All', 'دیاریکردنی هەموو') },
     ] },
-    { label: L('نافذة', 'Window'), submenu: [{ role: 'minimize', label: L('تصغير', 'Minimize') }, { role: 'zoom', label: L('تكبير', 'Zoom') }, { role: 'front', label: L('إظهار الكل بالمقدمة', 'Bring All to Front') }] },
+    { label: L('نافذة', 'Window', 'پەنجەرە'), submenu: [{ role: 'minimize', label: L('تصغير', 'Minimize', 'بچووککردنەوە') }, { role: 'zoom', label: L('تكبير', 'Zoom', 'گەورەکردن') }, { role: 'front', label: L('إظهار الكل بالمقدمة', 'Bring All to Front', 'هێنانی هەموو بۆ پێشەوە') }] },
   ]));
 }
 

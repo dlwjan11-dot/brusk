@@ -14,8 +14,16 @@ const T = {
     capture: 'Take over browser downloads', capture_hint: 'Files of the types set in Brusk settings',
     page_video: "Download this page's video", sent: 'Sent to Brusk ✓', found: 'Media on this page', none: 'No video found on this page yet. Play the video and come back.', get: 'Get', stream: 'stream',
   },
+  ckb: {
+    title: 'بروسک', ok: 'پەیوەستە', off: 'کراوە نییە', warn: 'پەیوەست نەکراوە',
+    off_text: 'بەرنامەی بروسک لەسەر کۆمپیوتەرەکە بکەرەوە، پاشان ئەم پەنجەرەیە دووبارە بکەرەوە.',
+    pair_text: 'یەک جار پاشکۆکە بە بەرنامەی بروسکەوە پەیوەست بکە، دوای ئەوە هەموو داگرتنەکان دەچن بۆ بروسک.', pair: 'پەیوەستکردن', pairing: 'لە پەنجەرەی بروسک داواکارییەکە پەسەند بکە…', denied: 'پەیوەستکردن ڕەتکرایەوە',
+    capture: 'وەرگرتنی داگرتنەکان لە وێبگەڕ', capture_hint: 'ئەو جۆرە فایلانەی لە ڕێکخستنەکانی بروسکدا دیاریکراون',
+    page_video: 'داگرتنی ڤیدیۆی ئەم پەڕەیە', sent: 'نێردرا بۆ بروسک ✓', found: 'فایلی میدیا لەم پەڕەیەدا', none: 'هێشتا هیچ ڤیدیۆیەک لەم پەڕەیەدا نەدۆزرایەوە. ڤیدیۆکە لێبدە و بگەڕێوە.', get: 'داگرتن', stream: 'پەخش',
+  },
 };
-let L = T[/^ar/.test(chrome.i18n.getUILanguage()) ? 'ar' : 'en'];
+const ui = chrome.i18n.getUILanguage();
+let L = T[/^ckb|^ku/.test(ui) ? 'ckb' : /^ar/.test(ui) ? 'ar' : 'en'];
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const size = b => { if (!b) return ''; const u = ['B', 'KB', 'MB', 'GB']; let i = 0; while (b >= 1024 && i < 3) { b /= 1024; i++; } return `${b.toFixed(i > 1 ? 1 : 0)} ${u[i]}`; };
@@ -23,8 +31,8 @@ const size = b => { if (!b) return ''; const u = ['B', 'KB', 'MB', 'GB']; let i 
 async function draw() {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   const st = await chrome.runtime.sendMessage({ type: 'status', tabId: tab?.id });
-  if (st.language) L = T[st.language === 'en' ? 'en' : 'ar'];
-  document.documentElement.dir = L === T.ar ? 'rtl' : 'ltr';
+  if (st.language) L = T[st.language] || T.ar;
+  document.documentElement.dir = L === T.en ? 'ltr' : 'rtl';
   $('#title').textContent = L.title;
   const s = $('#status');
   s.className = 'status ' + (st.running ? (st.paired ? 'ok' : 'warn') : 'off');

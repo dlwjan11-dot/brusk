@@ -32,6 +32,8 @@
   nav.top .sp { flex: 1; }
   nav.top a.l, nav.top button { color: #dfe7ff; text-decoration: none; font-size: 14.5px; background: none; border: 1px solid rgba(255,255,255,.25); border-radius: 8px; padding: 6px 12px; cursor: pointer; font-family: inherit; }
   nav.top a.l:hover, nav.top button:hover { background: rgba(255,255,255,.1); }
+  .langs { display: inline-flex; gap: 6px; }
+  .langs button.on { background: rgba(255,255,255,.18); border-color: rgba(255,255,255,.5); color: #fff; font-weight: 600; }
   .hero-grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: 40px; align-items: center; margin-top: 54px; }
   .hero h1 { font-size: 46px; line-height: 1.2; margin: 0 0 14px; }
   .hero h1 span { color: #ffd24a; }
@@ -78,12 +80,13 @@
   .alt { background: var(--panel); border-block: 1px solid var(--line); }
   footer { padding: 30px 0; color: var(--text-3); font-size: 14px; text-align: center; }
 
-  [data-lang="en"] .ar, [data-lang="ar"] .en { display: none !important; }
+  [data-lang="ar"] .en, [data-lang="ar"] .ckb, [data-lang="en"] .ar, [data-lang="en"] .ckb, [data-lang="ckb"] .ar, [data-lang="ckb"] .en { display: none !important; }
 
   @media (max-width: 860px) {
     .hero-grid, .downloads, .features, .gallery, .steps { grid-template-columns: 1fr; }
     .hero h1 { font-size: 36px; }
     nav.top a.l.hide-sm { display: none; }
+    .langs button { padding: 6px 9px; font-size: 13px; }
   }
 </style>
 </head>
@@ -91,53 +94,53 @@
 <header class="hero">
   <div class="wrap">
     <nav class="top">
-      <div class="brand"><img src="img/icon.png" alt=""><span class="ar">بروسك</span><span class="en">Brusk</span></div>
+      <div class="brand"><img src="img/icon.png" alt=""><span class="ar">بروسك</span><span class="en">Brusk</span><span class="ckb">بروسک</span></div>
       <span class="sp"></span>
-      <a class="l hide-sm" href="#download"><span class="ar">تنزيل</span><span class="en">Download</span></a>
+      <a class="l hide-sm" href="#download"><span class="ar">تنزيل</span><span class="en">Download</span><span class="ckb">داگرتن</span></a>
       <a class="l hide-sm" href="https://github.com/dlwjan11-dot/brusk">GitHub</a>
-      <button id="lang" type="button">English</button>
+      <span class="langs"><button type="button" data-l="ar">العربية</button><button type="button" data-l="ckb">کوردی</button><button type="button" data-l="en">English</button></span>
     </nav>
     <div class="hero-grid">
       <div>
         <h1 class="ar">نزّل أسرع،<br>بـ <span>بروسك</span></h1>
-        <h1 class="en">Download faster<br>with <span>Brusk</span></h1>
+        <h1 class="en">Download faster<br>with <span>Brusk</span></h1><h1 class="ckb">خێراتر دابگرە<br>بە <span>بروسک</span></h1>
         <p class="lead ar">مدير تحميل مجاني لـ Windows و macOS و Android. بيقسم الملف على عدة اتصالات، بيكمّل من وين وقف، وبينزّل فيديوهات يوتيوب والتورنت، والتقاط مباشر من المتصفح.</p>
-        <p class="lead en">A free download manager for Windows, macOS and Android. Several connections per file, resume where it stopped, YouTube videos, torrents, and one-click capture from your browser.</p>
+        <p class="lead en">A free download manager for Windows, macOS and Android. Several connections per file, resume where it stopped, YouTube videos, torrents, and one-click capture from your browser.</p><p class="lead ckb">بەڕێوەبەرێکی خۆڕایی داگرتن بۆ Windows و macOS و Android. هەر فایلێک لەسەر چەند پەیوەندییەک دادەبەشێت، لەو شوێنەوە بەردەوام دەبێت کە وەستا، ڤیدیۆی یوتیوب و تۆرێنت دادەگرێت، و ڕاستەوخۆ لە وێبگەڕەوە وەری دەگرێت.</p>
         <a class="dl-main" id="dl-main" href="#download">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12m0 0-5-5m5 5 5-5M5 20h14"/></svg>
-          <span id="dl-main-text" class="ar">تنزيل بروسك</span><span class="en" id="dl-main-text-en">Download Brusk</span>
+          <span id="dl-main-text" class="ar">تنزيل بروسك</span><span class="en" id="dl-main-text-en">Download Brusk</span><span class="ckb" id="dl-main-text-ckb">داگرتنی بروسک</span>
         </a>
-        <small><span class="ar">بروسك يعني البرق بالكردي · مجاني ومفتوح المصدر · بدون إعلانات · عربي وإنجليزي</span><span class="en">Brusk means lightning in Kurdish · Free and open source · No ads · Arabic and English</span></small>
+        <small><span class="ar">بروسك يعني البرق بالكردي · مجاني ومفتوح المصدر · بدون إعلانات · عربي وكردي وإنجليزي</span><span class="en">Brusk means lightning in Kurdish · Free and open source · No ads · Arabic, Kurdish and English</span><span class="ckb">بروسک واتە برووسکە بە کوردی · خۆڕایی و سەرچاوە کراوە · بێ ڕیکلام · عەرەبی، کوردی و ئینگلیزی</span></small>
       </div>
-      <img class="shot" src="img/main-ar.jpg" alt="Brusk">
+      <img class="shot ar" src="img/main-ar.jpg" alt="Brusk"><img class="shot ckb" src="img/main-ckb.jpg" alt="Brusk"><img class="shot en" src="img/main-en.jpg" alt="Brusk">
     </div>
   </div>
 </header>
 
 <section id="download">
   <div class="wrap">
-    <h2><span class="ar">التنزيل</span><span class="en">Download</span></h2>
-    <p class="sub"><span class="ar">للكمبيوتر وللموبايل. اختار نظام جهازك.</span><span class="en">For computers and phones. Pick your system.</span></p>
+    <h2><span class="ar">التنزيل</span><span class="en">Download</span><span class="ckb">داگرتن</span></h2>
+    <p class="sub"><span class="ar">للكمبيوتر وللموبايل. اختار نظام جهازك.</span><span class="en">For computers and phones. Pick your system.</span><span class="ckb">بۆ کۆمپیوتەر و مۆبایل. سیستەمی ئامێرەکەت هەڵبژێرە.</span></p>
     <div class="downloads">
       <div class="card" data-os="win">
-        <h3><svg viewBox="0 0 24 24"><path d="M3 5.5 10 4.5v7H3v-6Zm8-1.1L21 3v8.5H11V4.4ZM3 12.5h7v7l-7-1v-6Zm8 0h10V21l-10-1.4v-7.1Z"/></svg>Windows<span class="tag ar" hidden>جهازك</span><span class="tag en" hidden>Your system</span></h3>
+        <h3><svg viewBox="0 0 24 24"><path d="M3 5.5 10 4.5v7H3v-6Zm8-1.1L21 3v8.5H11V4.4ZM3 12.5h7v7l-7-1v-6Zm8 0h10V21l-10-1.4v-7.1Z"/></svg>Windows<span class="tag ar" hidden>جهازك</span><span class="tag en" hidden>Your system</span><span class="tag ckb" hidden>ئامێرەکەت</span></h3>
         <div class="meta">Windows 10 / 11 · 64-bit</div>
-        <a class="btn" href="https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Setup-Windows.exe"><span class="ar">برنامج التنصيب</span><span class="en">Installer</span><span class="s">.exe</span></a>
+        <a class="btn" href="https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Setup-Windows.exe"><span class="ar">برنامج التنصيب</span><span class="en">Installer</span><span class="ckb">پرۆگرامی دامەزراندن</span><span class="s">.exe</span></a>
       </div>
       <div class="card" data-os="mac">
-        <h3><svg viewBox="0 0 24 24"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7a4.6 4.6 0 0 0-3.6-2c-1.5-.2-3 .9-3.7.9-.8 0-2-.9-3.2-.8A4.8 4.8 0 0 0 4 9.4c-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8s1.9.8 3.2.8c1.3 0 2.1-1.2 2.9-2.4a10 10 0 0 0 1.3-2.7 4.2 4.2 0 0 1-2.3-3.9ZM14 5.4a4.3 4.3 0 0 0 1-3.1 4.4 4.4 0 0 0-2.9 1.5 4.1 4.1 0 0 0-1 3 3.6 3.6 0 0 0 2.9-1.4Z"/></svg>macOS<span class="tag ar" hidden>جهازك</span><span class="tag en" hidden>Your system</span></h3>
-        <div class="meta">macOS 12 <span class="ar">أو أحدث</span><span class="en">or newer</span></div>
+        <h3><svg viewBox="0 0 24 24"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7a4.6 4.6 0 0 0-3.6-2c-1.5-.2-3 .9-3.7.9-.8 0-2-.9-3.2-.8A4.8 4.8 0 0 0 4 9.4c-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8s1.9.8 3.2.8c1.3 0 2.1-1.2 2.9-2.4a10 10 0 0 0 1.3-2.7 4.2 4.2 0 0 1-2.3-3.9ZM14 5.4a4.3 4.3 0 0 0 1-3.1 4.4 4.4 0 0 0-2.9 1.5 4.1 4.1 0 0 0-1 3 3.6 3.6 0 0 0 2.9-1.4Z"/></svg>macOS<span class="tag ar" hidden>جهازك</span><span class="tag en" hidden>Your system</span><span class="tag ckb" hidden>ئامێرەکەت</span></h3>
+        <div class="meta">macOS 12 <span class="ar">أو أحدث</span><span class="en">or newer</span><span class="ckb">یان نوێتر</span></div>
         <a class="btn" href="https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Mac-AppleSilicon.dmg">Apple Silicon (M1–M4)<span class="s">.dmg</span></a>
         <a class="btn ghost" href="https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Mac-Intel.dmg">Intel<span class="s">.dmg</span></a>
       </div>
       <div class="card" data-os="android">
-        <h3><svg viewBox="0 0 24 24"><path d="M17.6 9.5l1.8-3.1a.4.4 0 0 0-.7-.4l-1.8 3.2a11 11 0 0 0-9.8 0L5.3 6a.4.4 0 1 0-.7.4l1.8 3.1A10 10 0 0 0 1.5 17.6h21a10 10 0 0 0-4.9-8.1ZM7 15.1a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm10 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></svg>Android<span class="tag ar" hidden>جهازك</span><span class="tag en" hidden>Your system</span></h3>
-        <div class="meta">Android 10 <span class="ar">أو أحدث · شارك الرابط من يوتيوب، فيسبوك، إنستغرام، تيك توك</span><span class="en">or newer · share links from YouTube, Facebook, Instagram, TikTok</span></div>
-        <a class="btn" href="https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Android.apk"><span class="ar">تطبيق الأندرويد</span><span class="en">Android app</span><span class="s">.apk</span></a>
-        <a class="btn ghost" href="https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Android-32bit.apk"><span class="ar">للموبايلات القديمة (32-bit)</span><span class="en">Older phones (32-bit)</span><span class="s">.apk</span></a>
+        <h3><svg viewBox="0 0 24 24"><path d="M17.6 9.5l1.8-3.1a.4.4 0 0 0-.7-.4l-1.8 3.2a11 11 0 0 0-9.8 0L5.3 6a.4.4 0 1 0-.7.4l1.8 3.1A10 10 0 0 0 1.5 17.6h21a10 10 0 0 0-4.9-8.1ZM7 15.1a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm10 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></svg>Android<span class="tag ar" hidden>جهازك</span><span class="tag en" hidden>Your system</span><span class="tag ckb" hidden>ئامێرەکەت</span></h3>
+        <div class="meta">Android 10 <span class="ar">أو أحدث · شارك الرابط من يوتيوب، فيسبوك، إنستغرام، تيك توك</span><span class="en">or newer · share links from YouTube, Facebook, Instagram, TikTok</span><span class="ckb">یان نوێتر · بەستەر لە یوتیوب، فەیسبووک، ئینستاگرام، تیکتۆک هاوبەش بکە</span></div>
+        <a class="btn" href="https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Android.apk"><span class="ar">تطبيق الأندرويد</span><span class="en">Android app</span><span class="ckb">ئەپی ئەندرۆید</span><span class="s">.apk</span></a>
+        <a class="btn ghost" href="https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Android-32bit.apk"><span class="ar">للموبايلات القديمة (32-bit)</span><span class="en">Older phones (32-bit)</span><span class="ckb">مۆبایلی کۆن (32-bit)</span><span class="s">.apk</span></a>
       </div>
       <div class="card">
-        <h3><svg viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:1.9;stroke-linejoin:round"><path d="M10 4a2 2 0 1 1 4 0v2h4v4h-2a2 2 0 1 0 0 4h2v4h-4v-2a2 2 0 1 0-4 0v2H6v-4h2a2 2 0 1 0 0-4H6V6h4V4Z"/></svg><span class="ar">إضافة المتصفح</span><span class="en">Browser extension</span></h3>
+        <h3><svg viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:1.9;stroke-linejoin:round"><path d="M10 4a2 2 0 1 1 4 0v2h4v4h-2a2 2 0 1 0 0 4h2v4h-4v-2a2 2 0 1 0-4 0v2H6v-4h2a2 2 0 1 0 0-4H6V6h4V4Z"/></svg><span class="ar">إضافة المتصفح</span><span class="en">Browser extension</span><span class="ckb">پاشکۆی وێبگەڕ</span></h3>
         <div class="meta">Firefox · Chrome · Edge · Brave</div>
         <a class="btn" href="https://addons.mozilla.org/firefox/addon/brusk-download-manager/">Firefox<span class="s">addons.mozilla.org</span></a>
         <a class="btn ghost" href="https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Chrome-Extension.zip">Chrome / Edge<span class="s">.zip</span></a>
@@ -148,72 +151,72 @@
 
 <section class="alt">
   <div class="wrap">
-    <h2><span class="ar">كل شي بتحتاجه</span><span class="en">Everything you need</span></h2>
-    <p class="sub"><span class="ar">جمعنا أحسن ميزات مدراء التحميل وصلّحنا مشاكلهم.</span><span class="en">The best of download managers, with their problems fixed.</span></p>
+    <h2><span class="ar">كل شي بتحتاجه</span><span class="en">Everything you need</span><span class="ckb">هەموو ئەوەی پێویستتە</span></h2>
+    <p class="sub"><span class="ar">جمعنا أحسن ميزات مدراء التحميل وصلّحنا مشاكلهم.</span><span class="en">The best of download managers, with their problems fixed.</span><span class="ckb">باشترینی بەڕێوەبەرانی داگرتن، بە چارەسەرکردنی کێشەکانیان.</span></p>
     <div class="features">
       <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z"/></svg></div>
-        <h3><span class="ar">تقسيم ذكي</span><span class="en">Smart splitting</span></h3>
+        <h3><span class="ar">تقسيم ذكي</span><span class="en">Smart splitting</span><span class="ckb">دابەشکردنی زیرەک</span></h3>
         <p class="ar">حتى 32 اتصال للملف. الاتصال يلي بيخلص بياخد نص أكبر جزء باقي، فالسرعة بتضل عالية للآخر.</p>
-        <p class="en">Up to 32 connections per file. A finished connection takes half of the biggest part left, so speed stays high to the end.</p></div>
+        <p class="en">Up to 32 connections per file. A finished connection takes half of the biggest part left, so speed stays high to the end.</p><p class="ckb">تا 32 پەیوەندی بۆ هەر فایلێک. ئەو پەیوەندییەی تەواو دەبێت نیوەی گەورەترین بەشی ماوە وەردەگرێت، بۆیە خێرایی تا کۆتایی بەرز دەمێنێتەوە.</p></div>
       <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.9-3M4 4v4h4M4 13a8 8 0 0 0 14.9 3M20 20v-4h-4"/></svg></div>
-        <h3><span class="ar">استكمال بعد أي شي</span><span class="en">Resume after anything</span></h3>
+        <h3><span class="ar">استكمال بعد أي شي</span><span class="en">Resume after anything</span><span class="ckb">بەردەوامبوون دوای هەر شتێک</span></h3>
         <p class="ar">انقطع النت أو سكّرت الجهاز؟ بروسك بيكمّل من نفس النقطة، وبيعيد المحاولة لحاله.</p>
-        <p class="en">Lost the connection or shut down? Brusk picks up at the same byte and retries by itself.</p></div>
+        <p class="en">Lost the connection or shut down? Brusk picks up at the same byte and retries by itself.</p><p class="ckb">ئینتەرنێت پچڕا یان ئامێرەکەت کوژاندەوە؟ بروسک لە هەمان شوێنەوە بەردەوام دەبێت و خۆی دووبارە هەوڵ دەداتەوە.</p></div>
       <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg></div>
-        <h3><span class="ar">يوتيوب ومواقع الفيديو</span><span class="en">YouTube and video sites</span></h3>
+        <h3><span class="ar">يوتيوب ومواقع الفيديو</span><span class="en">YouTube and video sites</span><span class="ckb">یوتیوب و ماڵپەڕەکانی ڤیدیۆ</span></h3>
         <p class="ar">اختار الجودة لحد 4K، أو صوت فقط MP3، قوائم تشغيل كاملة، وترجمة.</p>
-        <p class="en">Pick any quality up to 4K, audio-only MP3, whole playlists, and subtitles.</p></div>
+        <p class="en">Pick any quality up to 4K, audio-only MP3, whole playlists, and subtitles.</p><p class="ckb">هەر کوالیتییەک تا 4K هەڵبژێرە، یان تەنها دەنگ بە MP3، لیستی لێدانی تەواو، و ژێرنووس.</p></div>
       <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M6 3v8a6 6 0 0 0 12 0V3h-4v8a2 2 0 0 1-4 0V3H6ZM6 7h4M14 7h4"/></svg></div>
-        <h3><span class="ar">تورنت و magnet</span><span class="en">Torrents and magnet</span></h3>
+        <h3><span class="ar">تورنت و magnet</span><span class="en">Torrents and magnet</span><span class="ckb">تۆرێنت و magnet</span></h3>
         <p class="ar">اختار الملفات يلي بدك ياها قبل ما يبلش، مع حد سرعة الرفع ونسبة المشاركة.</p>
-        <p class="en">Choose which files you want before it starts, with upload limits and share ratio.</p></div>
+        <p class="en">Choose which files you want before it starts, with upload limits and share ratio.</p><p class="ckb">پێش دەستپێکردن ئەو فایلانە هەڵبژێرە کە دەتەوێت، لەگەڵ سنووری بەرزکردنەوە و ڕێژەی هاوبەشکردن.</p></div>
       <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-        <h3><span class="ar">جدولة وحد سرعة</span><span class="en">Scheduler and speed limit</span></h3>
+        <h3><span class="ar">جدولة وحد سرعة</span><span class="en">Scheduler and speed limit</span><span class="ckb">خشتەی کات و سنووری خێرایی</span></h3>
         <p class="ar">نزّل بالليل، وطفي الجهاز لما يخلص. حد سرعة عام أو لكل ملف.</p>
-        <p class="en">Download at night and shut down when done. Limit speed overall or per file.</p></div>
+        <p class="en">Download at night and shut down when done. Limit speed overall or per file.</p><p class="ckb">شەو دابگرە و کاتێک تەواو بوو ئامێرەکە بکوژێنەرەوە. خێرایی بە گشتی یان بۆ هەر فایلێک سنووردار بکە.</p></div>
       <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 5h12M9 3v2c0 4-2 7-6 9M5 9c0 2.5 3 5 7 6M13 21l4-10 4 10M14.5 17h5"/></svg></div>
-        <h3><span class="ar">عربي من اليمين لليسار</span><span class="en">Arabic, right to left</span></h3>
-        <p class="ar">واجهة عربية كاملة وإنجليزية، مع الوضع الفاتح والداكن.</p>
-        <p class="en">A complete Arabic and English interface, in light and dark.</p></div>
+        <h3><span class="ar">عربي وكردي من اليمين لليسار</span><span class="en">Arabic and Kurdish, right to left</span><span class="ckb">عەرەبی و کوردی، لە ڕاستەوە بۆ چەپ</span></h3>
+        <p class="ar">واجهة كاملة بالعربي والكردي السوراني والإنجليزي، مع الوضع الفاتح والداكن.</p>
+        <p class="en">A complete Arabic, Sorani Kurdish and English interface, in light and dark.</p><p class="ckb">ڕووکاری تەواوی عەرەبی، کوردی سۆرانی و ئینگلیزی، بە ڕووناک و تاریک.</p></div>
     </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h2><span class="ar">لقطات</span><span class="en">Screenshots</span></h2>
+    <h2><span class="ar">لقطات</span><span class="en">Screenshots</span><span class="ckb">وێنەکان</span></h2>
     <p class="sub"></p>
     <div class="gallery">
-      <figure><img src="img/add-ar.jpg" alt="" loading="lazy"><figcaption><span class="ar">الصق عدة روابط مرة وحدة، وبروسك بيفحصها</span><span class="en">Paste several links; Brusk checks each one</span></figcaption></figure>
-      <figure><img src="img/main-en-dark.jpg" alt="" loading="lazy"><figcaption><span class="ar">الوضع الداكن بالإنجليزي، مع خريطة الاتصالات</span><span class="en">Dark mode in English, with the connection map</span></figcaption></figure>
+      <figure><img class="ar" src="img/add-ar.jpg" alt="" loading="lazy"><img class="ckb" src="img/add-ckb.jpg" alt="" loading="lazy"><img class="en" src="img/add-en.jpg" alt="" loading="lazy"><figcaption><span class="ar">الصق عدة روابط مرة وحدة، وبروسك بيفحصها</span><span class="en">Paste several links; Brusk checks each one</span><span class="ckb">چەند بەستەرێک پێکەوە بلکێنە؛ بروسک هەریەکەیان دەپشکنێت</span></figcaption></figure>
+      <figure><img src="img/main-en-dark.jpg" alt="" loading="lazy"><figcaption><span class="ar">الوضع الداكن بالإنجليزي، مع خريطة الاتصالات</span><span class="en">Dark mode in English, with the connection map</span><span class="ckb">دۆخی تاریک بە ئینگلیزی، لەگەڵ نەخشەی پەیوەندییەکان</span></figcaption></figure>
     </div>
   </div>
 </section>
 
 <section class="alt" id="install">
   <div class="wrap">
-    <h2><span class="ar">التركيب</span><span class="en">Installing</span></h2>
-    <p class="sub"><span class="ar">البرنامج مجاني وغير موقّع من Microsoft أو Apple، فأول مرة بيطلع تحذير. هيك بتتجاوزه:</span><span class="en">Brusk is free and not signed by Microsoft or Apple, so the first launch shows a warning. Here is how to get past it:</span></p>
+    <h2><span class="ar">التركيب</span><span class="en">Installing</span><span class="ckb">دامەزراندن</span></h2>
+    <p class="sub"><span class="ar">البرنامج مجاني وغير موقّع من Microsoft أو Apple، فأول مرة بيطلع تحذير. هيك بتتجاوزه:</span><span class="en">Brusk is free and not signed by Microsoft or Apple, so the first launch shows a warning. Here is how to get past it:</span><span class="ckb">بروسک خۆڕاییە و لەلایەن Microsoft یان Apple ـەوە واژۆ نەکراوە، بۆیە یەکەم جار ئاگادارکردنەوەیەک دەردەکەوێت. ئەمە ڕێگای تێپەڕاندنیەتی:</span></p>
     <div class="steps">
       <div class="card"><h3>Windows</h3>
         <ol class="ar"><li>شغّل <code>Brusk-Setup-Windows.exe</code>.</li><li>إذا طلعت شاشة زرقا "Windows protected your PC"، اضغط <b>More info</b> وبعدين <b>Run anyway</b>.</li><li>كمّل التنصيب عادي.</li></ol>
-        <ol class="en"><li>Run <code>Brusk-Setup-Windows.exe</code>.</li><li>If a blue "Windows protected your PC" screen appears, click <b>More info</b>, then <b>Run anyway</b>.</li><li>Finish the installer.</li></ol>
+        <ol class="en"><li>Run <code>Brusk-Setup-Windows.exe</code>.</li><li>If a blue "Windows protected your PC" screen appears, click <b>More info</b>, then <b>Run anyway</b>.</li><li>Finish the installer.</li></ol><ol class="ckb"><li><code>Brusk-Setup-Windows.exe</code> کارپێبکە.</li><li>ئەگەر شاشەیەکی شین «Windows protected your PC» دەرکەوت، <b>More info</b> دابگرە، پاشان <b>Run anyway</b>.</li><li>دامەزراندنەکە تەواو بکە.</li></ol>
       </div>
       <div class="card"><h3>macOS</h3>
         <ol class="ar"><li>افتح ملف الـ dmg واسحب <b>Brusk</b> لمجلد Applications.</li><li>افتح Terminal والصق: <code>xattr -cr /Applications/Brusk.app</code></li><li>افتح بروسك. (أو: System Settings ← Privacy &amp; Security ← <b>Open Anyway</b>)</li></ol>
-        <ol class="en"><li>Open the dmg and drag <b>Brusk</b> into Applications.</li><li>Open Terminal and paste: <code>xattr -cr /Applications/Brusk.app</code></li><li>Open Brusk. (Or: System Settings → Privacy &amp; Security → <b>Open Anyway</b>)</li></ol>
+        <ol class="en"><li>Open the dmg and drag <b>Brusk</b> into Applications.</li><li>Open Terminal and paste: <code>xattr -cr /Applications/Brusk.app</code></li><li>Open Brusk. (Or: System Settings → Privacy &amp; Security → <b>Open Anyway</b>)</li></ol><ol class="ckb"><li>فایلی dmg بکەرەوە و <b>Brusk</b> ڕابکێشە بۆ Applications.</li><li>Terminal بکەرەوە و ئەمە بلکێنە: <code>xattr -cr /Applications/Brusk.app</code></li><li>بروسک بکەرەوە. (یان: System Settings ← Privacy &amp; Security ← <b>Open Anyway</b>)</li></ol>
       </div>
       <div class="card"><h3>Android</h3>
         <ol class="ar"><li>نزّل <code>Brusk-Android.apk</code> من الموبايل وافتحه.</li><li>إذا سألك، اسمح بـ <b>تثبيت تطبيقات من هذا المصدر</b>.</li><li>بأي تطبيق: <b>مشاركة</b> ← <b>تنزيل ببروسك</b> ← اختار الجودة.</li></ol>
-        <ol class="en"><li>Download <code>Brusk-Android.apk</code> on your phone and open it.</li><li>If asked, allow <b>Install from this source</b>.</li><li>In any app: <b>Share</b> → <b>Download with Brusk</b> → pick a quality.</li></ol>
+        <ol class="en"><li>Download <code>Brusk-Android.apk</code> on your phone and open it.</li><li>If asked, allow <b>Install from this source</b>.</li><li>In any app: <b>Share</b> → <b>Download with Brusk</b> → pick a quality.</li></ol><ol class="ckb"><li><code>Brusk-Android.apk</code> لەسەر مۆبایلەکەت دابگرە و بیکەرەوە.</li><li>ئەگەر پرسیاری کرد، ڕێگە بدە بە <b>دامەزراندن لەم سەرچاوەیە</b>.</li><li>لە هەر ئەپێکدا: <b>هاوبەشکردن</b> ← <b>داگرتن بە بروسک</b> ← کوالیتی هەڵبژێرە.</li></ol>
       </div>
       <div class="card"><h3>Firefox</h3>
         <ol class="ar"><li>ركّب الإضافة من صفحة Firefox Add-ons.</li><li>اضغط أيقونة بروسك ثم <b>ربط</b>، ووافق بنافذة البرنامج.</li></ol>
-        <ol class="en"><li>Install the add-on from Firefox Add-ons.</li><li>Click the Brusk icon, then <b>Connect</b>, and allow it in the app.</li></ol>
+        <ol class="en"><li>Install the add-on from Firefox Add-ons.</li><li>Click the Brusk icon, then <b>Connect</b>, and allow it in the app.</li></ol><ol class="ckb"><li>پاشکۆکە لە Firefox Add-ons دابمەزرێنە.</li><li>ئایکۆنی بروسک دابگرە، پاشان <b>پەیوەستکردن</b>، و لە بەرنامەکەدا ڕێگە بدە.</li></ol>
       </div>
       <div class="card"><h3>Chrome / Edge / Brave</h3>
         <ol class="ar"><li>فكّ ضغط <code>Brusk-Chrome-Extension.zip</code>.</li><li>افتح <code>chrome://extensions</code> وفعّل <b>Developer mode</b>.</li><li>اضغط <b>Load unpacked</b> واختار المجلد، ثم <b>ربط</b>.</li></ol>
-        <ol class="en"><li>Unzip <code>Brusk-Chrome-Extension.zip</code>.</li><li>Open <code>chrome://extensions</code> and turn on <b>Developer mode</b>.</li><li>Click <b>Load unpacked</b>, pick the folder, then <b>Connect</b>.</li></ol>
+        <ol class="en"><li>Unzip <code>Brusk-Chrome-Extension.zip</code>.</li><li>Open <code>chrome://extensions</code> and turn on <b>Developer mode</b>.</li><li>Click <b>Load unpacked</b>, pick the folder, then <b>Connect</b>.</li></ol><ol class="ckb"><li><code>Brusk-Chrome-Extension.zip</code> بکەرەوە.</li><li><code>chrome://extensions</code> بکەرەوە و <b>Developer mode</b> چالاک بکە.</li><li><b>Load unpacked</b> دابگرە، بوخچەکە هەڵبژێرە، پاشان <b>پەیوەستکردن</b>.</li></ol>
       </div>
     </div>
   </div>
@@ -222,25 +225,28 @@
 <footer>
   <div class="wrap">
     <span class="ar">بروسك · من صنع <a href="https://abdulmedia.com">Abdulmedia</a> · مفتوح المصدر على <a href="https://github.com/dlwjan11-dot/brusk">GitHub</a> · نزّل فقط المحتوى المسموح لك بتنزيله.</span>
-    <span class="en">Brusk · made by <a href="https://abdulmedia.com">Abdulmedia</a> · open source on <a href="https://github.com/dlwjan11-dot/brusk">GitHub</a> · Only download content you have the right to.</span>
+    <span class="en">Brusk · made by <a href="https://abdulmedia.com">Abdulmedia</a> · open source on <a href="https://github.com/dlwjan11-dot/brusk">GitHub</a> · Only download content you have the right to.</span><span class="ckb">بروسک · دروستکراوە لەلایەن <a href="https://abdulmedia.com">Abdulmedia</a> · سەرچاوە کراوە لە <a href="https://github.com/dlwjan11-dot/brusk">GitHub</a> · تەنها ئەو ناوەڕۆکانە دابگرە کە مافی داگرتنیانت هەیە.</span>
   </div>
 </footer>
 
 <script>
   (function () {
-    var body = document.body, btn = document.getElementById('lang');
+    var body = document.body, buttons = document.querySelectorAll('.langs button');
+    var TITLES = { ar: 'بروسك — مدير تحميل سريع', en: 'Brusk — fast download manager', ckb: 'بروسک — بەڕێوەبەری خێرای داگرتن' };
     function setLang(l) {
+      if (!TITLES[l]) l = 'ar';
       body.dataset.lang = l;
       document.documentElement.lang = l;
-      document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
-      btn.textContent = l === 'ar' ? 'English' : 'العربية';
-      document.title = l === 'ar' ? 'بروسك — مدير تحميل سريع' : 'Brusk — fast download manager';
+      document.documentElement.dir = l === 'en' ? 'ltr' : 'rtl';   // Arabic and Sorani are right to left
+      document.title = TITLES[l];
+      buttons.forEach(function (b) { b.classList.toggle('on', b.dataset.l === l); });
       try { localStorage.setItem('barq-lang', l); } catch (e) {}
     }
     var saved = null;
     try { saved = localStorage.getItem('barq-lang'); } catch (e) {}
-    setLang(saved || (/^ar/.test(navigator.language || '') ? 'ar' : (navigator.language ? 'en' : 'ar')));
-    btn.onclick = function () { setLang(body.dataset.lang === 'ar' ? 'en' : 'ar'); };
+    var nav = (navigator.language || '').toLowerCase();
+    setLang(saved || (/^(ckb|ku)/.test(nav) ? 'ckb' : /^ar/.test(nav) ? 'ar' : nav ? 'en' : 'ar'));
+    buttons.forEach(function (b) { b.onclick = function () { setLang(b.dataset.l); }; });
 
     // Point the big button at the right file for this computer.
     var ua = navigator.userAgent, os = /Android/.test(ua) ? 'android' : /Windows/.test(ua) ? 'win' : /Macintosh|Mac OS X/.test(ua) && !/iPhone|iPad/.test(ua) ? 'mac' : null;
@@ -252,6 +258,7 @@
       main.href = card.querySelector('a.btn').href;
       document.getElementById('dl-main-text').textContent = os === 'win' ? 'تنزيل لـ Windows' : os === 'mac' ? 'تنزيل للماك' : 'تنزيل للأندرويد';
       document.getElementById('dl-main-text-en').textContent = os === 'win' ? 'Download for Windows' : os === 'mac' ? 'Download for Mac' : 'Download for Android';
+      document.getElementById('dl-main-text-ckb').textContent = os === 'win' ? 'داگرتن بۆ Windows' : os === 'mac' ? 'داگرتن بۆ ماک' : 'داگرتن بۆ ئەندرۆید';
     }
   })();
 </script>

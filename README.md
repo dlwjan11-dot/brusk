@@ -1,10 +1,11 @@
 <p align="center"><img src="docs/img/icon.png" width="96" alt="Brusk"></p>
-<h1 align="center">بروسك · Brusk</h1>
-<p align="center"><b>مدير تحميل سريع ومجاني لـ Windows و macOS و Android</b><br>A fast, free download manager for Windows, macOS and Android</p>
+<h1 align="center">بروسك · بروسک · Brusk</h1>
+<p align="center"><b>مدير تحميل سريع ومجاني لـ Windows و macOS و Android</b><br>بەڕێوەبەرێکی خێرا و خۆڕایی داگرتن بۆ Windows و macOS و Android<br>A fast, free download manager for Windows, macOS and Android</p>
 <p align="center">
   <a href="https://dlwjan11-dot.github.io/brusk/"><b>🌐 الموقع · Website</b></a> &nbsp;·&nbsp;
   <a href="https://github.com/dlwjan11-dot/brusk/releases/latest"><b>⬇️ التنزيل · Download</b></a> &nbsp;·&nbsp;
   <a href="#العربية">العربية</a> &nbsp;·&nbsp;
+  <a href="#kurdi">کوردی</a> &nbsp;·&nbsp;
   <a href="#english">English</a>
 </p>
 <p align="center"><img src="docs/img/main-ar.jpg" width="820" alt="Brusk"></p>
@@ -17,7 +18,7 @@
 
 **بروسك** يعني **البرق** بالكردي.
 
-بروسك مدير تحميل مجاني ومفتوح المصدر، بيشتغل على Windows والماك والأندرويد، وواجهته بالعربي والإنجليزي. بيقسم الملف على عدة اتصالات حتى ينزل أسرع، وبيكمّل من وين وقف، وبينزّل فيديوهات يوتيوب والتورنت، وفيه إضافة للمتصفح بتبعتله التحميلات لحالها.
+بروسك مدير تحميل مجاني ومفتوح المصدر، بيشتغل على Windows والماك والأندرويد، وواجهته بالعربي والكردي السوراني والإنجليزي. بيقسم الملف على عدة اتصالات حتى ينزل أسرع، وبيكمّل من وين وقف، وبينزّل فيديوهات يوتيوب والتورنت، وفيه إضافة للمتصفح بتبعتله التحميلات لحالها.
 
 ### التنزيل
 
@@ -83,7 +84,7 @@
 - قائمة الزر اليمين: تحميل رابط، أو كل الروابط المحددة، أو فيديو الصفحة.
 
 **عام**
-- واجهة عربية كاملة من اليمين لليسار، وإنجليزية.
+- واجهة كاملة بالعربي والكردي من اليمين لليسار، وبالإنجليزي.
 - وضع فاتح وداكن.
 - مراقبة الروابط المنسوخة، وأيقونة جنب الساعة، وإشعارات.
 
@@ -97,11 +98,97 @@
 
 ---
 
+<div dir="rtl">
+
+<h2 id="kurdi">کوردی (سۆرانی)</h2>
+
+**بروسک** واتە **برووسکە** بە کوردی.
+
+بروسک بەڕێوەبەرێکی داگرتنی خۆڕایی و سەرچاوە کراوەیە، لەسەر Windows و ماک و ئەندرۆید کار دەکات، و ڕووکارەکەی بە عەرەبی، کوردی سۆرانی و ئینگلیزییە. هەر فایلێک لەسەر چەند پەیوەندییەک دابەش دەکات تا خێراتر دابگیرێت، لەو شوێنەوە بەردەوام دەبێت کە وەستا، ڤیدیۆی یوتیوب و تۆرێنت دادەگرێت، و پاشکۆیەکی وێبگەڕی هەیە کە داگرتنەکان خۆکارانە دەنێرێت بۆی.
+
+### داگرتن
+
+| ئامێر | فایل |
+|---|---|
+| Windows 10 و 11 | [Brusk-Setup-Windows.exe](https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Setup-Windows.exe) |
+| ماکی Apple Silicon ‏(M1 تا M4) | [Brusk-Mac-AppleSilicon.dmg](https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Mac-AppleSilicon.dmg) |
+| ماکی Intel | [Brusk-Mac-Intel.dmg](https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Mac-Intel.dmg) |
+| ئەندرۆید 10 یان نوێتر | [Brusk-Android.apk](https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Android.apk) (مۆبایلی کۆن: [32-bit](https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Android-32bit.apk)) |
+| پاشکۆی Chrome و Edge و Brave | [Brusk-Chrome-Extension.zip](https://github.com/dlwjan11-dot/brusk/releases/latest/download/Brusk-Chrome-Extension.zip) |
+| پاشکۆی Firefox | لە [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/brusk-download-manager/) |
+
+بۆ زانینی جۆری ماکەکەت:  دابگرە، پاشان **About This Mac**. ئەگەر نووسرابوو **Chip: Apple M…** ئەوا ئامێرەکەت Apple Silicon ـە.
+
+### یەکەم جار کردنەوە
+
+بروسک خۆڕاییە و لەلایەن Microsoft یان Apple ـەوە واژۆ نەکراوە، بۆیە یەکەم جار ئاگادارکردنەوەیەک دەردەکەوێت:
+
+- **Windows:** ئەگەر شاشەی «Windows protected your PC» دەرکەوت، **More info** دابگرە، پاشان **Run anyway**.
+- **ماک:** فایلی dmg بکەرەوە و Brusk ڕابکێشە بۆ Applications. پاشان Terminal بکەرەوە و ئەمە بلکێنە:
+  `xattr -cr /Applications/Brusk.app`
+  یان هەوڵی کردنەوەی بدە، پاشان بڕۆ بۆ System Settings ← Privacy & Security و **Open Anyway** دابگرە.
+
+### ئەندرۆید
+
+`Brusk-Android.apk` لەسەر مۆبایلەکەت دابگرە و بیکەرەوە. ئەگەر پرسیاری کرد، ڕێگە بدە بە **دامەزراندن لەم سەرچاوەیە**. پاشان لە هەر ئەپێکدا (یوتیوب، فەیسبووک، ئینستاگرام، تیکتۆک…) لەسەر ڤیدیۆکە **هاوبەشکردن** دابگرە، **داگرتن بە بروسک** هەڵبژێرە، و کوالیتی دیاری بکە. ڤیدیۆکان لە `Movies/Brusk` پاشەکەوت دەکرێن و لە گەلەری دەردەکەون، دەنگیش لە `Music/Brusk`.
+
+### دامەزراندنی پاشکۆی وێبگەڕ
+
+- **Firefox:** لە پەڕەی Firefox Add-ons دایبمەزرێنە.
+- **Chrome و Edge و Brave:**
+  1. `Brusk-Chrome-Extension.zip` بکەرەوە.
+  2. `chrome://extensions` (یان `edge://extensions`) بکەرەوە و **Developer mode** چالاک بکە.
+  3. **Load unpacked** دابگرە و بوخچەکە هەڵبژێرە.
+
+دوای دامەزراندن، ئایکۆنی بروسک لە وێبگەڕدا دابگرە، پاشان **پەیوەستکردن**، و لە پەنجەرەی بەرنامەکەدا ڕێگە بدە.
+
+### تایبەتمەندییەکان
+
+**داگرتن**
+- تا 32 پەیوەندی بۆ هەر فایلێک، بە دابەشکردنی زیرەک: ئەو پەیوەندییەی تەواو دەبێت نیوەی گەورەترین بەشی ماوە وەردەگرێت، بۆیە خێرایی تا کۆتایی بەرز دەمێنێتەوە.
+- بەردەوامبوون دوای وەستاندن، پچڕانی ئینتەرنێت، یان کوژاندنەوەی ئامێر.
+- هەوڵدانەوەی خۆکار بۆ پەیوەندییە پچڕاوەکان.
+- سنووری خێرایی بۆ هەموو داگرتنەکان، یان بۆ هەر فایلێک بە جیا.
+- ڕیزی چاوەڕوانی، و خشتەی کات بە کاتژمێر و ڕۆژی دیاریکراو.
+- دوای تەواوبوونی داگرتنەکان: کوژاندنەوە، خەوتن، یان داخستنی بەرنامەکە.
+- پۆلێنکردنی خۆکار بەپێی جۆری فایل، لەگەڵ بوخچەیەک بۆ هەر جۆرێک.
+- پشتگیری پرۆکسی، و پشکنینی فایل بە SHA-256.
+
+**ڤیدیۆ**
+- یوتیوب، ڤیمیۆ، تیکتۆک، X، فەیسبووک، ئینستاگرام، و زۆر ماڵپەڕی تر.
+- هەر کوالیتییەک تا 4K، یان تەنها دەنگ بە MP3 یان M4A.
+- لیستی لێدانی تەواو، و ژێرنووس.
+
+**تۆرێنت**
+- بەستەری magnet و فایلی `.torrent`.
+- هەڵبژاردنی فایلەکان پێش دەستپێکردنی داگرتن.
+- سنووری خێرایی بەرزکردنەوە و ڕێژەی هاوبەشکردن.
+
+**وێبگەڕ**
+- داگرتنەکان خۆکارانە بەپێی جۆری فایل وەردەگرێت.
+- دوگمەی «داگرتن بە بروسک» لەسەر ڤیدیۆکان.
+- لیستی کلیکی ڕاست: داگرتنی بەستەرێک، هەموو بەستەرە دیاریکراوەکان، یان ڤیدیۆی پەڕەکە.
+
+**گشتی**
+- ڕووکاری تەواوی عەرەبی و کوردی لە ڕاستەوە بۆ چەپ، و ئینگلیزی.
+- ڕووکاری ڕووناک و تاریک.
+- پشکنینی بەستەرە کۆپیکراوەکان، ئایکۆن لە تەنیشت کاتژمێر، و ئاگادارکردنەوە.
+
+### تایبەتێتی
+
+بروسک هیچ زانیارییەک کۆ ناکاتەوە و ڕیکلامی تێدا نییە. پاشکۆکە بەستەرەکان تەنها دەنێرێت بۆ بەرنامەی بروسک لەسەر هەمان ئامێری خۆت.
+
+تەنها ئەو ناوەڕۆکانە دابگرە کە مافی داگرتنیانت هەیە.
+
+</div>
+
+---
+
 <h2 id="english">English</h2>
 
 **Brusk** means **lightning** in Kurdish.
 
-Brusk is a free, open-source download manager for Windows, macOS and Android, in Arabic and English. It splits each file across several connections to download faster, resumes where it stopped, downloads YouTube videos and torrents, and comes with a browser extension that hands your downloads to it automatically.
+Brusk is a free, open-source download manager for Windows, macOS and Android, in Arabic, Sorani Kurdish and English. It splits each file across several connections to download faster, resumes where it stopped, downloads YouTube videos and torrents, and comes with a browser extension that hands your downloads to it automatically.
 
 ### Download
 
@@ -167,7 +254,7 @@ Then click the Brusk icon in your browser, press **Connect**, and allow it in th
 - Right-click menu: download a link, all selected links, or the page's video.
 
 **General**
-- A complete right-to-left Arabic interface, and English.
+- Complete right-to-left Arabic and Sorani Kurdish interfaces, and English.
 - Light and dark themes.
 - Copied-link detection, a tray icon, and notifications.
 

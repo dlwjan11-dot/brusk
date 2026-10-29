@@ -3,8 +3,12 @@
 (() => {
   if (window.__barqContent) return;
   window.__barqContent = true;
-  const ar = /^ar/.test(navigator.language || '') || document.documentElement.lang?.startsWith('ar');
-  const LABEL = ar ? 'تحميل بـ بروسك' : 'Download with Brusk';
+  // Language: the one chosen in the Brusk app (saved by the extension), else the browser's.
+  let lang = /^ckb|^ku/.test(navigator.language || '') ? 'ckb' : /^ar/.test(navigator.language || '') ? 'ar' : 'en';
+  chrome.storage?.local.get('lang').then(r => { if (r?.lang) { lang = r.lang; if (btn) { btn.style.direction = rtl() ? 'rtl' : 'ltr'; btn.querySelector('span').textContent = LABEL(); } } }).catch(() => {});
+  const tr = (a, e, k) => (lang === 'en' ? e : lang === 'ckb' ? k : a);
+  const rtl = () => lang !== 'en';
+  const LABEL = () => tr('تحميل بـ بروسك', 'Download with Brusk', 'داگرتن بە بروسک');
 
   let host = null, btn = null, current = null, hideTimer = null;
 
@@ -14,11 +18,11 @@
     const root = host.attachShadow({ mode: 'closed' });
     root.innerHTML = `<style>
       button{all:initial;display:flex;align-items:center;gap:6px;cursor:pointer;font:600 12.5px/1 "Segoe UI",Tahoma,sans-serif;color:#fff;
-        background:linear-gradient(180deg,#3b78ff,#1d55e0);padding:7px 11px 7px 9px;border-radius:9px;box-shadow:0 4px 14px rgba(0,0,0,.35);direction:${ar ? 'rtl' : 'ltr'}}
+        background:linear-gradient(180deg,#3b78ff,#1d55e0);padding:7px 11px 7px 9px;border-radius:9px;box-shadow:0 4px 14px rgba(0,0,0,.35);direction:${rtl() ? 'rtl' : 'ltr'}}
       button:hover{filter:brightness(1.08)} svg{width:15px;height:15px;fill:#ffc414}
       .x{all:initial;cursor:pointer;color:#fff;opacity:.7;font:14px/1 sans-serif;padding:0 2px 0 4px} .x:hover{opacity:1}
       .ok{background:linear-gradient(180deg,#22b06b,#178a52)}</style>
-      <button part="b"><svg viewBox="0 0 24 24"><path d="M14.3 0.8 4.6 12.6h6.3L9.6 20.2 19.4 8.4h-6.3L14.3 0.8ZM6.45 21.9h11.1a.65.65 0 0 1 0 1.3H6.45a.65.65 0 0 1 0-1.3Z"/></svg><span>${LABEL}</span><span class="x" title="×">×</span></button>`;
+      <button part="b"><svg viewBox="0 0 24 24"><path d="M14.3 0.8 4.6 12.6h6.3L9.6 20.2 19.4 8.4h-6.3L14.3 0.8ZM6.45 21.9h11.1a.65.65 0 0 1 0 1.3H6.45a.65.65 0 0 1 0-1.3Z"/></svg><span>${LABEL()}</span><span class="x" title="×">×</span></button>`;
     btn = root.querySelector('button');
     btn.addEventListener('mouseenter', () => clearTimeout(hideTimer));
     btn.addEventListener('mouseleave', scheduleHide);
@@ -43,19 +47,19 @@
       if (finished) return; finished = true; clearTimeout(timer);
       btn.classList.toggle('ok', Boolean(ok)); span.textContent = text;
       clearTimeout(hideTimer);
-      setTimeout(() => { btn.classList.remove('ok'); span.textContent = LABEL; scheduleHide(); }, ok ? 2500 : 6000);
+      setTimeout(() => { btn.classList.remove('ok'); span.textContent = LABEL(); scheduleHide(); }, ok ? 2500 : 6000);
     };
     const why = code => ({
-      'not-running': ar ? 'برنامج بروسك مو مفتوح' : 'Brusk is not running',
-      'not-paired': ar ? 'اربط الإضافة ببروسك أولاً (من أيقونة بروسك)' : 'Connect the extension first (Brusk icon)',
-    }[code] || (/context invalidated|receiving end|Could not establish/i.test(code || '') ? (ar ? 'أعد تحميل الصفحة (F5) وجرّب' : 'Reload the page (F5) and try again') : `${ar ? 'تعذّر الإرسال' : 'Could not send'}: ${code || '?'}`));
-    span.textContent = ar ? 'جاري الإرسال…' : 'Sending…';
+      'not-running': tr('برنامج بروسك مو مفتوح', 'Brusk is not running', 'بەرنامەی بروسک کراوە نییە'),
+      'not-paired': tr('اربط الإضافة ببروسك أولاً (من أيقونة بروسك)', 'Connect the extension first (Brusk icon)', 'سەرەتا پاشکۆکە پەیوەست بکە (ئایکۆنی بروسک)'),
+    }[code] || (/context invalidated|receiving end|Could not establish/i.test(code || '') ? tr('أعد تحميل الصفحة (F5) وجرّب', 'Reload the page (F5) and try again', 'پەڕەکە نوێ بکەرەوە (F5) و دووبارە هەوڵ بدەرەوە') : `${tr('تعذّر الإرسال', 'Could not send', 'نەنێردرا')}: ${code || '?'}`));
+    span.textContent = tr('جاري الإرسال…', 'Sending…', 'دەنێردرێت…');
     const timer = setTimeout(() => finish(why('Could not establish connection')), 10000);
     try {
       chrome.runtime.sendMessage(msg, r => {
         const err = chrome.runtime.lastError;
         if (err) return finish(why(err.message));
-        if (r?.ok) finish(ar ? 'أُرسل إلى بروسك ✓' : 'Sent to Brusk ✓', true);
+        if (r?.ok) finish(tr('أُرسل إلى بروسك ✓', 'Sent to Brusk ✓', 'نێردرا بۆ بروسک ✓'), true);
         else finish(why(r?.error));
       });
     } catch (e) { finish(why(e.message)); }
@@ -66,7 +70,7 @@
     if (r.width < 220 || r.height < 120 || r.bottom < 0 || r.top > innerHeight) { host.style.display = 'none'; return; }
     host.style.display = 'block';
     const w = host.offsetWidth || 150;
-    const x = ar ? Math.max(4, r.left + 10) : Math.min(innerWidth - w - 6, r.right - w - 10);
+    const x = rtl() ? Math.max(4, r.left + 10) : Math.min(innerWidth - w - 6, r.right - w - 10);
     host.style.transform = `translate(${Math.round(x)}px, ${Math.round(Math.max(4, r.top + 10))}px)`;
   }
   function scheduleHide() { clearTimeout(hideTimer); hideTimer = setTimeout(() => { if (host) host.style.display = 'none'; current = null; }, 2200); }

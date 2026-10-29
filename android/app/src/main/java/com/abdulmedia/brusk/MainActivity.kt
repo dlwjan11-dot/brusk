@@ -285,6 +285,7 @@ private fun SettingsScreen(onBack: () -> Unit) {
         Card {
             Text(s.language, fontWeight = FontWeight.SemiBold)
             Choice("العربية", lang == "ar") { Prefs.setLang(ctx, "ar"); DownloadService.createChannels(ctx) }
+            Choice("کوردی (سۆرانی)", lang == "ckb") { Prefs.setLang(ctx, "ckb"); DownloadService.createChannels(ctx) }
             Choice("English", lang == "en") { Prefs.setLang(ctx, "en"); DownloadService.createChannels(ctx) }
         }
         Spacer(Modifier.height(10.dp))

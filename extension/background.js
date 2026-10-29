@@ -25,7 +25,11 @@ async function ping(force = false) {
   let found = null;
   if (app.port) found = await tryPort(app.port).catch(() => null);
   if (!found) found = await Promise.any(PORTS.map(tryPort)).catch(() => null);
-  if (found) { app = { port: found.port, checked: Date.now(), info: found.j }; setIcon(found.j.paired); return found.j; }
+  if (found) {
+    app = { port: found.port, checked: Date.now(), info: found.j }; setIcon(found.j.paired);
+    if (found.j.language) chrome.storage.local.get('lang').then(r => { if (r.lang !== found.j.language) { chrome.storage.local.set({ lang: found.j.language }); buildMenus(found.j.language); } });
+    return found.j;
+  }
   app = { port: null, checked: Date.now(), info: null };
   setIcon(false);
   return null;
@@ -160,14 +164,19 @@ function bestFor(tabId, pageUrl, title) {
 function extOf(m) { const e = (new URL(m.url).pathname.match(/\.([a-z0-9]{2,4})$/i) || [])[1]; return e || (m.mime.includes('audio') ? 'mp3' : 'mp4'); }
 
 /* ---------- right-click menu ---------- */
-chrome.runtime.onInstalled.addListener(() => {
-  const ar = /^ar/.test(chrome.i18n.getUILanguage());
+function uiLang() { const l = chrome.i18n.getUILanguage(); return /^ckb|^ku/.test(l) ? 'ckb' : /^ar/.test(l) ? 'ar' : 'en'; }
+const tr3 = (lang, a, e, k) => (lang === 'en' ? e : lang === 'ckb' ? k : a);
+function buildMenus(lang) {
   chrome.contextMenus.removeAll(() => {
-    chrome.contextMenus.create({ id: 'link', title: ar ? 'تحميل بـ بروسك' : 'Download with Brusk', contexts: ['link'] });
-    chrome.contextMenus.create({ id: 'media', title: ar ? 'تحميل هذا الملف بـ بروسك' : 'Download this with Brusk', contexts: ['video', 'audio', 'image'] });
-    chrome.contextMenus.create({ id: 'selection', title: ar ? 'تحميل كل الروابط المحددة بـ بروسك' : 'Download all selected links with Brusk', contexts: ['selection'] });
-    chrome.contextMenus.create({ id: 'page', title: ar ? 'تحميل فيديو هذه الصفحة بـ بروسك' : "Download this page's video with Brusk", contexts: ['page'] });
+    chrome.contextMenus.create({ id: 'link', title: tr3(lang, 'تحميل بـ بروسك', 'Download with Brusk', 'داگرتن بە بروسک'), contexts: ['link'] });
+    chrome.contextMenus.create({ id: 'media', title: tr3(lang, 'تحميل هذا الملف بـ بروسك', 'Download this with Brusk', 'داگرتنی ئەم فایلە بە بروسک'), contexts: ['video', 'audio', 'image'] });
+    chrome.contextMenus.create({ id: 'selection', title: tr3(lang, 'تحميل كل الروابط المحددة بـ بروسك', 'Download all selected links with Brusk', 'داگرتنی هەموو بەستەرە دیاریکراوەکان بە بروسک'), contexts: ['selection'] });
+    chrome.contextMenus.create({ id: 'page', title: tr3(lang, 'تحميل فيديو هذه الصفحة بـ بروسك', "Download this page's video with Brusk", 'داگرتنی ڤیدیۆی ئەم پەڕەیە بە بروسک'), contexts: ['page'] });
   });
+}
+chrome.runtime.onInstalled.addListener(async () => {
+  const { lang } = await chrome.storage.local.get('lang');
+  buildMenus(lang || uiLang());
 });
 
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
@@ -187,8 +196,9 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 });
 
 function notify(code) {
-  const ar = /^ar/.test(chrome.i18n.getUILanguage());
-  const text = code === 'not-running' ? (ar ? 'برنامج بروسك غير مفتوح' : 'Brusk is not running') : code === 'not-paired' ? (ar ? 'اربط الإضافة ببروسك أولاً' : 'Connect the extension to Brusk first') : code;
+  const lang = app.info?.language || uiLang();
+  const text = code === 'not-running' ? tr3(lang, 'برنامج بروسك غير مفتوح', 'Brusk is not running', 'بەرنامەی بروسک کراوە نییە')
+    : code === 'not-paired' ? tr3(lang, 'اربط الإضافة ببروسك أولاً', 'Connect the extension to Brusk first', 'سەرەتا پاشکۆکە بە بروسکەوە پەیوەست بکە') : code;
   chrome.action.setBadgeBackgroundColor({ color: '#e5484d' });
   chrome.action.setBadgeText({ text: '!' });
   chrome.action.setTitle({ title: text });

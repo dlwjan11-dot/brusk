@@ -19,8 +19,9 @@ function t(key, vars) {
   return s;
 }
 function applyLang() {
-  const ar = S.settings.language !== 'en';
-  document.documentElement.lang = ar ? 'ar' : 'en';
+  const lang = I18N[S.settings.language] ? S.settings.language : 'ar';
+  const ar = lang !== 'en';   // Arabic and Sorani Kurdish are both written right to left
+  document.documentElement.lang = lang;
   document.documentElement.dir = ar ? 'rtl' : 'ltr';
   $$('[data-t]').forEach(el => { el.textContent = t(el.dataset.t); });
   $('#search').placeholder = t('search');
@@ -48,7 +49,9 @@ function fmtEta(s) {
 }
 function fmtDate(iso) {
   if (!iso) return '—';
-  return new Date(iso).toLocaleString(S.settings.language === 'en' ? 'en-GB' : 'ar-SY-u-nu-latn', { dateStyle: 'medium', timeStyle: 'short' });
+  const loc = { en: 'en-GB', ckb: 'ckb-IQ-u-nu-latn' }[S.settings.language] || 'ar-SY-u-nu-latn';
+  try { return new Date(iso).toLocaleString(loc, { dateStyle: 'medium', timeStyle: 'short' }); }
+  catch { return new Date(iso).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' }); }
 }
 function errText(e) { return e ? t('e_' + e) !== 'e_' + e ? t('e_' + e) : e : ''; }
 
@@ -690,7 +693,7 @@ async function settingsPane(tab) {
   const s = S.settings;
   switch (tab) {
     case 'general': return [
-      field(t('s_language'), segc('language', s.language, [['ar', 'العربية'], ['en', 'English']])),
+      field(t('s_language'), segc('language', s.language, [['ar', 'العربية'], ['ckb', 'کوردی'], ['en', 'English']])),
       field(t('s_theme'), segc('theme', s.theme, [['system', t('th_system')], ['light', t('th_light')], ['dark', t('th_dark')]])),
       field(t('s_tray'), sw('minimizeToTray', s.minimizeToTray)),
       field(t(api.platform === 'darwin' ? 's_startup_mac' : 's_startup'), sw('startWithWindows', s.startWithWindows)),
